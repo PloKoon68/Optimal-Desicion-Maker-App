@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/MCDM-dp-test/static/css/main.83aca4c8.css",
-    "main.js": "/MCDM-dp-test/static/js/main.cc6d6236.js",
+    "main.css": "/MCDM-dp-test/static/css/main.5a96fd68.css",
+    "main.js": "/MCDM-dp-test/static/js/main.a1142363.js",
     "static/media/primeicons.svg": "/MCDM-dp-test/static/media/primeicons.6ed59f962963a4a73af2.svg",
     "static/media/primeicons.eot": "/MCDM-dp-test/static/media/primeicons.ff0c4cd79b2ffca2de54.eot",
     "static/media/primeicons.woff": "/MCDM-dp-test/static/media/primeicons.8931fda1930c3bd21e96.woff",
     "static/media/primeicons.ttf": "/MCDM-dp-test/static/media/primeicons.a5c2a53d1ff7a9ff5933.ttf",
     "static/media/primeicons.woff2": "/MCDM-dp-test/static/media/primeicons.024b32cc7bf399b1a847.woff2",
     "index.html": "/MCDM-dp-test/index.html",
-    "main.83aca4c8.css.map": "/MCDM-dp-test/static/css/main.83aca4c8.css.map",
-    "main.cc6d6236.js.map": "/MCDM-dp-test/static/js/main.cc6d6236.js.map"
+    "main.5a96fd68.css.map": "/MCDM-dp-test/static/css/main.5a96fd68.css.map",
+    "main.a1142363.js.map": "/MCDM-dp-test/static/js/main.a1142363.js.map"
   },
   "entrypoints": [
-    "static/css/main.83aca4c8.css",
-    "static/js/main.cc6d6236.js"
+    "static/css/main.5a96fd68.css",
+    "static/js/main.a1142363.js"
   ]
 }
