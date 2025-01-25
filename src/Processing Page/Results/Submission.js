@@ -67,7 +67,7 @@ function Submission({products, criteriaCards}) {
 
         {submitted && 
         (criteriaCards.length && products.length && results.map((result, index) => {return (<div key={index} className='results' style={{backgroundColor: "pink"}}>
-                                            <p>{products[index] && `${products[index].alternativeName}: ${result}`}</p>
+                                            <p>{products[index].alternativeName}: {result}</p>
                                           </div>)}) 
       || (!products.length && <h1 style={{color:"red"}}>First add some alternatives</h1> || !criteriaCards.length && <h1 style={{color:"red"}}>First add some criterias</h1>)) }
 

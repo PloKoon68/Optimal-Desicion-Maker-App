@@ -14,7 +14,7 @@ function ProcessingPage() {
   const [criteriaNames, setCriteriaNames] = useState(new Set());
 
   const [products, setProducts] = useState([]);
-
+  console.log("set edit: ", editCard)
 
   return (
     <div className="ProcessingPage" style={{backgroundColor:"rgb(178, 218, 91)", minHeight:"100vh"}}>

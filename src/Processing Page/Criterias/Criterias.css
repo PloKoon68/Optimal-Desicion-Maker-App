@@ -7,20 +7,27 @@
     background-color: rgb(255, 0, 179);
     padding: 3%;
     z-index: 1; /* Ensure cards are at a lower z-index */
+    overflow-x: auto;
+    scrollbar-width: thin; /* Optional: for thinner scrollbar (Firefox) */
+    align-items: flex-start; /* Align cards at the top, allowing variable heights */
+
   }
   
   .criteria-card {
-    display: flex;
-    flex-direction: column;
     border: 1px solid #ccc;
     background-color: antiquewhite;
     padding: 1rem;
     border-radius: 0.7rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    min-width: 100px;
+    min-width: 300px;
+    max-width: 550px;
+    width: auto;
+    height: auto;
+    min-height: 100px;
     z-index: 2; /* Ensure cards are at a lower z-index */
-}
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent cards from shrinking when the container overflows */
+  }
 
 
 

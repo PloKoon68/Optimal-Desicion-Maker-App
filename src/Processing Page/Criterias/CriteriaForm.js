@@ -74,6 +74,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
     setCharacteristic('Beneficial');
     setCriteriaPoint(1);
     setCategories([]);
+    setEditCard(null)
 
     setFormSubmitted(false);
     setValidInputs({validCriteriaName: true, criteriaNameDoesntExist: true, validCategories: true});
