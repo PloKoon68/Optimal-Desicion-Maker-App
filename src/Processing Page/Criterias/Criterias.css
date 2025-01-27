@@ -4,13 +4,13 @@
 .cards-container {
     display: flex;
     gap: 1rem;
-    background-color: rgb(255, 0, 179);
-    padding: 3%;
+    background-color: rgb(57, 50, 55);
+    padding: 2%;
     z-index: 1; /* Ensure cards are at a lower z-index */
     overflow-x: auto;
     scrollbar-width: thin; /* Optional: for thinner scrollbar (Firefox) */
     align-items: flex-start; /* Align cards at the top, allowing variable heights */
-
+    border-radius: 2%;
   }
   
   .criteria-card {

@@ -17,7 +17,7 @@ function ProcessingPage() {
   console.log("set edit: ", editCard)
 
   return (
-    <div className="ProcessingPage" style={{backgroundColor:"rgb(178, 218, 91)", minHeight:"100vh"}}>
+    <div className="ProcessingPage" style={{backgroundColor:"rgb(210, 215, 198)", minHeight:"100vh"}}>
       <CriteriaForm criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
       <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts}/> 
