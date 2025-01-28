@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+import { Chart } from 'primereact/chart';
+
 import SAW from "./Saw.js"
+import PieChart from "./PieChart.js"
+
 
 function Submission({products, criteriaCards}) {
-
   const [results, setResults] = useState([])
 
   const [submitted, setSubmitted] = useState(false);
@@ -59,19 +62,22 @@ function Submission({products, criteriaCards}) {
       }
     }
   }
-
+  console.log(results, products)
   return (
     <>
-      <button onClick={() => {calculate()}} style={{marginTop: "10px"}}>Submit</button>
+      <button onClick={() => {calculate()}}   className="btn btn-success btn-lg w-100 mt-3">Submit</button>
       <div className="Submission" style={{backgroundColor: "purple", marginTop: "20px"}}>
 
         {submitted && 
         (criteriaCards.length && products.length && results.map((result, index) => {return (<div key={index} className='results' style={{backgroundColor: "pink"}}>
                                             <p>{products[index].alternativeName}: {result}</p>
-                                          </div>)}) 
+                                          </div>)})
       || (!products.length && <h1 style={{color:"red"}}>First add some alternatives</h1> || !criteriaCards.length && <h1 style={{color:"red"}}>First add some criterias</h1>)) }
 
       </div>
+      {submitted && <PieChart results={results} products={products}/>}
+
+      
     </>
   );
 }

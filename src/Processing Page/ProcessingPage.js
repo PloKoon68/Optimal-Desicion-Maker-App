@@ -5,6 +5,9 @@ import Submission from "./Results/Submission.js"
 
 import React, { useState } from 'react';
 
+import { Chart } from 'primereact/chart';
+        
+
 
 function ProcessingPage() {
 
@@ -14,7 +17,6 @@ function ProcessingPage() {
   const [criteriaNames, setCriteriaNames] = useState(new Set());
 
   const [products, setProducts] = useState([]);
-  console.log("set edit: ", editCard)
 
   return (
     <div className="ProcessingPage" style={{backgroundColor:"rgb(210, 215, 198)", minHeight:"100vh"}}>
