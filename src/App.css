@@ -1,0 +1,10 @@
+.App {
+    padding-top: 100px;
+    height:auto;
+    background-color: rgb(210, 215, 198); /* Ensures full-page coverage */
+}
+
+.root {
+    background-color: rgb(210, 215, 198); /* Ensures full-page coverage */
+
+}

@@ -55,7 +55,6 @@
     background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
-    padding-bottom: 10%;
     align-items: center;
     z-index: 3; /* Ensure cards are at a lower z-index */
     visibility:hidden;

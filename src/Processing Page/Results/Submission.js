@@ -74,7 +74,6 @@ function Submission({products, criteriaCards}) {
       }
     }
   }
-  console.log("prosr: ", criteriaCards.length)
   return (
     <>
       <button onClick={() => {calculate()}}   className="btn btn-success btn-lg w-100 mt-3">Submit</button>

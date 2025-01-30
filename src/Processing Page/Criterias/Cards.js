@@ -10,7 +10,16 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
   
   return (
     <div className='criterias'>
-      <button type="button" className="btn btn-primary" onClick={() => document.getElementsByClassName('overlay')[0].style.visibility = "visible"} style={{marginTop:"60px", marginLeft:"10px", marginBottom: "10px"}}>Add Criteria</button>
+      
+      <div className="d-flex justify-content-between align-items-center" style={{marginBottom: "10px", marginLeft: "10px" }}>
+        <button type="button" className="btn btn-primary" onClick={() => document.getElementsByClassName('overlay')[0].style.visibility = "visible"}>
+          Add Criteria
+        </button>
+        
+        <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Help with criterias">
+          ?
+        </button>
+      </div>
 
       
       <div className="cards-container">
