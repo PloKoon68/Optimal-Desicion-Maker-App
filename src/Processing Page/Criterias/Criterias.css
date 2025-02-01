@@ -4,7 +4,7 @@
 .cards-container {
     display: flex;
     gap: 1rem;
-    background-color: rgb(57, 50, 55);
+    background-color: rgb(212, 149, 188);
     padding: 2%;
     z-index: 1; /* Ensure cards are at a lower z-index */
     overflow-x: auto;
@@ -16,6 +16,7 @@
   .criteria-card {
     border: 1px solid #ccc;
     background-color: antiquewhite;
+    background-color: rgb(248, 209, 157);
     padding: 1rem;
     border-radius: 0.7rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

@@ -75,9 +75,9 @@ function Submission({products, criteriaCards}) {
   }
   return (
     <>
-      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3">Submit</button>
+      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black"}}>Submit</button>
 
-      
+
       <div className="Submission" style={{backgroundColor: "purple", marginTop: "20px"}}>
         {submitted && 
         (criteriaCards.length && products.length && results.labels.map((label, index) => {return (<div key={index} className='results' style={{backgroundColor: "pink"}}>

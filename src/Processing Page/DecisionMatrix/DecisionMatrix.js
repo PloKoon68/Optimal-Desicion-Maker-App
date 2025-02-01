@@ -20,6 +20,7 @@ import { FloatLabel } from 'primereact/floatlabel';
 
 export default function DecisionMatrix({criteriaCards, products, setProducts}) {
 
+    const tableColor = "rgb(226, 243, 132)"
     let emptyProduct;
     const [alternativeNames, setAlternativeNames] = useState(new Set());
 
@@ -206,7 +207,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
     };
 
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
+        return <Button label="Export" icon="pi pi-upload" className="p-button-help" style={{ backgroundColor: "rgb(200, 148, 230)", borderColor: "blue", color: "white" }} onClick={exportCSV} />;
     };
 
 
@@ -220,7 +221,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
     };
 
     const header = (
-        <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+        <div className="flex flex-wrap gap-2 align-items-center justify-content-between" style={{backgroundColor: tableColor}}>
             <h4 className="m-0">Desicion Matrix</h4>
             <IconField iconPosition="left">
                 <InputIcon className="pi pi-search" />
@@ -247,26 +248,27 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
         </React.Fragment>
     );
 
+
     return (
-        <div style={{marginTop: "90px"}}>
-            <Toast ref={toast} />
-            <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+        <div style={{marginTop: "90px", backgroundColor: tableColor}}>
+            <Toast ref={toast} style={{backgroundColor: tableColor}}/>
+            <div className="card" style={{backgroundColor: tableColor}}>
+                <Toolbar style={{backgroundColor: tableColor}} className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} style={{backgroundColor: tableColor}}>
                     
-                    <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="alternativeName" header="Alternative Name" sortable style={{ minWidth: '12rem' }}></Column>
-                    {criteriaCards.map((card, i) => {return <Column key={i} field={card.criteriaName} header={card.criteriaName} sortable style={{ minWidth: '12rem' }}></Column>})}
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
+                    <Column style={{backgroundColor: tableColor}} selectionMode="multiple" exportable={false}></Column>
+                    <Column field="alternativeName" header="Alternative Name" sortable style={{ backgroundColor: tableColor, minWidth: '12rem' }}></Column>
+                    {criteriaCards.map((card, i) => {return <Column key={i} field={card.criteriaName} header={card.criteriaName} sortable style={{ backgroundColor: tableColor, minWidth: '12rem' }}></Column>})}
+                    <Column body={actionBodyTemplate} exportable={false} style={{ backgroundColor: tableColor, minWidth: '8rem' }}></Column>
 
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '32rem', backgroundColor: tableColor }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 
                 <div className="field">
                     <label htmlFor="alternativeName" className="font-bold">
