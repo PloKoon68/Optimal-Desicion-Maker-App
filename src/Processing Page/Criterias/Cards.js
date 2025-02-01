@@ -9,7 +9,8 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
 
   
   return (
-    <div className='criterias'>
+    <div className='criterias-container mt-7'>
+      <div className='criterias'>
       
       <div className="d-flex justify-content-between align-items-center" style={{marginBottom: "10px", marginLeft: "10px" }}>
         <button type="button" className="btn btn-primary" onClick={() => document.getElementsByClassName('overlay')[0].style.visibility = "visible"}>
@@ -65,6 +66,7 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
           </div>
   })}
         
+        </div>
       </div>
     </div>
   );

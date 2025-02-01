@@ -75,17 +75,18 @@ function Submission({products, criteriaCards}) {
   }
   return (
     <>
-      <button onClick={() => {calculate()}}   className="btn btn-success btn-lg w-100 mt-3">Submit</button>
-      <div className="Submission" style={{backgroundColor: "purple", marginTop: "20px"}}>
+      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3">Submit</button>
 
+      
+      <div className="Submission" style={{backgroundColor: "purple", marginTop: "20px"}}>
         {submitted && 
         (criteriaCards.length && products.length && results.labels.map((label, index) => {return (<div key={index} className='results' style={{backgroundColor: "pink"}}>
                                             <p>{label}: {results.scores[index]}</p>
                                           </div>)})
       || (!products.length && <h1 style={{color:"red"}}>First add some alternatives</h1> || !criteriaCards.length && <h1 style={{color:"red"}}>First add some criterias</h1>)) }
+      {submitted && <PieChart results={results} products={products}/>}
 
       </div>
-      {submitted && <PieChart results={results} products={products}/>}
 
       
     </>

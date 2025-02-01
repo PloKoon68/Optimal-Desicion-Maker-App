@@ -10,7 +10,7 @@
     overflow-x: auto;
     scrollbar-width: thin; /* Optional: for thinner scrollbar (Firefox) */
     align-items: flex-start; /* Align cards at the top, allowing variable heights */
-    border-radius: 2%;
+    border-radius: 0.7rem;
   }
   
   .criteria-card {

@@ -248,7 +248,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
     );
 
     return (
-        <div style={{marginTop: "110px"}}>
+        <div style={{marginTop: "90px"}}>
             <Toast ref={toast} />
             <div className="card">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
@@ -327,16 +327,4 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
     );
 }
 
-
-
-
-
-
-
-/*
-
-    alternative name already exists: 
-      - for edit, it should not check it  -> simply define use state edit, when edit button clicked, set it true, in save product, if it is true, make it false
-      - in edit, if you change the alternative name, delete the old one from set and add the new one    
-*/
 
