@@ -2,11 +2,9 @@ import Cards from "./Criterias/Cards.js";
 import CriteriaForm from "./Criterias/CriteriaForm.js"
 import DecisionMatrix from "./DecisionMatrix/DecisionMatrix.js"
 import Submission from "./Results/Submission.js"
-import Navbar from "./Navbar.js"
 
 import React, { useState } from 'react';
 
-import { Chart } from 'primereact/chart';
         
 
 

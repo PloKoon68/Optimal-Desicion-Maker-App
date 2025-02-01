@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { Chart } from 'primereact/chart';
 
 import SAW from "./Saw.js"
 import PieChart from "./PieChart.js"
