@@ -1,0 +1,74 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0% 2%;
+}
+
+#score-table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    border-radius: 10px;
+    border-spacing: 0;
+    text-align: center;
+}
+
+#score-table caption {
+    caption-side: top; /* Ensure it's at the top */
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#score-table th {
+    background: rgba(255,137,0,0.9);
+    padding: 10px 20px;
+    color: rgba(129, 69, 0, 1);
+}
+
+#score-table th, 
+#score-table td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: rgba(0,0,0,0.1);
+    font-size: 18px; /* Set larger size for table content */
+}
+
+#score-table th:first-child {
+    border-top-left-radius: 5px;
+}
+
+#score-table th:last-child {
+    border-top-right-radius: 5px;
+    border-right: none;
+}
+
+#score-table th:first-child, 
+#score-table td:first-child {
+    padding: 7px 8px;
+}
+
+#score-table td {
+    padding: 7px 20px;
+    background: rgba(230,230,230,1);
+    color: rgba(0, 0, 0, 0.6);
+}
+
+#score-table .player td {
+    color: rgba(0, 0, 0, 1.0);
+    font-weight: bold;
+    background: rgba(215, 215, 215, 1);
+    color: rgba(0, 0, 0, 0.8);
+}
+
+#score-table tr:last-child td:first-child {
+    border-radius: 0 0 0 5px;
+}
+
+#score-table tr:last-child td:last-child {
+    border-radius: 0 0 5px 0;
+}
+
+#score-table tr td:last-child {
+    border-right: none;
+}
