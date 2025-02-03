@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/Optimal-Desicion-Maker-App/static/css/main.d3cc753e.css",
-    "main.js": "/Optimal-Desicion-Maker-App/static/js/main.00f7e218.js",
-    "static/js/214.18ee24d0.chunk.js": "/Optimal-Desicion-Maker-App/static/js/214.18ee24d0.chunk.js",
+    "main.css": "/Optimal-Desicion-Maker-App/static/css/main.5f954f0c.css",
+    "main.js": "/Optimal-Desicion-Maker-App/static/js/main.e865ed7a.js",
+    "static/js/867.bd92a4b7.chunk.js": "/Optimal-Desicion-Maker-App/static/js/867.bd92a4b7.chunk.js",
     "static/media/primeicons.svg": "/Optimal-Desicion-Maker-App/static/media/primeicons.6ed59f962963a4a73af2.svg",
     "static/media/primeicons.eot": "/Optimal-Desicion-Maker-App/static/media/primeicons.ff0c4cd79b2ffca2de54.eot",
     "static/media/primeicons.woff": "/Optimal-Desicion-Maker-App/static/media/primeicons.8931fda1930c3bd21e96.woff",
     "static/media/primeicons.ttf": "/Optimal-Desicion-Maker-App/static/media/primeicons.a5c2a53d1ff7a9ff5933.ttf",
     "static/media/primeicons.woff2": "/Optimal-Desicion-Maker-App/static/media/primeicons.024b32cc7bf399b1a847.woff2",
     "index.html": "/Optimal-Desicion-Maker-App/index.html",
-    "main.d3cc753e.css.map": "/Optimal-Desicion-Maker-App/static/css/main.d3cc753e.css.map",
-    "main.00f7e218.js.map": "/Optimal-Desicion-Maker-App/static/js/main.00f7e218.js.map",
-    "214.18ee24d0.chunk.js.map": "/Optimal-Desicion-Maker-App/static/js/214.18ee24d0.chunk.js.map"
+    "main.5f954f0c.css.map": "/Optimal-Desicion-Maker-App/static/css/main.5f954f0c.css.map",
+    "main.e865ed7a.js.map": "/Optimal-Desicion-Maker-App/static/js/main.e865ed7a.js.map",
+    "867.bd92a4b7.chunk.js.map": "/Optimal-Desicion-Maker-App/static/js/867.bd92a4b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d3cc753e.css",
-    "static/js/main.00f7e218.js"
+    "static/css/main.5f954f0c.css",
+    "static/js/main.e865ed7a.js"
   ]
 }
