@@ -258,7 +258,8 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} style={{backgroundColor: tableColor}}>
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} 
+                        style={{fontSize: "25px", backgroundColor: tableColor}}>
                     
                     <Column style={{backgroundColor: tableColor}} selectionMode="multiple" exportable={false}></Column>
                     <Column field="alternativeName" header="Alternative Name" sortable style={{ backgroundColor: tableColor, minWidth: '12rem' }}></Column>
@@ -310,7 +311,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
 
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '3rem' }} />
                     {product && (
                         <span>
                             Are you sure you want to delete <b>{product.name}</b>?

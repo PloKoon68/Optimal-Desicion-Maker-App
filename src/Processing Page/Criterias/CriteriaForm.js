@@ -256,17 +256,18 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
                       </div>
                   </div>
               </div>
+
               <div className="mb-3 col-4">
-              <label htmlFor="criteriaPoint" className="form-label">Criteria Point</label>
-              <input
-                  type="number"
-                  className="form-control"
-                  id="criteriaPoint"
-                  value={criteriaPoint}
-                  onChange={(e) => setCriteriaPoint(parseInt(e.target.value))}
-                  min="1"
-                  required
-              />
+                <label htmlFor="criteriaPoint" className="form-label">Criteria Point</label>
+                <input
+                    type="number"
+                    className="form-control"
+                    id="criteriaPoint"
+                    value={criteriaPoint}
+                    onChange={(e) => setCriteriaPoint(parseInt(e.target.value))}
+                    min="1"
+                    required
+                />
               </div>
           </div>
           

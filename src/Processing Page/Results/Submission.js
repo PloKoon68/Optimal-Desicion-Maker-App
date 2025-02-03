@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
 
-import SAW from "./Saw.js"
-import PieChart from "./PieChart.js"
+import SAW from "./MCDM Algorithms/Saw.js"
+import PieChart from "./Score Components/PieChart.js"
+import ScoreTable from "./Score Components/ScoreTable.js"
 
+import './Submission.css';
 
 function Submission({products, criteriaCards}) {
   const [results, setResults] = useState({})
@@ -77,18 +79,19 @@ function Submission({products, criteriaCards}) {
     <>
       <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black"}}>Submit</button>
 
-
-      <div className="Submission" style={{backgroundColor: "purple", marginTop: "20px"}}>
-        {submitted && 
-        (criteriaCards.length && products.length && results.labels.map((label, index) => {return (<div key={index} className='results' style={{backgroundColor: "pink"}}>
-                                            <p>{label}: {results.scores[index]}</p>
-                                          </div>)})
-      || (!products.length && <h1 style={{color:"red"}}>First add some alternatives</h1> || !criteriaCards.length && <h1 style={{color:"red"}}>First add some criterias</h1>)) }
-      {submitted && <PieChart results={results} products={products}/>}
-
-      </div>
-
-      
+      <div className="Submission row" style={{ backgroundColor: "purple", marginTop: "20px" }}>
+        <div className="scores col-lg-6 col-md-12 p-3">
+          {submitted && 
+            (criteriaCards.length && products.length && <ScoreTable results={results}/>
+              || 
+            (!criteriaCards.length && <h1 style={{ color: "red" }}>First add some criterias</h1> || 
+              !products.length && <h1 style={{ color: "red" }}>First add some alternatives</h1> ))
+          }
+        </div>
+        <div className="pie-chart col-lg-6 col-md-12 d-flex justify-content-center align-items-center p-3">
+          {submitted && <PieChart results={results} products={products}/>}
+        </div>
+      </div> 
     </>
   );
 }

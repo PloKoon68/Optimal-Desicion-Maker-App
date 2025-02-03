@@ -2,9 +2,10 @@
     height:auto;
     background-color: rgb(210, 215, 198); /* Ensures full-page coverage */
     background-color: rgb(158, 247, 235); /* Ensures full-page coverage */
+    padding-bottom: 10%;
+    font-size: 20px;
 }
 
 .root {
     background-color: rgb(210, 215, 198); /* Ensures full-page coverage */
-
 }
