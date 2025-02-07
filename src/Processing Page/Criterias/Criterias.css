@@ -1,3 +1,7 @@
+.inputs-size {
+  font-size: 20px;
+}
+
 
 
 /* Cards.css */
@@ -35,7 +39,7 @@
 
   /* Form */
   #criteria-form {
-    width: 40%;
+    width: 35%;
     background-color: rgb(232, 233, 229);
     border-radius: 3%;
     padding: 50px;
@@ -44,7 +48,29 @@
     overflow-y: auto;
 
   }
+  
+  /* For tablets and smaller screens */
+  @media screen and (max-width: 1024px) {
+    #criteria-form {
+        width: 60%; /* Increase width for tablets */
+    }
+  }
 
+  /* For mobile devices */
+  @media screen and (max-width: 768px) {
+    #criteria-form {
+        width: 80%; /* Make it wider for mobile */
+        padding: 30px; /* Reduce padding to save space */
+    }
+  }
+
+  /* For very small screens */
+  @media screen and (max-width: 480px) {
+    #criteria-form {
+        width: 90%; /* Almost full width for very small screens */
+        padding: 20px; /* Further reduce padding */
+    }
+  }
   
 
   .overlay {

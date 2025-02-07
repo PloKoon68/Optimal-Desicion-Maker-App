@@ -77,7 +77,7 @@ function Submission({products, criteriaCards}) {
   }
   return (
     <>
-      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black"}}>Submit</button>
+      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black", fontSize: "28px"}}>Submit</button>
 
       <div className="Submission row" style={{ backgroundColor: "purple", marginTop: "20px" }}>
         <div className="scores col-lg-6 col-md-12 p-3">

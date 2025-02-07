@@ -19,7 +19,7 @@ function ProcessingPage() {
   
   //rgb(210, 215, 198)
   return (
-    <div className="ProcessingPage container-fluid" style={{backgroundColor:"rgb(158, 247, 235)", minHeight:"100vh", width:"90%"}}>
+    <div className="ProcessingPage container-fluid" style={{minHeight:"100vh", width:"90%"}}>
       <CriteriaForm criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
       <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts}/> 

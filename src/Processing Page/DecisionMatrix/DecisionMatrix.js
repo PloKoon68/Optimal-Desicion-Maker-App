@@ -200,14 +200,14 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button label="New" icon="pi pi-plus" severity="success" onClick={openNew} />
-                <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button label="New" icon="pi pi-plus" style={{fontSize: "23px"}} severity="success" onClick={openNew} />
+                <Button label="Delete" icon="pi pi-trash" style={{fontSize: "23px"}} severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
 
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="p-button-help" style={{ backgroundColor: "rgb(200, 148, 230)", borderColor: "blue", color: "white" }} onClick={exportCSV} />;
+        return <Button label="Export" icon="pi pi-upload" className="p-button-help" style={{ backgroundColor: "rgb(200, 148, 230)", borderColor: "blue", color: "white", fontSize: "23px" }} onClick={exportCSV} />;
     };
 
 

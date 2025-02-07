@@ -140,7 +140,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
             <label htmlFor="criteriaName" className="form-label">Criteria Name</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control inputs-size"
               id="criteriaName"
               value={criteriaName}
               onChange={(e) => setCriteriaName(e.target.value)}
@@ -154,7 +154,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
           <div className="mb-3">  
             <label htmlFor="dataType" className="form-label">Data Type</label>
             <select
-              className="form-select"
+              className="form-select inputs-size"
               id="dataType"
               value={dataType}
               onChange={(e) => setDataType(e.target.value)}
@@ -168,7 +168,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
           {/* Categories Table */}
           {dataType === 'Categorical' && (
             <div className="mt-5">
-              <h5>Categories</h5>
+              <h4>Categories</h4>
               <table className="table">
                 <thead>
                   <tr>
@@ -184,7 +184,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
                         <input
                           style={formSubmitted && (!category.categoryName || category.categoryName === "") ? { border: "3px solid red" } : {}}
                           type="text"
-                          className="form-control"
+                          className="form-control inputs-size"
                           value={category.categoryName}
                           onChange={(e) => handleCategoryChange(index, 'categoryName', e.target.value)}
                           required
@@ -194,7 +194,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
                         <input
                           style={formSubmitted && (!category.categoryPoint || category.categoryPoint === "") ? { border: "3px solid red" } : {}}
                           type="number"
-                          className="form-control"
+                          className="form-control inputs-size"
                           value={category.categoryPoint}
                           onChange={(e) => handleCategoryChange(index, 'categoryPoint', e.target.value)}
                           required
@@ -203,7 +203,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
                       <td>
                         <button
                           type="button"
-                          className="btn btn-danger btn-sm"
+                          className="btn btn-danger btn-sm inputs-size"
                           onClick={() => handleRemoveCategory(index)}
                         >
                           Delete
@@ -216,7 +216,7 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
               </table>
               <button
                 type="button"
-                className="btn btn-success btn-sm"
+                className="btn btn-success btn-sm inputs-size"
                 onClick={handleAddCategory}
               >
                 Add Category
@@ -224,60 +224,62 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
             </div>
           )}
 
-
-          {/* Characteristic and Criteria Point */}
-          <div className='row mt-5'>
-              <div className="mb-3 col-8">
-                  <label className="form-label">Characteristic</label>
-                  <div>
-                      <div className="form-check form-check-inline">
-                      <input
-                          className="form-check-input"
-                          type="radio"
-                          name="characteristic"
-                          id="beneficial"
-                          value="Beneficial"
-                          checked={characteristic === 'Beneficial'}
-                          onChange={(e) => setCharacteristic(e.target.value)}
-                      />
-                      <label className="form-check-label" htmlFor="beneficial">Beneficial</label>
-                      </div>
-                      <div className="form-check form-check-inline">
-                      <input
-                          className="form-check-input"
-                          type="radio"
-                          name="characteristic"
-                          id="cost"
-                          value="Cost"
-                          checked={characteristic === 'Cost'}
-                          onChange={(e) => setCharacteristic(e.target.value)}
-                      />
-                      <label className="form-check-label" htmlFor="cost">Cost</label>
-                      </div>
-                  </div>
+          
+          <div className="row mt-5">
+            {/* Characteristic (Takes 8 columns on medium+ screens, full width on small screens) */}
+            <div className="mb-3 col-lg-8 col-md-12">
+              <label className="form-label">Characteristic</label>
+              <div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="characteristic"
+                    id="beneficial"
+                    value="Beneficial"
+                    checked={characteristic === 'Beneficial'}
+                    onChange={(e) => setCharacteristic(e.target.value)}
+                  />
+                  <label className="form-check-label inputs-size" htmlFor="beneficial">Beneficial</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="characteristic"
+                    id="cost"
+                    value="Cost"
+                    checked={characteristic === 'Cost'}
+                    onChange={(e) => setCharacteristic(e.target.value)}
+                  />
+                  <label className="form-check-label inputs-size" htmlFor="cost">Cost</label>
+                </div>
               </div>
+            </div>
 
-              <div className="mb-3 col-4">
-                <label htmlFor="criteriaPoint" className="form-label">Criteria Point</label>
-                <input
-                    type="number"
-                    className="form-control"
-                    id="criteriaPoint"
-                    value={criteriaPoint}
-                    onChange={(e) => setCriteriaPoint(parseInt(e.target.value))}
-                    min="1"
-                    required
-                />
-              </div>
+            {/* Criteria Point (Takes 4 columns on medium+ screens, full width on small screens) */}
+            <div className="mb-3 col-lg-4 col-md-12">
+              <label htmlFor="criteriaPoint" className="form-label">Criteria Point</label>
+              <input
+                type="number"
+                className="form-control inputs-size"
+                id="criteriaPoint"
+                value={criteriaPoint}
+                onChange={(e) => setCriteriaPoint(parseInt(e.target.value))}
+                min="1"
+                required
+              />
+            </div>
           </div>
+
           
           
           <div className="row mt-5">
             <div className="col text-start">
-              <button type="submit" className="btn btn-success" style={{width:"120px", height:"50px"}}  onClick={handleSubmit}>Submit</button>
+              <button type="submit" className="btn btn-success inputs-size" style={{width:"100px", height:"50px"}}  onClick={handleSubmit}>Submit</button>
             </div>
             <div className="col text-end">
-              <button type="button" className="btn btn-secondary" style={{width:"120px", height:"50px"}} onClick={handleCancelForm}>Cancel</button>
+              <button type="button" className="btn btn-secondary inputs-size" style={{width:"100px", height:"50px"}} onClick={handleCancelForm}>Cancel</button>
             </div>
           </div>
         </form>

@@ -12,11 +12,11 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
     <div className='criterias-container mt-7'>
       <div className='criterias'>
       <div className="d-flex justify-content-between align-items-center" style={{marginBottom: "10px", marginLeft: "10px" }}>
-        <button type="button" className="btn btn-primary" style={{backgroundColor: "rgb(235, 233, 127)", color: "black"}} onClick={() => document.getElementsByClassName('overlay')[0].style.visibility = "visible"}>
+        <button type="button" className="btn btn-primary" style={{backgroundColor: "rgb(235, 233, 127)", color: "black", fontSize: "25px"}} onClick={() => document.getElementsByClassName('overlay')[0].style.visibility = "visible"}>
           Add Criteria
         </button>
         
-        <button type="button" className="btn btn-secondary" style={{backgroundColor: "rgb(202, 77, 240)"}} data-bs-toggle="tooltip" data-bs-placement="top" title="Help with criterias">
+        <button type="button" className="btn btn-secondary" style={{backgroundColor: "rgb(202, 77, 240)", fontSize: "25px"}} data-bs-toggle="tooltip" data-bs-placement="top" title="Help with criterias">
           ?
         </button>
       </div>
@@ -43,7 +43,7 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
               <div className='d-flex justify-content-between'>
                 <button
                   type='button'
-                  className='btn btn-danger'
+                  className='btn btn-danger inputs-size'
                   style={{backgroundColor: "rgb(221, 96, 180)"}}
                   onClick={() => {
                     setCriteriaCards(criteriaCards.filter((mapCard) => mapCard !== card));
@@ -55,7 +55,7 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
                 </button>
                 <button
                   type='button'
-                  className='btn btn-primary'
+                  className='btn btn-primary inputs-size'
                   style={{backgroundColor: "rgb(72, 228, 77)"}}
                   onClick={() => setEditCard({ cardData: card, cardIndex: index })}
                 >
