@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "rgb(215, 122, 243)"}}>
+    <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "rgb(118, 110, 120)"}}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/" style={{fontSize: "25px"}}>DecisionMaker</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item mx-2">
-              <Link className="nav-link active" to="/my-cases">My Cases</Link>
+              <Link className="nav-link" to="/my-cases">My Cases</Link>
             </li>
             <li className="nav-item mx-2">
               <Link className="nav-link" to="/help">Help</Link>

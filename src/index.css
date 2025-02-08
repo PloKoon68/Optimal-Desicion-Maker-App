@@ -1,5 +1,5 @@
-body {
-    font-size: 1600px; /* Set a default font size */
-    font-family: 'Arial', sans-serif;
-  }
-  
+html, body, #root,.App {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

@@ -8,7 +8,9 @@ import 'primeflex/primeflex.css';  // Optional but recommended
 import { Routes, Route } from 'react-router-dom';
 
 import Navbar from "./Navbar.js"
-import ProcessingPage from "./Processing Page/ProcessingPage.js";
+
+import ProcessingPage from "./Pages/Processing Page/ProcessingPage.js";
+import MyCases from "./Pages/My Cases/My Cases.js"
 
 
 function App() {
@@ -16,6 +18,10 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
+        <Route path="/my-cases" element={<MyCases />} />
+        <Route path="/" element={<ProcessingPage/>} />
+                   
+
         {/*
           <Route path="/my-cases" element={<MyCases />} />
           <Route path="/help" element={<Help />} />
@@ -23,7 +29,6 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         */}
       </Routes>
-      <ProcessingPage/>           
 
     </div>
   );
