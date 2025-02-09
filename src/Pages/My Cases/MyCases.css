@@ -1,11 +1,23 @@
-.circle {
+
+.case-card:hover {
+    transform: scale(1.1); /* Slightly enlarge */
+    background-color: rgb(174, 177, 179); /* Change color */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+
+
+
+
+/*add circle*/
+
+.add-sign {
     border-radius: 50%;
     width: 100px;
     height: 100px;
     background-color: rgb(207, 223, 228);
     position: relative;
   }
-  .circle::after {
+  .add-sign::after {
     content: " ";
     position: absolute;
     display: block;
@@ -17,7 +29,7 @@
     right: 5px;
     z-index: 9;
   }
-  .circle::before {
+  .add-sign::before {
     content: " ";
     position: absolute;
     display: block;
@@ -31,13 +43,8 @@
   }
 
   /* Hover Effect */
-.circle:hover {
+.add-sign:hover {
     transform: scale(1.2); /* Slightly enlarge */
     background-color: rgb(160, 200, 220); /* Change color */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow */
-}
-.case-card:hover {
-    transform: scale(1.1); /* Slightly enlarge */
-    background-color: rgb(174, 177, 179); /* Change color */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow */
 }

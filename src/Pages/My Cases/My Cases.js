@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-
 import "./MyCases.css";
 
 export default function MyCases() {
@@ -9,12 +8,33 @@ export default function MyCases() {
     { title: "case 2", description: "Another case description" },
     { title: "case 3", description: "Some more text here" },
   ]);
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
 
+  const handleAddCase = () => {
+    const newCase = { title: `case ${caseCards.length + 1}`, description: "" };
+    const updatedCases = [...caseCards, newCase];
+
+    setCaseCards(updatedCases);
+    setEditingIndex(updatedCases.length - 1); // Edit the newly added case
+    setEditedCard({ ...newCase }); // Make a copy to prevent direct state mutation
+  };
+
+  const handleDeleteCase = (index) => {
+    const updatedCases = caseCards.filter((_, i) => i !== index);
+    setCaseCards(updatedCases);
+    
+    // If the deleted case was being edited, exit edit mode
+    if (editingIndex === index) {
+      setEditingIndex(null);
+      setEditedCard({ title: "", description: "" });
+    }
+  };
+
   const handleEditClick = (index) => {
     setEditingIndex(index);
-    setEditedCard(caseCards[index]); // Set initial values
+    setEditedCard({ ...caseCards[index] }); // Copy object to prevent state mutation
   };
 
   const handleInputChange = (e) => {
@@ -23,7 +43,7 @@ export default function MyCases() {
 
   const handleSaveClick = (index) => {
     const updatedCards = [...caseCards];
-    updatedCards[index] = editedCard;
+    updatedCards[index] = { ...editedCard }; // Make sure to use a new object
     setCaseCards(updatedCards);
     setEditingIndex(null); // Exit edit mode
   };
@@ -32,7 +52,7 @@ export default function MyCases() {
     <div className="my-cases container mt-6">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="fw-bold ml-4">My Cases</h1>
-        <button className="btn btn-success btn-lg">+ Add Case</button>
+        <button className="btn btn-success btn-lg" onClick={handleAddCase}>+ Add Case</button>
       </div>
 
       <div className="row">
@@ -70,14 +90,14 @@ export default function MyCases() {
                 ) : (
                   <button className="btn btn-info" style={{ fontSize: "22px" }} onClick={() => handleEditClick(index)}>Edit</button>
                 )}
-                <button className="btn btn-danger" style={{ fontSize: "22px" }}>Delete</button>
+                <button className="btn btn-danger" style={{ fontSize: "22px" }} onClick={() => handleDeleteCase(index)}>Delete</button>
               </div>
             </div>
           </div>
         ))}
 
         <div className="col-md-4 col-sm-6 mb-4 d-flex justify-content-center align-items-center">
-          <div className="circle"></div>
+          <div className="add-sign" onClick={handleAddCase}></div>
         </div>
       </div>
     </div>
