@@ -1,0 +1,11 @@
+.case-title-container {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.case-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #1f7adc; /* Bootstrap primary color */
+}
+
