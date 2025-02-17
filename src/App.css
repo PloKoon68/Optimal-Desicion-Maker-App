@@ -12,3 +12,10 @@
     font-size: 25px; 
     font-family: 'Arial', sans-serif;
 }
+
+
+.App {
+    position: relative; /* Ensures child absolute positioning stays within it */
+    height: 100vh; /* Ensures App covers the viewport */
+  }
+  
