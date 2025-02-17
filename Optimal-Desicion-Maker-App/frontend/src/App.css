@@ -1,0 +1,21 @@
+.App {
+    min-height: 100vh; /* Instead of height: 100vh */
+    font-size: 20px;
+
+    background: linear-gradient(
+        90deg,
+        rgb(255, 94, 98, 1) 0%,  
+        rgba(255, 165, 0, 1) 50%,  
+        rgb(255, 218, 185, 1) 100%
+    ); 
+
+    font-size: 25px; 
+    font-family: 'Arial', sans-serif;
+}
+
+
+.App {
+    position: relative; /* Ensures child absolute positioning stays within it */
+    height: 100vh; /* Ensures App covers the viewport */
+  }
+  
