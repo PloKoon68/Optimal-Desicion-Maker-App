@@ -1,5 +1,5 @@
-const { getCases, getCaseById, createCase,
-        updateCase, deleteCase, getDecisionMatrix, 
+const { getCases, getCaseById, createCase, getDecisionMatrix,
+        updateCase, deleteCase, insertDecisionMatrix, 
         getCriteriasByCaseId, deleteCriteriasByCaseId,
         insertCriterias, runQuery } = require("./db/dbFunctions");
         
@@ -79,17 +79,6 @@ app.delete('/api/cases/:id', async (req, res) => {
   }
 });
 
-// Assuming you have a decision matrix endpoint
-app.get('/api/decision-matrix', async (req, res) => {
-  try {
-    const result = await getDecisionMatrix();
-    res.status(200).json(result);
-  } catch (err) {
-    console.error('Error fetching decision matrix:', err);
-    res.status(500).send('Error fetching decision matrix');
-  }
-});
-
 
 //criterias api calls
 app.get('/api/cases/:caseId/criterias', async (req, res) => {
@@ -123,6 +112,27 @@ app.post('/api/cases/:caseId/criterias', async (req, res) => {
     res.status(201).send('Criterias added');
   } catch (err) {
     res.status(500).send('Error inserting criterias');
+  }
+});
+
+
+
+/*
+            case id geçersiz olduğunda da criter bulunamadı hatası vermesin farklı versin
+*/
+
+
+//fetch decision matrix data
+app.post('/api/cases/:caseId/criterias/:criteriaId/decisionmatrix', async (req, res) => {
+  try {
+    console.log("he ",req.body);
+    await insertDecisionMatrix(req.params.criteriaId, req.body.alternativeName, req.body.value);
+    res.status(201).send('Decision matrix entry added');
+  } catch (err) {
+    if (err.code === '23505') {  // PostgreSQL duplicate key error
+      return res.status(400).send('Alternative name already exists for this criteria');
+    }
+    res.status(500).send('Criteria name not found');
   }
 });
 

@@ -45,14 +45,8 @@ const deleteCase = async (id) => {
   return (await runQuery("DELETE FROM cases WHERE case_id = $1 RETURNING *", [id])).rows.length;
 };
 
-// 6️⃣ Fetch decision matrix for a case
-const getDecisionMatrix = async (caseId) => {
-  return (await runQuery("SELECT * FROM decision_matrix WHERE case_id = $1", [caseId])).rows;
-};
-
 
 //criterias table
-
 const getCriteriasByCaseId = async (caseId) => {
   return (await runQuery("SELECT * FROM criterias WHERE case_id = $1", [caseId])).rows;
 };
@@ -67,6 +61,26 @@ const insertCriterias = async (caseId, criterias) => {
 };
 
 
+
+//decision matrix
+const insertDecisionMatrix = async (criteriaId, alternativeName, value) => {
+  const query = `
+    INSERT INTO decisionmatrix (criteria_id, alternative_Name, value)
+    VALUES ($1, $2, $3)
+  `;
+
+  await runQuery(query, [criteriaId, alternativeName, value]);
+};
+
+// 6️⃣ Fetch decision matrix for a case
+const getDecisionMatrix = async (caseId) => {
+  return (await runQuery("SELECT * FROM decision_matrix WHERE case_id = $1", [caseId])).rows;
+};
+
+
+
+
+
 // Export all functions
 module.exports = {
   getCases,
@@ -74,9 +88,10 @@ module.exports = {
   createCase,
   updateCase,
   deleteCase,
-  getDecisionMatrix,
   getCriteriasByCaseId,
   deleteCriteriasByCaseId,
   insertCriterias,
-  runQuery 
+  runQuery,
+  insertDecisionMatrix,
+  getDecisionMatrix
 };
