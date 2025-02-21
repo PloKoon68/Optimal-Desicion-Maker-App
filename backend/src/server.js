@@ -94,9 +94,10 @@ app.get('/api/cases/:caseId/criterias', async (req, res) => {
 app.delete('/api/cases/:caseId/criterias', async (req, res) => {
   try {
     await deleteCriteriasByCaseId(req.params.caseId);
-    res.status(200).send('Criterias deleted');
+    res.status(200).send(`Criterias deleted at case with id ${req.params.caseId}`);
   } catch (err) {
-    res.status(500).send('Error deleting criterias');
+    console.log("ee is: ", err)
+    res.status(500).send(`Error deleting criterias: ${err.detail}`);
   }
 });
 
@@ -117,24 +118,48 @@ app.post('/api/cases/:caseId/criterias', async (req, res) => {
 
 
 
-/*
-            case id geçersiz olduğunda da criter bulunamadı hatası vermesin farklı versin
-*/
+//decision matrix api calls
 
-
-//fetch decision matrix data
-app.post('/api/cases/:caseId/criterias/:criteriaId/decisionmatrix', async (req, res) => {
+app.get('/api/cases/:caseId/decision-matrix', async (req, res) => {
   try {
-    console.log("he ",req.body);
-    await insertDecisionMatrix(req.params.criteriaId, req.body.alternativeName, req.body.value);
-    res.status(201).send('Decision matrix entry added');
+    const decisionMatrix = await getDecisionMatrix(req.params.caseId);
+    
+    res.status(200).json(decisionMatrix);
+  } catch (err) {
+    console.error('Error fetching decision matrix:', err);
+    res.status(500).send('Error fetching decision matrix: ',err.detail);
+  }
+});
+
+app.post('/api/cases/:caseId/criterias/:criteriaId/decisionmatrix', async (req, res) => {
+  console.log(req.body)
+  try {
+    await insertDecisionMatrix(req.params.criteriaId, req.body);
+    res.status(201).send(`Alternative values for criteria_id ${req.params.criteriaId} was added successfully`);
   } catch (err) {
     if (err.code === '23505') {  // PostgreSQL duplicate key error
       return res.status(400).send('Alternative name already exists for this criteria');
     }
-    res.status(500).send('Criteria name not found');
+    res.status(500).send(err.detail);
   }
 });
+
+/*
+app.delete('/api/cases/:caseId/decision-matrix', async (req, res) => {
+  try {
+    const caseId = req.params.caseId;
+    await deleteDecisionMatrix(caseId);
+    res.status(200).send('Decision matrix deleted successfully');
+  } catch (err) {
+    console.error('Error deleting decision matrix:', err);
+    res.status(500).send('Error deleting decision matrix');
+  }
+});*/
+
+
+
+
+
 
 
 

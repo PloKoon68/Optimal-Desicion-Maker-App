@@ -62,20 +62,43 @@ const insertCriterias = async (caseId, criterias) => {
 
 
 
-//decision matrix
-const insertDecisionMatrix = async (criteriaId, alternativeName, value) => {
+
+const getDecisionMatrix = async (caseId) => {
   const query = `
-    INSERT INTO decisionmatrix (criteria_id, alternative_Name, value)
-    VALUES ($1, $2, $3)
+    SELECT dm.*
+    FROM decisionmatrix dm
+    JOIN criterias c ON dm.criteria_id = c.criteria_id
+    WHERE c.case_id = $1
   `;
 
-  await runQuery(query, [criteriaId, alternativeName, value]);
+  return (await runQuery(query, [caseId])).rows;
 };
 
-// 6️⃣ Fetch decision matrix for a case
-const getDecisionMatrix = async (caseId) => {
-  return (await runQuery("SELECT * FROM decision_matrix WHERE case_id = $1", [caseId])).rows;
+const insertDecisionMatrix = async (criteriaId, alternativesPerCriteria) => {
+  const query = `
+    INSERT INTO decisionmatrix (criteria_id, alternative_name, value)
+    VALUES ${alternativesPerCriteria.map((alternative) => `($1, '${alternative.alternativeName}', '${alternative.value}')`)}
+  `;
+  console.log("here query: ", query)
+  await runQuery(query, [criteriaId]);
 };
+
+//no need since deleting criterias will already delete these
+/*
+const deleteDecisionMatrix = async (caseId) => {
+  const query = `
+    DELETE FROM decisionmatrix 
+    USING criterias 
+    WHERE decisionmatrix.criteria_id = criterias.criteria_id 
+    AND criterias.case_id = $1
+  `;
+
+  await runQuery(query, [caseId]);
+};*/
+
+
+
+
 
 
 
