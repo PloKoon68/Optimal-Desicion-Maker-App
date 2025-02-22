@@ -1,12 +1,20 @@
+
+
 const { getCases, getCaseById, createCase, getDecisionMatrix,
         updateCase, deleteCase, insertDecisionMatrix, 
         getCriteriasByCaseId, deleteCriteriasByCaseId,
         insertCriterias, runQuery } = require("./db/dbFunctions");
-        
-
 const express = require("express");
+const cors = require("cors");
+
+
 
 const app = express();
+app.use(cors({  
+  origin: "http://localhost:3000",  // Allow frontend to access backend
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization"
+}));
 app.use(express.json())
 const port = 5000;
 

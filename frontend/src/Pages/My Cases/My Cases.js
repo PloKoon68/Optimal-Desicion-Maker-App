@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MyCases.css";
+
+import {fetchCases} from "../../api/fetchData.js"; // Import the axios instance
+
 
 export default function MyCases() {
   const [caseCards, setCaseCards] = useState([
@@ -8,10 +11,21 @@ export default function MyCases() {
     { title: "case 2", description: "Another case description" },
     { title: "case 3", description: "Some more text here" },
   ]);
-
+  
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
-
+  
+  useEffect(() => {
+    fetchCases()
+    .then(cases => {
+      setCaseCards(cases);
+    })
+    .catch(error => {
+      console.error("Error fetching cases:", error);
+    });
+  }, []);
+ 
+  //console.log("case are: ", (await fetchCases()));
   const handleAddCase = () => {
     const newCase = { title: `case ${caseCards.length + 1}`, description: "" };
     const updatedCases = [...caseCards, newCase];
