@@ -2,14 +2,22 @@ import axiosInstance from "./axios"; // Import the axios instance
 
 
 const fetchCases = async () => {
-      return (await axiosInstance.get('/')).data
+  try{
+    console.log("try fetching")
+    return (await axiosInstance.get('/')).data
+  } catch(err) {
+    console.log("fetch error is:", err)
+  }
 }
 
 // Create a new case
 const createCase = async (newCaseData) => {
-  let a = (await axiosInstance.post('/', newCaseData)).data;
-  console.log("a is :", a)
-  return a;
+  try{
+    let a = (await axiosInstance.post('/', newCaseData)).data;
+    return a;
+  } catch(err) {
+    return err
+  }
 };
 
 // Update an existing case

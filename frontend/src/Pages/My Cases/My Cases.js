@@ -9,24 +9,38 @@ import {fetchCases, createCase,
 export default function MyCases() {
   const [caseCards, setCaseCards] = useState([
     { case_id: 1, title: "case 1", description: "This is the description of a bla bla bla" },
-    { case_id: 2, title: "case 2", description: "Another case description" },
-    { case_id: 3, title: "case 3", description: "Some more text here" },
+    { case_id: 2, title: "case 2", description: "Another case description" }
   ]);
   
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
-  console.log("cases: ", caseCards)
+  const [dbConnected, setDbConnected] = useState(false);
   
   useEffect(() => {
-    fetchCases()
-    .then(cases => {
-      setCaseCards(cases);
-    })
-    .catch(error => {
-      console.error("Error fetching cases:", error);
-    });
-  }, []);
- 
+    const fetchWithDelay = async () => {
+      let numCounts = 0;
+      
+      while (numCounts++ < 6) {
+        console.log("Tried ", numCounts);
+        try {
+          const cases = await fetchCases();
+          if (cases) {
+            setCaseCards(cases);
+            numCounts = 6; // Exit the loop if cases are found
+            setDbConnected(true);
+          }
+        } catch (error) {
+          console.error("Error fetching cases:", error);
+        }
+  
+        // Delay before proceeding to the next iteration
+        await new Promise(resolve => setTimeout(resolve, 2000)); 
+      }
+    };
+  
+    fetchWithDelay();
+  }, []); // Empty dependency array means this runs once when the component mounts
+  
 
   const notSavedWarning = () => {
     const updatedCases = [...caseCards];
@@ -73,24 +87,25 @@ export default function MyCases() {
 
   const handleSaveClick = async (index) => {
     const updatedCards = [...caseCards];
-  
     try {
       if (!editedCard.case_id) { // Creating a new case
         const updatedCase = await createCase(editedCard);
         updatedCards[index] = { ...updatedCase };
-      } else { // Editing an existing case
+      } else  // Editing an existing case
         updatedCards[index] = { ...editedCard };
-      }
-      setCaseCards(updatedCards); // Update state after all operations
-      setEditingIndex(null); // Exit edit mode
     } catch (error) {
       console.error("Error saving case:", error);
+      updatedCards[index] = { ...editedCard };
     }
+    setCaseCards(updatedCards); // Update state after all operations
+    setEditingIndex(null); // Exit edit mode
   };
   
 
   return (
-    <div className="my-cases container mt-6">
+    <>
+    {dbConnected? (
+      <div className="my-cases container mt-6">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="fw-bold ml-4">My Cases</h1>
         <button className="btn btn-success btn-lg" onClick={handleAddCase}>+ Add Case</button>
@@ -143,6 +158,9 @@ export default function MyCases() {
           <div className="add-sign" onClick={handleAddCase}></div>
         </div>
       </div>
-    </div>
-  );
+    </div>):
+    (<h1>Server couldn't connected</h1>)
+    }
+    </>
+);
 }
