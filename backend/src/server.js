@@ -49,10 +49,7 @@ app.post('/api/cases', async (req, res) => {
   const { title, description } = req.body; // assuming the case has a description
   try {
     const createdRow = await createCase(title, description);
-    const response =  {
-       "created case succesfully": createdRow
-    }
-    res.status(201).json(response);  // Return the created case
+    res.status(201).json(createdRow);  // Return the created case
   } catch (err) {
     res.status(500).send('Error creating case');
   }

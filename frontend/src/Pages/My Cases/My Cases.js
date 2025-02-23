@@ -2,18 +2,20 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./MyCases.css";
 
-import {fetchCases} from "../../api/fetchData.js"; // Import the axios instance
+import {fetchCases, createCase,
+        updateCase, deleteCase} from "../../api/dbQueries.js"; // Import the axios call functions
 
 
 export default function MyCases() {
   const [caseCards, setCaseCards] = useState([
-    { title: "case 1", description: "This is the description of a bla bla bla" },
-    { title: "case 2", description: "Another case description" },
-    { title: "case 3", description: "Some more text here" },
+    { case_id: 1, title: "case 1", description: "This is the description of a bla bla bla" },
+    { case_id: 2, title: "case 2", description: "Another case description" },
+    { case_id: 3, title: "case 3", description: "Some more text here" },
   ]);
   
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
+  console.log("cases: ", caseCards)
   
   useEffect(() => {
     fetchCases()
@@ -25,18 +27,28 @@ export default function MyCases() {
     });
   }, []);
  
-  //console.log("case are: ", (await fetchCases()));
-  const handleAddCase = () => {
-    const newCase = { title: `case ${caseCards.length + 1}`, description: "" };
-    const updatedCases = [...caseCards, newCase];
 
+  const notSavedWarning = () => {
+    const updatedCases = [...caseCards];
+    updatedCases[editingIndex] = { ...caseCards[editingIndex], highlight: true };
     setCaseCards(updatedCases);
-    setEditingIndex(updatedCases.length - 1); // Edit the newly added case
-    setEditedCard({ ...newCase }); // Make a copy to prevent direct state mutation
+
+  }
+  const handleAddCase = () => {
+    if(!editingIndex) {
+      const newCase = { title: `case ${caseCards.length + 1}`, description: "" };
+      const updatedCases = [...caseCards, newCase];
+
+      setCaseCards(updatedCases);
+      setEditingIndex(updatedCases.length - 1); // Edit the newly added case
+      setEditedCard({ ...newCase }); // Make a copy to prevent direct state mutation
+    } 
+    else notSavedWarning();
   };
 
   const handleDeleteCase = (index) => {
-    const updatedCases = caseCards.filter((_, i) => i !== index);
+    let deletedCaseId;
+    const updatedCases = caseCards.filter((_, i) => { if(i === index) deletedCaseId = _.case_id; return (i !== index)});
     setCaseCards(updatedCases);
     
     // If the deleted case was being edited, exit edit mode
@@ -44,23 +56,38 @@ export default function MyCases() {
       setEditingIndex(null);
       setEditedCard({ title: "", description: "" });
     }
+    else deleteCase(deletedCaseId)    //axios call
   };
 
   const handleEditClick = (index) => {
-    setEditingIndex(index);
-    setEditedCard({ ...caseCards[index] }); // Copy object to prevent state mutation
+    if(!editingIndex) {
+      setEditingIndex(index);
+      setEditedCard({ ...caseCards[index] }); // Copy object to prevent state mutation
+    }
+    else notSavedWarning();
   };
 
   const handleInputChange = (e) => {
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value });
   };
 
-  const handleSaveClick = (index) => {
+  const handleSaveClick = async (index) => {
     const updatedCards = [...caseCards];
-    updatedCards[index] = { ...editedCard }; // Make sure to use a new object
-    setCaseCards(updatedCards);
-    setEditingIndex(null); // Exit edit mode
+  
+    try {
+      if (!editedCard.case_id) { // Creating a new case
+        const updatedCase = await createCase(editedCard);
+        updatedCards[index] = { ...updatedCase };
+      } else { // Editing an existing case
+        updatedCards[index] = { ...editedCard };
+      }
+      setCaseCards(updatedCards); // Update state after all operations
+      setEditingIndex(null); // Exit edit mode
+    } catch (error) {
+      console.error("Error saving case:", error);
+    }
   };
+  
 
   return (
     <div className="my-cases container mt-6">
@@ -82,6 +109,7 @@ export default function MyCases() {
                       className="form-control mb-2"
                       value={editedCard.title}
                       onChange={handleInputChange}
+                      style={{ border: caseCard["highlight"] ? "2px solid red" : "1px solid black"}}
                     />
                     <textarea
                       name="description"
@@ -89,6 +117,7 @@ export default function MyCases() {
                       rows="3"
                       value={editedCard.description}
                       onChange={handleInputChange}
+                      style={{ border: caseCard["highlight"] ? "2px solid red" : "1px solid black"}}
                     />
                   </>
                 ) : (
