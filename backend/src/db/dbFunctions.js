@@ -1,4 +1,4 @@
-const { pool } = require("./dbConnection");
+const { pool } = require("./dbConfig");
 
 // General function to run queries
 const runQuery = async (query, params) => {

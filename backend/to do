@@ -1,1 +1,2 @@
 - decisionmatrix route, adjust create to add whole decisionmatrix at once
+- in server.js, use.cors, allowheaders... what are thos 

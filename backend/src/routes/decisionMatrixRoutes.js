@@ -24,7 +24,7 @@ router.post('/:criteriaId', async (req, res) => {
 module.exports = router;
 
 /*
-app.delete('/api/cases/:caseId/decision-matrix', async (req, res) => {
+app.delete('/:criteriaId', async (req, res) => {
   try {
     const caseId = req.params.caseId;
     await deleteDecisionMatrix(caseId);

@@ -23,4 +23,4 @@ pool.on("error", (err) => {
 });
 
 // Export the pool and query function
-module.exports = { pool };
+module.exports = pool;
