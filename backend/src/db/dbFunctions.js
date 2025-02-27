@@ -57,7 +57,6 @@ const deleteCriteriasByCaseId = async (caseId) => {
 
 const insertCriterias = async (caseId, criterias) => {
   const values = criterias.map(c => `(${caseId}, '${c.criteria_name}', '${c.data_type}', '${c.characteristic}', ${c.criteria_point})`).join(", ");
-  console.log("inputs are: ", caseId, criterias)
   return await runQuery(`INSERT INTO criterias (case_id, criteria_name, data_type, characteristic, criteria_point) VALUES ${values}`, []);
 };
 
@@ -76,6 +75,7 @@ const getDecisionMatrix = async (caseId) => {
 };
 
 const insertDecisionMatrix = async (criteriaId, alternativesPerCriteria) => {
+  console.log("id: ", alternativesPerCriteria)
   const query = `
     INSERT INTO decisionmatrix (criteria_id, alternative_name, value)
     VALUES ${alternativesPerCriteria.map((alternative) => `($1, '${alternative.alternativeName}', '${alternative.value}')`)}

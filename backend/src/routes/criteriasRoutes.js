@@ -14,7 +14,7 @@ router.get('/:caseId', async (req, res) => {
   }
 });
 
-router.delete('/:caseId', async (req, res) => {
+router.delete('/:caseId', async (req, res) => { 
   try {
     await deleteCriteriasByCaseId(req.params.caseId);
     res.status(200).send(`Criterias deleted at case with id ${req.params.caseId}`);
