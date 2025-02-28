@@ -1,8 +1,12 @@
-
-
-const express = require("express");
+﻿const express = require("express");
 const cors = require("cors");
 const pool = require('./db/dbConfig'); // Import your database pool
+
+//require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
+console.log('Loaded PORT from .env:', process.env.DATABASE_USER);
+
+//console.log('Loaded ENV:', process.env.PORT); // Check all environment variables
 
 const casesRoutes = require('./routes/casesRoutes');
 const criteriasRoutes = require('./routes/criteriasRoutes');
@@ -12,9 +16,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({  
-  origin: "http://localhost:3000",  // Allow frontend to access backend
-  methods: "GET,POST,PUT,DELETE"
- /* allowedHeaders: "Content-Type,Authorization"*/    
+  origin: ["http://localhost:3000", "https://plokoon68.github.io"],  // Allow frontend to access backend
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization"   
 }));
 app.use(express.json())
 

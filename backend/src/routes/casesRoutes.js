@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
       const result = await getCases();
       res.status(200).json(result);
     } catch (err) {
+      console.log("err is: ", err)
       res.status(500).send('Error fetching cases');
     }
   });

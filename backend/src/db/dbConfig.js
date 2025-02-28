@@ -2,14 +2,17 @@ const { Pool } = require("pg");
 
 // Create a pool of database connections
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "MCDM",
-  password: "password",
-  port: 5432,
+  user: process.env.DATABASE_USER,
+  host: process.env.DATABASE_HOST,
+  database: process.env.DATABASE_SERVER,
+  password: process.env.DATABASE_PASSWORD,
+  port: process.env.DATABASE_PORT,
   max: 10, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
 });
+
+
+console.log("user is: ", process.env.DATABASE_SERVER)
 
 
 // Log successful connection

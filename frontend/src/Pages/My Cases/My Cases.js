@@ -11,6 +11,7 @@ export default function MyCases() {
     { case_id: 1, title: "case 1", description: "This is the description of a bla bla bla" },
     { case_id: 2, title: "case 2", description: "Another case description" }
   ]);
+  console.log(caseCards)
   
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
@@ -18,21 +19,20 @@ export default function MyCases() {
   
   useEffect(() => {
     const fetchWithDelay = async () => {
-      let numCounts = 0;
+      let numCounts = 0, limit = 1;
       
-      while (numCounts++ < 6) {
+      while (numCounts++ < limit) {
         console.log("Tried ", numCounts);
         try {
           const cases = await fetchCases();
           if (cases) {
             setCaseCards(cases);
-            numCounts = 6; // Exit the loop if cases are found
+            numCounts = limit; // Exit the loop if cases are found
             setDbConnected(true);
           }
         } catch (error) {
           console.error("Error fetching cases:", error);
         }
-  
         // Delay before proceeding to the next iteration
         await new Promise(resolve => setTimeout(resolve, 2000)); 
       }
