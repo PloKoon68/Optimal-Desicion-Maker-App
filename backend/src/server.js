@@ -4,7 +4,7 @@ const pool = require('./db/dbConfig'); // Import your database pool
 
 //require('dotenv').config();
 require('dotenv').config({ path: '../.env' });
-console.log('Loaded PORT from .env:', process.env.DATABASE_USER);
+//console.log('Loaded PORT from .env:', process.env);
 
 //console.log('Loaded ENV:', process.env.PORT); // Check all environment variables
 
