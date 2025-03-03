@@ -1,0 +1,1 @@
+echo "web: node src/server.js" > Procfile
