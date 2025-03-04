@@ -19,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/my-cases" element={<MyCases />} />
-        <Route path="/processing-page " element={<ProcessingPage/>} />
+        <Route path="/processing-page/:case_id" element={<ProcessingPage/>} />
                    
 
         {/*

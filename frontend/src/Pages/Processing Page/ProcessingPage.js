@@ -4,13 +4,17 @@ import CriteriaForm from "./Criterias/CriteriaForm.js"
 import DecisionMatrix from "./DecisionMatrix/DecisionMatrix.js"
 import Submission from "./Results/Submission.js"
 
+
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
         
 
 
 function ProcessingPage() {
+  const { case_id } = useParams();
 
+  console.log("cae id is: ", case_id)
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 

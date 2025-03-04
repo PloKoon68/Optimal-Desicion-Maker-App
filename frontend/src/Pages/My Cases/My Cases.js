@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./MyCases.css";
+
+
+//<Link className="nav-link" to="/about">About</Link>
 
 import {fetchCases, createCase,
         updateCase, deleteCase} from "../../api/dbQueries.js"; // Import the axios call functions
 
 
 export default function MyCases() {
+  const navigate = useNavigate();
   const [caseCards, setCaseCards] = useState([
     { case_id: 1, title: "case 1", description: "This is the description of a bla bla bla" },
     { case_id: 2, title: "case 2", description: "Another case description" }
@@ -113,7 +117,7 @@ export default function MyCases() {
 
       <div className="row">
         {caseCards.map((caseCard, index) => (
-          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card">
+          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={() => navigate(`/processing-page/${caseCard.case_id}`)}>
             <div className="card text-decoration-none shadow-sm" style={{ cursor: "pointer" }}>
               <div className="card-body">
                 {editingIndex === index ? (
