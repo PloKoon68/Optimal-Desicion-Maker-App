@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();
 const { getCriteriasByCaseId, deleteCriteriasByCaseId, insertCriterias, runQuery } = require('../db/dbFunctions');
 
-
+/*
+        criteriaName
+        dataType
+        characteristic
+        criteriaPoint
+*/
 //criterias api calls
 router.get('/:caseId', async (req, res) => {
+  console.log("request recieved!", req.params.caseId)
   const criterias = await getCriteriasByCaseId(req.params.caseId);
   console.log("hebele")
   try {

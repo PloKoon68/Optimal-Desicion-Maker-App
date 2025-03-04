@@ -1,33 +1,30 @@
-import axiosInstance from "./axios"; // Import the axios instance
+import axiosInstance from "../axios"; // Import the axios instance
 
 
 const fetchCases = async () => {
   try{
     console.log("try fetching")
-    return (await axiosInstance.get('/')).data
+    return (await axiosInstance.get('/cases/')).data
   } catch(err) {
     console.log("fetch error is:", err)
   }
 }
 
-// Create a new case
 const createCase = async (newCaseData) => {
   try{
-    let a = (await axiosInstance.post('/', newCaseData)).data;
+    let a = (await axiosInstance.post('/cases/', newCaseData)).data;
     return a;
   } catch(err) {
     return err
   }
 };
 
-// Update an existing case
 const updateCase = async (caseId, updatedData) => {
-  return (await axiosInstance.put(`/${caseId}`, updatedData)).data;
+  return (await axiosInstance.put(`/cases/${caseId}`, updatedData)).data;
 };
 
-// Delete a case
 const deleteCase = async (caseId) => {
-  return (await axiosInstance.delete(`/${caseId}`)).data;
+  return (await axiosInstance.delete(`/cases/${caseId}`)).data;
 };
 
 export {

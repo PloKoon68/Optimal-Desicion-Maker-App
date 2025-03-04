@@ -19,8 +19,6 @@
             ?
           </button>
         </div>
-
-        
         <div className="cards-container">
           {criteriaCards.map((card, index) => {
             return <div className="criteria-card" key={index}>
