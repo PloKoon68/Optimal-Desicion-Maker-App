@@ -13,6 +13,7 @@ import {fetchCriterias, deleteCriterias,
 
 function ProcessingPage() {
   const { caseId } = useParams();
+  console.log("so case is: ", caseId)
 
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -23,17 +24,11 @@ function ProcessingPage() {
 
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
-      let numCounts = 0, limit = 1;
-      
-      while (numCounts++ < limit) {
-        try {
-          const criterias = await fetchCriterias(caseId);
-          setCriteriaCards(criterias)
-        } catch (error) {
-          console.error("Error fetching criterias:", error);
-        }
-        // Delay before proceeding to the next iteration
-        await new Promise(resolve => setTimeout(resolve, 2000)); 
+      try {
+        const criterias = await fetchCriterias(caseId);
+        setCriteriaCards(criterias)
+      } catch (error) {
+        console.error("Error fetching criterias:", error);
       }
     };
   

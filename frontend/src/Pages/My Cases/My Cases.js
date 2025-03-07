@@ -10,12 +10,15 @@ import {fetchCases, createCase,
 
 
 export default function MyCases() {
+
   const navigate = useNavigate();
   const [caseCards, setCaseCards] = useState([
-    { case_id: 1, title: "case 1", description: "This is the description of a bla bla bla" },
-    { case_id: 2, title: "case 2", description: "Another case description" }
+    { caseId: 1, title: "case 1", description: "This is the description of a bla bla bla" },
+    { caseId: 2, title: "case 2", description: "Another case description" }
   ]);
-  console.log(caseCards)
+  console.log("case cards areee: ", caseCards)
+
+
   
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
@@ -66,7 +69,7 @@ export default function MyCases() {
 
   const handleDeleteCase = (index) => {
     let deletedCaseId;
-    const updatedCases = caseCards.filter((_, i) => { if(i === index) deletedCaseId = _.case_id; return (i !== index)});
+    const updatedCases = caseCards.filter((_, i) => { if(i === index) deletedCaseId = _.caseId; return (i !== index)});
     setCaseCards(updatedCases);
     
     // If the deleted case was being edited, exit edit mode
@@ -92,7 +95,7 @@ export default function MyCases() {
   const handleSaveClick = async (index) => {
     const updatedCards = [...caseCards];
     try {
-      if (!editedCard.case_id) { // Creating a new case
+      if (!editedCard.caseId) { // Creating a new case
         const updatedCase = await createCase(editedCard);
         updatedCards[index] = { ...updatedCase };
       } else  // Editing an existing case
@@ -117,7 +120,7 @@ export default function MyCases() {
 
       <div className="row">
         {caseCards.map((caseCard, index) => (
-          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={() => navigate(`/processing-page/${caseCard.case_id}`)}>
+          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={() =>  navigate(`/processing-page/${caseCard.caseId}`)}>
             <div className="card text-decoration-none shadow-sm" style={{ cursor: "pointer" }}>
               <div className="card-body">
                 {editingIndex === index ? (

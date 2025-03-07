@@ -21,13 +21,13 @@ const getCases = async () => {
 
 // 2️⃣ Fetch a case by ID
 const getCaseById = async (id) => {
-  return (await runQuery("SELECT * FROM cases WHERE case_id = $1", [id])).rows[0];
+  return (await runQuery(`SELECT * FROM cases WHERE "caseId" = $1`, [id])).rows[0];
 };
 
 // 3️⃣ Create a new case
 const createCase = async (title, description) => {
   return (await runQuery(
-    "INSERT INTO cases (title, description) VALUES ($1, $2) RETURNING *",
+    `INSERT INTO cases (title, description) VALUES ($1, $2) RETURNING *`,
     [title, description]
   )).rows[0];
 };
@@ -35,29 +35,29 @@ const createCase = async (title, description) => {
 // 4️⃣ Update a case
 const updateCase = async (id, title, description) => {
   return (await runQuery(
-    "UPDATE cases SET title = $1, description = $2 WHERE case_id = $3 RETURNING *",
+    `UPDATE cases SET title = $1, description = $2 WHERE "caseId" = $3 RETURNING *`,
     [title, description, id]
   )).rows[0];
 };
 
 // 5️⃣ Delete a case
 const deleteCase = async (id) => {
-  return (await runQuery("DELETE FROM cases WHERE case_id = $1 RETURNING *", [id])).rows.length;
+  return (await runQuery(`DELETE FROM cases WHERE "caseId" = $1 RETURNING *`, [id])).rows.length;
 };
 
 
 //criterias table
 const getCriteriasByCaseId = async (caseId) => {
-  return (await runQuery("SELECT * FROM criterias WHERE case_id = $1", [caseId])).rows;
+  return (await runQuery(`SELECT * FROM criterias WHERE "caseId" = $1`, [caseId])).rows;
 };
 
 const deleteCriteriasByCaseId = async (caseId) => {
-  return await runQuery("DELETE FROM criterias WHERE case_id = $1", [caseId]);
+  return await runQuery(`DELETE FROM criterias WHERE "caseId" = $1`, [caseId]);
 };
 
 const insertCriterias = async (caseId, criterias) => {
   const values = criterias.map(c => `(${caseId}, '${c.criteria_name}', '${c.data_type}', '${c.characteristic}', ${c.criteria_point})`).join(", ");
-  return await runQuery(`INSERT INTO criterias (case_id, criteria_name, data_type, characteristic, criteria_point) VALUES ${values}`, []);
+  return await runQuery(`INSERT INTO criterias ("caseId", "criteriaName", "dataType", characteristic, "criteriaPoint") VALUES ${values}`, []);
 };
 
 
@@ -68,7 +68,7 @@ const getDecisionMatrix = async (caseId) => {
     SELECT dm.*
     FROM decisionmatrix dm
     JOIN criterias c ON dm.criteria_id = c.criteria_id
-    WHERE c.case_id = $1
+    WHERE c.caseId = $1
   `;
 
   return (await runQuery(query, [caseId])).rows;

@@ -33,7 +33,7 @@ router.delete('/:caseId', async (req, res) => {
 router.post('/:caseId', async (req, res) => {
   try {
     // 1️⃣ Check if the case exists
-    const caseCheckResult = await runQuery(`SELECT * FROM cases WHERE case_id = $1`, [req.params.caseId]);
+    const caseCheckResult = await runQuery(`SELECT * FROM cases WHERE "caseId" = $1`, [req.params.caseId]);
     
     if (!caseCheckResult.rowCount) {
       return res.status(404).send('Case not found');
