@@ -12,9 +12,8 @@ import {fetchCriterias, deleteCriterias,
       createCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 
 function ProcessingPage() {
-  const { case_id } = useParams();
+  const { caseId } = useParams();
 
-  console.log("cae id is: ", case_id)
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 
@@ -23,21 +22,13 @@ function ProcessingPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchWithDelay = async (case_id) => {
+    const fetchWithDelay = async (caseId) => {
       let numCounts = 0, limit = 1;
       
       while (numCounts++ < limit) {
         try {
-          const criterias = await fetchCriterias(case_id  );
-          console.log("Tried ", numCounts);
-          console.log("criterias are fetched: ", criterias);
-/*
-          if (cases) {
-            setCaseCards(cases);
-            numCounts = limit; // Exit the loop if cases are found
-            setDbConnected(true);
-          }
-            */
+          const criterias = await fetchCriterias(caseId);
+          setCriteriaCards(criterias)
         } catch (error) {
           console.error("Error fetching criterias:", error);
         }
@@ -46,7 +37,7 @@ function ProcessingPage() {
       }
     };
   
-    fetchWithDelay(case_id)
+    fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
   
 

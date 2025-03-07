@@ -282,7 +282,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
                 {criteriaCards.map((card, i) => {
                     return card.dataType === "Numerical"? 
                     (
-                        <div className="field">
+                        <div key={i} className="field">
                             <label htmlFor={i} className="font-bold">
                                 {card.criteriaName}
                             </label>
@@ -291,11 +291,13 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
                         </div>
                     ):
                     (
+                        
 
-                        <div className="field">
+                        <div key={i} className="field">
                             <label htmlFor={i} className="font-bold">
                                 {card.criteriaName}
                             </label>
+                            {console.log("heere: ", card)}
                             <Dropdown id={i} value={product[card.criteriaName]} onChange={(e) => onInputChange(e, card.criteriaName)} options={card.categories.map(category => category.categoryName)} optionLabel="name" className={classNames({ 'p-invalid': submitted && !product[card.criteriaName] })} />
                             {submitted && productDialog && !product[card.criteriaName] && <small className="p-error">{card.criteriaName} is required.</small>}
                         </div>
@@ -304,9 +306,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
 
                 <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
 
-                
-                
-                
+    
             </Dialog>
 
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>

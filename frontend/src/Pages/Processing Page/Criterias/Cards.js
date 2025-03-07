@@ -6,7 +6,7 @@
 
   function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, criteriaNames}) {
     
-    
+    console.log("cards ac: ", criteriaCards)
     return (
       <div className='criterias-container mt-7'>
         <div className='criterias'>
