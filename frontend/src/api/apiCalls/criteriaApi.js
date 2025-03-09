@@ -19,7 +19,8 @@ const createCriterias = async (caseId, newCriterias) => {
     let a = (await axiosInstance.post(`/criterias/${caseId}`, newCriterias)).data;
     return a;
   } catch(err) {
-    return err
+    console.error("Create criterias error:", err.response ? err.response.data : err.message);
+    throw err
   }
 };
   

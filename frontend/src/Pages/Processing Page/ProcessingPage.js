@@ -19,7 +19,6 @@ function ProcessingPage({setSaveParams}) {
   const [products, setProducts] = useState([]);
 
 
-  
 
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
@@ -33,11 +32,10 @@ function ProcessingPage({setSaveParams}) {
   
     fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
-
   useEffect(() => {
     setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
   
-  }, [criteriaCards]); // Empty dependency array means this runs once when the component mounts
+  }, [criteriaCards, products]); // Empty dependency array means this runs once when the component mounts
 
   return (
     <div className="ProcessingPage container-fluid col-10" >

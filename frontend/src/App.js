@@ -32,8 +32,8 @@ function App() {
     }
   }, [location]);
 
+    console.log(saveParams)
   
-  console.log(saveParams)    
 
   return (
     <div className="App">

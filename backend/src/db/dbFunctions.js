@@ -5,9 +5,9 @@ const runQuery = async (query, params) => {
   const client = await pool.connect();
   try {
     const result = await client.query(query, params);
+    console.log("should return: ", result)
     return result;
   } catch (err) {
-    console.error("Database query error:", err);
     throw err;
   } finally {
     client.release();
@@ -67,8 +67,8 @@ const getDecisionMatrix = async (caseId) => {
   const query = `
     SELECT dm.*
     FROM decisionmatrix dm
-    JOIN criterias c ON dm.criteria_id = c.criteria_id
-    WHERE c.caseId = $1
+    JOIN criterias c ON dm."criteriaId" = c."criteriaId"
+    WHERE c."caseId" = $1
   `;
 
   return (await runQuery(query, [caseId])).rows;
@@ -77,7 +77,7 @@ const getDecisionMatrix = async (caseId) => {
 const insertDecisionMatrix = async (criteriaId, alternativesPerCriteria) => {
   console.log("id: ", alternativesPerCriteria)
   const query = `
-    INSERT INTO decisionmatrix (criteria_id, alternative_name, value)
+    INSERT INTO decisionmatrix ("criteriaId", "alternativeName", value)
     VALUES ${alternativesPerCriteria.map((alternative) => `($1, '${alternative.alternativeName}', '${alternative.value}')`)}
   `;
   console.log("here query: ", query)
@@ -90,13 +90,13 @@ const deleteDecisionMatrix = async (caseId) => {
   const query = `
     DELETE FROM decisionmatrix 
     USING criterias 
-    WHERE decisionmatrix.criteria_id = criterias.criteria_id 
-    AND criterias.case_id = $1
+    WHERE decisionmatrix."criteriaId" = criterias."criteriaId" 
+    AND criterias."caseId" = $1
   `;
 
   await runQuery(query, [caseId]);
-};*/
-
+};
+*/
 
 
 

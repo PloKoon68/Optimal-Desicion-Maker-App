@@ -4,7 +4,7 @@ export default function ScoreTable({results}) {
 
     return (
         <div className="score-table">
-            <div class="wrapper" id='score-table'>
+            <div className="wrapper" id='score-table'>
                 <table style={{width: "100%"}}>
                     <caption>Scores</caption>
                     
@@ -14,7 +14,7 @@ export default function ScoreTable({results}) {
                     </tr>
                     {
                         results.labels.map((label, index) => (
-                            <tr>
+                            <tr key={index}>
                                 <td>{label}</td>
                                 <td>{results.scores[index]}</td>
                             </tr>

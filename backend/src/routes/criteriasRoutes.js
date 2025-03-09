@@ -12,7 +12,6 @@ const { getCriteriasByCaseId, deleteCriteriasByCaseId, insertCriterias, runQuery
 router.get('/:caseId', async (req, res) => {
   console.log("request recieved!", req.params.caseId)
   const criterias = await getCriteriasByCaseId(req.params.caseId);
-  console.log("hebele")
   try {
     res.status(200).json(criterias);
   } catch (err) {

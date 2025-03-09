@@ -21,17 +21,16 @@ router.post('/:criteriaId', async (req, res) => {
   }
 });
 
-module.exports = router;
-
 /*
-app.delete('/:criteriaId', async (req, res) => {
-  try {
-    const caseId = req.params.caseId;
-    await deleteDecisionMatrix(caseId);
-    res.status(200).send('Decision matrix deleted successfully');
-  } catch (err) {
-    console.error('Error deleting decision matrix:', err);
-    res.status(500).send('Error deleting decision matrix');
-  }
-});*/
+
+{alternativeName: 'asd', asd: 32, as: 1, id: '6NzON'}
+1
+: 
+{alternativeName: 'ds', asd: 44, as: 54, id: 'DPKRM'}
+2
+: 
+{alternativeName: '2d', asd: 23, as: 66, id: 'kyhah'}
+*/
+
+module.exports = router;
 
