@@ -15,13 +15,13 @@ const deleteCriterias = async (caseId) => {
 
 
 const createCriterias = async (caseId, newCriterias) => {
-    try{
-      let a = (await axiosInstance.post(`/criterias/${caseId}`, newCriterias)).data;
-      return a;
-    } catch(err) {
-      return err
-    }
-  };
+  try{
+    let a = (await axiosInstance.post(`/criterias/${caseId}`, newCriterias)).data;
+    return a;
+  } catch(err) {
+    return err
+  }
+};
   
 
 export {

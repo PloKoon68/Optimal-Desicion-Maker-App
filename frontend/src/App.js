@@ -13,30 +13,34 @@ import Navbar from "./Navbar.js"
 import ProcessingPage from "./Pages/Processing Page/ProcessingPage.js";
 import MyCases from "./Pages/My Cases/My Cases.js"
 
+import saveChangesProcessingPage from "./api/saveChanges.js"; // Import the axios call functions
+
 
 function App() {
   
   
   const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
-  const saveChanges = () => {
-    console.log("Changes saved!: ");
-  };
+  const [saveParams, setSaveParams] = useState([]);  
+ 
+ 
   const location = useLocation();
-
   useEffect(() => {
     if(location.pathname.startsWith('/processing-page')) setIsAtProcessingPage(true);  //came to processing page
     else if(isAtProcessingPage){  //processing page de değil ama önceden oradaydı
-      saveChanges();
       setIsAtProcessingPage(false);
+      saveChangesProcessingPage(saveParams)
     }
   }, [location]);
+
+  
+  console.log(saveParams)    
 
   return (
     <div className="App">
       <Navbar />
       <Routes>
         <Route path="/my-cases" element={<MyCases />} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage/>} />
+        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}/>} />
                    
 
         {/*

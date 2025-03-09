@@ -56,7 +56,7 @@ const deleteCriteriasByCaseId = async (caseId) => {
 };
 
 const insertCriterias = async (caseId, criterias) => {
-  const values = criterias.map(c => `(${caseId}, '${c.criteria_name}', '${c.data_type}', '${c.characteristic}', ${c.criteria_point})`).join(", ");
+  const values = criterias.map(c => `(${caseId}, '${c.criteriaName}', '${c.dataType}', '${c.characteristic}', ${c.criteriaPoint})`).join(", ");
   return await runQuery(`INSERT INTO criterias ("caseId", "criteriaName", "dataType", characteristic, "criteriaPoint") VALUES ${values}`, []);
 };
 

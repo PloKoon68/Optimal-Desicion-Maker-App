@@ -27,7 +27,6 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
     _validInputs.validCriteriaName = criteriaName !== ''
     _validInputs.criteriaNameDoesntExist = !criteriaNames.has(criteriaName)
     _validInputs.validCategories = true;
-    console.log(categories)
     for(let i = 0; i < categories.length; i++) 
       if(categories[i].categoryName === "" || categories[i].categoryPoint === "") {
         _validInputs.validCategories = false;

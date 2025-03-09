@@ -8,16 +8,18 @@ import Submission from "./Results/Submission.js"
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {fetchCriterias, deleteCriterias,
-      createCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
+import {fetchCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 
-function ProcessingPage() {
+function ProcessingPage({setSaveParams}) {
   const { caseId } = useParams();
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 
   const [criteriaNames, setCriteriaNames] = useState(new Set());
   const [products, setProducts] = useState([]);
+
+
+  
 
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
@@ -31,6 +33,11 @@ function ProcessingPage() {
   
     fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
+
+  useEffect(() => {
+    setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
+  
+  }, [criteriaCards]); // Empty dependency array means this runs once when the component mounts
 
   return (
     <div className="ProcessingPage container-fluid col-10" >
