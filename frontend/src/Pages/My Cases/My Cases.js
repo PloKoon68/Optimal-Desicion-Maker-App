@@ -16,8 +16,6 @@ export default function MyCases() {
     { caseId: 1, title: "case 1", description: "This is the description of a bla bla bla" },
     { caseId: 2, title: "case 2", description: "Another case description" }
   ]);
-  console.log("case cards areee: ", caseCards)
-
 
   
   const [editingIndex, setEditingIndex] = useState(null);

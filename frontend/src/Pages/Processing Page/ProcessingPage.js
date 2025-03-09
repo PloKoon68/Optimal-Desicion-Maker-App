@@ -13,13 +13,10 @@ import {fetchCriterias, deleteCriterias,
 
 function ProcessingPage() {
   const { caseId } = useParams();
-  console.log("so case is: ", caseId)
-
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 
   const [criteriaNames, setCriteriaNames] = useState(new Set());
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -34,8 +31,6 @@ function ProcessingPage() {
   
     fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
-  
-
 
   return (
     <div className="ProcessingPage container-fluid col-10" >
