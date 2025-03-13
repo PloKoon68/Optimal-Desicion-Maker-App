@@ -1,8 +1,7 @@
 import {deleteCriterias,
     createCriterias} from "./apiCalls/criteriaApi.js"; // Import the axios call functions
 
-import {deleteMatrixContent,
-    insertMatrixContent} from "./apiCalls/decisionMatrixApi.js"; // Import the axios call functions
+import {insertMatrixContent} from "./apiCalls/decisionMatrixApi.js"; // Import the axios call functions
     
 
 const saveChangesProcessingPage = async (saveParams) => {
@@ -17,6 +16,7 @@ const saveChangesProcessingPage = async (saveParams) => {
             await createCriterias(caseId, newCriterias);
         }
         if(decisionMatrix.length) {
+            await insertMatrixContent(caseId, decisionMatrix);
             /*
             await deleteCriterias(caseId);  // Wait for the deletion to finish
             await createCriterias(caseId, newCriterias);

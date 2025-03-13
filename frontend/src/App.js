@@ -20,7 +20,7 @@ function App() {
   
   
   const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
-  const [saveParams, setSaveParams] = useState([]);  
+  const [saveParams, setSaveParams] = useState({});  
  
  
   const location = useLocation();
@@ -32,9 +32,9 @@ function App() {
     }
   }, [location]);
 
-    console.log(saveParams)
-  
 
+   
+    
   return (
     <div className="App">
       <Navbar />

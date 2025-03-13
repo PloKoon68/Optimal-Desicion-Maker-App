@@ -2,7 +2,7 @@ const { Pool } = require("pg");
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
-console.log("user isA : ", (process.env.DATABASE_PORT))
+console.log("database port: ", (process.env.DATABASE_PORT))
 
 // Create a pool of database connections
 const pool = new Pool({

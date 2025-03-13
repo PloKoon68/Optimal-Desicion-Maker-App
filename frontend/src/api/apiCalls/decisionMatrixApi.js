@@ -1,6 +1,14 @@
 import axiosInstance from "../axios"; // Import the axios instance
 
+//{
+// {alternativeName, c1, c2, c3},
+// {alternativeName, c1, c2, c3},
+// {alternativeName, c1, c2, c3}
+//}
 
+
+
+//case_id, criteriaName, alternativeName, value 
 const fetchDecisionMatrix = async (caseId) => {
   try{
     return (await axiosInstance.get(`/decisionMatrix/${caseId}`)).data

@@ -5,7 +5,6 @@ const runQuery = async (query, params) => {
   const client = await pool.connect();
   try {
     const result = await client.query(query, params);
-    console.log("should return: ", result)
     return result;
   } catch (err) {
     throw err;
@@ -65,41 +64,55 @@ const insertCriterias = async (caseId, criterias) => {
 
 const getDecisionMatrix = async (caseId) => {
   const query = `
-    SELECT dm.*
-    FROM decisionmatrix dm
-    JOIN criterias c ON dm."criteriaId" = c."criteriaId"
-    WHERE c."caseId" = $1
+    SELECT * FROM decisionmatrix WHERE "caseId" = $1
   `;
 
   return (await runQuery(query, [caseId])).rows;
 };
 
-const insertDecisionMatrix = async (criteriaId, alternativesPerCriteria) => {
-  console.log("id: ", alternativesPerCriteria)
-  const query = `
-    INSERT INTO decisionmatrix ("criteriaId", "alternativeName", value)
-    VALUES ${alternativesPerCriteria.map((alternative) => `($1, '${alternative.alternativeName}', '${alternative.value}')`)}
-  `;
-  console.log("here query: ", query)
-  await runQuery(query, [criteriaId]);
+const insertDecisionMatrix = async (caseId, decisionMatrix) => {
+  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
+  VALUES ${decisionMatrix.map((alternative) => {
+    let values = ``;
+    Object.keys(alternative).filter(key => key !== 'alternativeName' && key !== 'id')
+    .forEach(criteriaName => {
+       values += `($1, '${criteriaName}', '${alternative.alternativeName}', '${alternative[criteriaName]}'),`
+      //         caseId, criteriaName,         alternativeName,                      value
+      })
+      return values.substring(0, values.length - 1);
+  })}`
+
+  await runQuery(query, [caseId]);
 };
 
-//no need since deleting criterias will already delete these
+
+
 /*
+//no need since deleting criterias will already delete these
 const deleteDecisionMatrix = async (caseId) => {
   const query = `
     DELETE FROM decisionmatrix 
-    USING criterias 
-    WHERE decisionmatrix."criteriaId" = criterias."criteriaId" 
-    AND criterias."caseId" = $1
+    WHERE "caseId" = $1
   `;
 
   await runQuery(query, [caseId]);
 };
 */
 
+//TABLE CREATIONS
+//decisionmatrix
+/*
+DROP TABLE IF EXISTS decisionmatrix;
 
-
+CREATE TABLE decisionmatrix (
+    "caseId" INT NOT NULL,
+    "criteriaName" VARCHAR(255) NOT NULL,
+    "alternativeName" VARCHAR(255) NOT NULL,
+    value TEXT NOT NULL,  
+    PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
+    FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
+);
+*/
 
 
 

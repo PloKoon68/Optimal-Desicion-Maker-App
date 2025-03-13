@@ -11,26 +11,17 @@ router.get('/:caseId', async (req, res) => {
   }
 });
 
-router.post('/:criteriaId', async (req, res) => {
+router.post('/:caseId', async (req, res) => {
   try {
-    const alternatives = req.body;
-    await insertDecisionMatrix(req.params.criteriaId, alternatives);
+    const products = req.body;
+    await insertDecisionMatrix(req.params.caseId, products);
     res.status(201).send('Decision matrix updated');
   } catch (err) {
-    res.status(500).send('Error updating decision matrix');
+    res.status(500).send(err);
   }
 });
 
-/*
 
-{alternativeName: 'asd', asd: 32, as: 1, id: '6NzON'}
-1
-: 
-{alternativeName: 'ds', asd: 44, as: 54, id: 'DPKRM'}
-2
-: 
-{alternativeName: '2d', asd: 23, as: 66, id: 'kyhah'}
-*/
 
 module.exports = router;
 
