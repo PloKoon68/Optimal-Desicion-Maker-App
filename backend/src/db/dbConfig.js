@@ -4,18 +4,40 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env'
 
 console.log("database port: ", (process.env.DATABASE_PORT))
 
-// Create a pool of database connections
+
+
+/* for local dev
 const pool = new Pool({
   user: process.env.DATABASE_USER,
   host: process.env.DATABASE_HOST,
   database: process.env.DATABASE_SERVER,
+  database: process.env.DATABASE_NAME,
   password: process.env.DATABASE_PASSWORD,
   port: process.env.DATABASE_PORT,
   max: 10, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+  
+});
+*/
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // The full connection URL
+  ssl: {
+    rejectUnauthorized: false, // Required for Render PostgreSQL
+  }
 });
 
 
+//test by fetching time
+/*
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Error executing query', err.stack);
+  } else {
+    console.log('Database time: ', res.rows[0]);
+  }
+});
+*/
 
 
 // Log successful connection

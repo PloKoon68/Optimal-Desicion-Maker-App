@@ -23,6 +23,7 @@ function ProcessingPage({setSaveParams}) {
 
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
+
         const criterias = await fetchCriterias(caseId);
         const decisionMatrix = await fetchDecisionMatrix(caseId);
         let altIndexes = {}
@@ -56,7 +57,7 @@ function ProcessingPage({setSaveParams}) {
       <CaseTitle caseTitle={"University Selection okayy"}/>
       <CriteriaForm criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
-      <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts}/> 
+      <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
       <Submission products={products} criteriaCards={criteriaCards}/>
 
     </div>

@@ -11,20 +11,3 @@
     padding-top: 2%;
 }
 
-/*
-@media (max-width: 768px) {
-    .Submission {
-        flex-direction: column; 
-        align-items: center;
-    }
-
-    .scores {
-        width: 100%; 
-    }
-
-    .piechart-container {
-        width: 100%;
-        padding-top: 20px;
-    }
-}
-*/

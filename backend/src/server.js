@@ -24,6 +24,12 @@ app.use('/api/criterias', criteriasRoutes);
 app.use('/api/decisionMatrix', decisionMatrixRoutes);
 
 
+// Health check endpoint for Render
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
 const server = app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

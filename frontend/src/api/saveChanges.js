@@ -17,10 +17,7 @@ const saveChangesProcessingPage = async (saveParams) => {
         }
         if(decisionMatrix.length) {
             await insertMatrixContent(caseId, decisionMatrix);
-            /*
-            await deleteCriterias(caseId);  // Wait for the deletion to finish
-            await createCriterias(caseId, newCriterias);
-            */
+            
         }
       } catch (error) {
         console.error("Error saving changes:", error);

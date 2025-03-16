@@ -18,13 +18,15 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 
-export default function DecisionMatrix({criteriaCards, products, setProducts}) {
+export default function DecisionMatrix({criteriaCards, products, setProducts, fetchedAlternativeNames}) {
 
     const tableColor = "rgb(226, 243, 132)"
     let emptyProduct;
-    const [alternativeNames, setAlternativeNames] = useState(new Set());
-
+    const [alternativeNames, setAlternativeNames] = useState(fetchedAlternativeNames);
     
+    
+ 
+
     emptyProduct = {
         alternativeName: ""
     };
@@ -70,7 +72,6 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
 
 
     const saveProduct = () => {
-
         let n = criteriaCards.length;
         product.alternativeName = product.alternativeName.trim()
         let blankExists = product.alternativeName === "" || alternativeNames.has(product.alternativeName)
@@ -297,7 +298,6 @@ export default function DecisionMatrix({criteriaCards, products, setProducts}) {
                             <label htmlFor={i} className="font-bold">
                                 {card.criteriaName}
                             </label>
-                            {console.log("heere: ", card)}
                             <Dropdown id={i} value={product[card.criteriaName]} onChange={(e) => onInputChange(e, card.criteriaName)} options={card.categories.map(category => category.categoryName)} optionLabel="name" className={classNames({ 'p-invalid': submitted && !product[card.criteriaName] })} />
                             {submitted && productDialog && !product[card.criteriaName] && <small className="p-error">{card.criteriaName} is required.</small>}
                         </div>

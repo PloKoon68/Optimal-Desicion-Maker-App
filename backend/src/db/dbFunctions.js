@@ -86,7 +86,6 @@ const insertDecisionMatrix = async (caseId, decisionMatrix) => {
 };
 
 
-
 /*
 //no need since deleting criterias will already delete these
 const deleteDecisionMatrix = async (caseId) => {
@@ -98,23 +97,6 @@ const deleteDecisionMatrix = async (caseId) => {
   await runQuery(query, [caseId]);
 };
 */
-
-//TABLE CREATIONS
-//decisionmatrix
-/*
-DROP TABLE IF EXISTS decisionmatrix;
-
-CREATE TABLE decisionmatrix (
-    "caseId" INT NOT NULL,
-    "criteriaName" VARCHAR(255) NOT NULL,
-    "alternativeName" VARCHAR(255) NOT NULL,
-    value TEXT NOT NULL,  
-    PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
-    FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
-);
-*/
-
-
 
 
 
@@ -132,3 +114,75 @@ module.exports = {
   insertDecisionMatrix,
   getDecisionMatrix
 };
+
+
+//table creations:
+
+/*
+CREATE TABLE decisionmatrix (
+  "caseId" INT NOT NULL,
+  "criteriaName" VARCHAR(255) NOT NULL,
+  "alternativeName" VARCHAR(255) NOT NULL,
+  value TEXT NOT NULL,  
+  PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
+  FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
+);
+*/
+/*
+const createTables = async () => {
+  try {
+    // Create cases table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS cases (
+        "caseId" SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT
+      );
+    `);
+    console.log("✅ Table 'cases' created successfully.");
+
+    // Create criterias table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS criterias (
+        "caseId" INT,
+        "criteriaName" VARCHAR(255) NOT NULL,
+        "dataType" VARCHAR(20),
+        characteristic VARCHAR(20),
+        "criteriaPoint" NUMERIC,
+        PRIMARY KEY ("caseId", "criteriaName"),
+        FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
+      );
+    `);
+    console.log("✅ Table 'criterias' created successfully.");
+
+    // Create decisionmatrix table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS decisionmatrix (
+        "caseId" INT,
+        "criteriaName" VARCHAR(255),
+        "alternativeName" VARCHAR(255) NOT NULL,
+        value TEXT,
+        PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
+        FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
+      );
+    `);
+    console.log("✅ Table 'decisionmatrix' created successfully.");
+
+  } catch (err) {
+    console.error("❌ Error creating tables:", err);
+  } finally {
+    pool.end(); // Close the connection
+  }
+};
+createTables();
+
+//check if the tables exists: 
+pool.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';", (err, res) => {
+  if (err) {
+    console.error('Error fetching tables:', err);
+  } else {
+    console.log('Existing tables:', res.rows);
+  }
+});
+
+*/
