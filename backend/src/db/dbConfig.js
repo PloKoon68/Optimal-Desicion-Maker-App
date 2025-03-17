@@ -2,7 +2,7 @@ const { Pool } = require("pg");
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
-console.log("database port: ", (process.env.DATABASE_PORT))
+//console.log("database port: ", (process.env.DATABASE_PORT))
 
 
 
@@ -22,14 +22,12 @@ const pool = new Pool({
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // The full connection URL
-  ssl: {
-    rejectUnauthorized: false, // Required for Render PostgreSQL
-  }
+  ssl: { rejectUnauthorized: false} // Bunu "require" olarak tut
+
 });
 
-
-//test by fetching time
 /*
+//test by fetching time
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Error executing query', err.stack);
@@ -38,7 +36,6 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 */
-
 
 // Log successful connection
 pool.on("connect", () => {

@@ -64,13 +64,10 @@ function Submission({products, criteriaCards}) {
       if(criteriaCards.length !== 0) {
         let inputs = prepareForCalculation();
 
-        console.log("pro are: ", inputs)
-
         let saw = new SAW();
         const results = {labels: [], scores: []};
         results.scores = saw.calculate(inputs.decisionMatrix, inputs.criteriaPoints, inputs.isBeneficial, "NthRoot");
         results.labels = products.map((product) => product.alternativeName);
-        console.log("re: ", results)
         setResults(results)
       }
     }

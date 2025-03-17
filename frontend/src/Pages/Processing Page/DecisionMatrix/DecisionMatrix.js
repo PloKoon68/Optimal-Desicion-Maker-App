@@ -23,6 +23,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
     const tableColor = "rgb(226, 243, 132)"
     let emptyProduct;
     const [alternativeNames, setAlternativeNames] = useState(fetchedAlternativeNames);
+    const [editingIndex, setEditingIndex] = useState(-1);
     
     
  
@@ -81,8 +82,10 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         if(!blankExists)
             for(let i = 0; i < n; i++) {
                 let card = criteriaCards[i];
+                /* bu ne???????????
                 if(card.dataType === "Categorical") 
                     product[card.criteriaName] = product[card.criteriaName]
+                */
                 if(!product[card.criteriaName]) {
                     blankExists = true;
                     break;
@@ -91,13 +94,10 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
 
         if(!blankExists){
             let _products = [...products];
-            if (product.id) {
-                const index = findIndexById(product.id);
-
-                _products[index] = product;
+            if (editingIndex !== -1) {
+                _products[editingIndex] = product;
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
             } else {
-                product.id = createId();
                 _products.push(product);
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             }
@@ -108,25 +108,23 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
             setProducts(_products);
             setProductDialog(false);
             setProduct(emptyProduct);
+            setEditingIndex(-1);
         }
         setSubmitted(true);
     };
 
     const editProduct = (product) => {
+        let ind = -1;
+        products.map((_product, _ind) => {if(product.alternativeName === _product.alternativeName) ind = _ind})
+        setEditingIndex(ind)
         alternativeNames.delete(product.alternativeName)
         setAlternativeNames(alternativeNames)
-
         setProduct({ ...product });
         setProductDialog(true);
     };
 
-    const confirmDeleteProduct = (product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
-    };
-
     const deleteProduct = () => {
-        let _products = products.filter((val) => val.id !== product.id);
+        let _products = products.filter((val) => val.alternativeName !== product.alternativeName);
 
         alternativeNames.delete(product.alternativeName)
 
@@ -135,6 +133,13 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         setProduct(emptyProduct);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
+    console.log("products are: ", products)
+
+    const confirmDeleteProduct = (product) => {
+        setProduct(product);
+        setDeleteProductDialog(true);
+    };
+    
 
     const findIndexById = (id) => {
         let index = -1;
@@ -211,7 +216,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         return <Button label="Export" icon="pi pi-upload" className="p-button-help" style={{ backgroundColor: "rgb(200, 148, 230)", borderColor: "blue", color: "white", fontSize: "23px" }} onClick={exportCSV} />;
     };
 
-
+    //delete and edit icon
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -292,8 +297,6 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
                         </div>
                     ):
                     (
-                        
-
                         <div key={i} className="field">
                             <label htmlFor={i} className="font-bold">
                                 {card.criteriaName}

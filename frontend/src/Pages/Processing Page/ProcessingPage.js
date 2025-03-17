@@ -50,7 +50,6 @@ function ProcessingPage({setSaveParams}) {
   
     fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
-  console.log("names are: ", fetchedAlternativeNames)
   useEffect(() => {
     setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
   
@@ -58,7 +57,7 @@ function ProcessingPage({setSaveParams}) {
 
   return (
     <div className="ProcessingPage container-fluid col-10" >
-      <CaseTitle caseTitle={"University Selection okayy"}/>
+      {/*<CaseTitle caseTitle={"University Selection okayy"}/>*/}
       <CriteriaForm criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
       <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
