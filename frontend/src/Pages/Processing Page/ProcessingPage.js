@@ -19,15 +19,17 @@ function ProcessingPage({setSaveParams}) {
   const [criteriaNames, setCriteriaNames] = useState(new Set());
   const [products, setProducts] = useState([]);
 
-
+  let fetchedAlternativeNames = new Set();
 
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
 
         const criterias = await fetchCriterias(caseId);
-        const decisionMatrix = await fetchDecisionMatrix(caseId);
+        const decisionMatrix = await fetchDecisionMatrix(caseId) || [];
         let altIndexes = {}
         let _products = []
+
+        //convert decisionmatrix to products array for table
         decisionMatrix.map((val) => {
           const alternativeName = val.alternativeName
           let ind = altIndexes[alternativeName];
@@ -38,6 +40,7 @@ function ProcessingPage({setSaveParams}) {
           }
           _products[ind][val.criteriaName] = val.value;
 
+          if(!fetchedAlternativeNames.has(alternativeName)) fetchedAlternativeNames.add(alternativeName);
         })
 
         setProducts(_products)
@@ -47,6 +50,7 @@ function ProcessingPage({setSaveParams}) {
   
     fetchWithDelay(caseId)
   }, []); // Empty dependency array means this runs once when the component mounts
+  console.log("names are: ", fetchedAlternativeNames)
   useEffect(() => {
     setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
   

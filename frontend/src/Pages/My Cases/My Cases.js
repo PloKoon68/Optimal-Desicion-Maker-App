@@ -118,7 +118,7 @@ export default function MyCases() {
 
       <div className="row">
         {caseCards.map((caseCard, index) => (
-          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={() =>  navigate(`/processing-page/${caseCard.caseId}`)}>
+          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={(e) =>  {if(!e.target.closest("button") && editingIndex !== index) navigate(`/processing-page/${caseCard.caseId}`)}}>
             <div className="card text-decoration-none shadow-sm" style={{ cursor: "pointer" }}>
               <div className="card-body">
                 {editingIndex === index ? (

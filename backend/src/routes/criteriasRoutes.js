@@ -10,6 +10,7 @@ const { getCriteriasByCaseId, deleteCriteriasByCaseId, insertCriterias, runQuery
 */
 //criterias api calls
 router.get('/:caseId', async (req, res) => {
+  console.log("here is case id: ", req.params.caseId)
   const criterias = await getCriteriasByCaseId(req.params.caseId);
   try {
     res.status(200).json(criterias);
