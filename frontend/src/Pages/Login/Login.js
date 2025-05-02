@@ -41,25 +41,6 @@ function LoginPage({ onLogin }) {
 
             <button>Log In</button>
         </form>
-    {/*
-    <div className="login-container d-flex justify-content-center">
-        <form onSubmit={handleLogin} className="login-form d-flex flex-column p-7" >
-            <h1 className='mb-5'>Login to your MCDM account!</h1>
-            
-            <div className='d-flex flex-inline'>
-                <div className='d-flex flex-column col-3'>
-                    <p className='mr-3'>username: </p>
-                    <p className='mr-3'>password: </p>
-                </div>
-                <div className='d-flex flex-column col-9'>
-                    
-                </div>
-            </div>
-            
-            <button className="login-button" type="submit">Login</button>
-        </form>
-    </div>
-    */}
     </div>
     
 
