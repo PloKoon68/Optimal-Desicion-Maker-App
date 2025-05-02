@@ -121,6 +121,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         setAlternativeNames(alternativeNames)
         setProduct({ ...product });
         setProductDialog(true);
+
     };
 
     const deleteProduct = () => {

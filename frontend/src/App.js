@@ -12,6 +12,7 @@ import Navbar from "./Navbar.js"
 
 import ProcessingPage from "./Pages/Processing Page/ProcessingPage.js";
 import MyCases from "./Pages/My Cases/My Cases.js"
+import LoginPage from "./Pages/Login/Login.js"
 
 import saveChangesProcessingPage from "./api/saveChanges.js"; // Import the axios call functions
 
@@ -39,9 +40,10 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/my-cases" element={<MyCases />} />
         <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}/>} />
-                   
+                    
 
         {/*
           <Route path="/my-cases" element={<MyCases />} />
