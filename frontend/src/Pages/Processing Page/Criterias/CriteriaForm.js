@@ -89,19 +89,6 @@ function CriteriaForm({ criteriaCards, setCriteriaCards, editCard, setEditCard, 
     else if(field === 'categoryPoint') _categories[index].categoryPoint = value
       
     setCategories(_categories);
-
-/*
-    const keys = Object.keys(_categories);
-    if (field === 'categoryName') {
-      const oldKey = keys[index];
-      const oldValue = _categories[oldKey];
-      delete _categories[oldKey];
-      _categories[value] = oldValue;
-    } else if (field === 'categoryPoint') {
-      const key = keys[index];
-      _categories[key] = parseInt(value);
-    }
-*/
   };
 
   const handleRemoveCategory = (index) => {
