@@ -18,10 +18,10 @@ router.post("/login", (req, res) => {
 
         // Set HttpOnly cookie
         res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,         // true in production (HTTPS)
-        sameSite: "Lax",       // "Strict" or "None" depending on your case
-        maxAge: 3600000        // 1 hour
+            //httpOnly: true,       //not readable from JS (XSS protection)
+            secure: true,         // not sent over insecure HTTP, only HTTPS (MITM protection)
+            sameSite: "None",     // "Strict", "Lax" "None" depends. 
+            maxAge: 3600000       // 1 hour
         });
 
         res.json({ message: "Login successful" });
