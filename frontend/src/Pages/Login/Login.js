@@ -7,17 +7,32 @@ function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const getProtectedData = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/protected", {
+        withCredentials: true
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.error("Access denied");
+    }
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
+    try {/*
+      const res = await axios.post("http://localhost:5000/api/auth/login",
+        { email, password },
+        { withCredentials: true } // ✅ Important for sending cookies
+      );
 
-      const { token, username } = res.data;
-      localStorage.setItem('token', token);
-      onLogin(username);
+      alert(res.data.message);
+*/
+const email = "test@example.com";
+const password = "password123";
+const result = (await axios.post('http://localhost:5000/api/auth/login', { email, password }))
+    console.log(result)
+//      onLogin(username);
     } catch (err) {
       alert('Login failed');
     }
