@@ -15,9 +15,13 @@ const port = process.env.PORT || 5000;
 app.use(cors({  
   origin: ["http://localhost:3000", "https://plokoon68.github.io"],  // Allow frontend to access backend
   methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization"   
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true   
 }));
+
 app.use(express.json())
+app.use(cookieParser());
+
 
 app.use('/api/cases', casesRoutes);
 app.use('/api/criterias', criteriasRoutes);

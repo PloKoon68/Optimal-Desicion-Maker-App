@@ -30,7 +30,7 @@ function LoginPage({ onLogin }) {
 */
 const email = "test@example.com";
 const password = "password123";
-const result = (await axios.post('http://localhost:5000/api/auth/login', { email, password }))
+const result = (await axios.post('http://localhost:5000/api/auth/login', { email, password }, { withCredentials: true }))
     console.log(result)
 //      onLogin(username);
     } catch (err) {
