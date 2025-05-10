@@ -19,6 +19,18 @@ function LoginPage({ onLogin }) {
     }
 console.log(document.cookie);  // "token=eyJhbGci..."
   };
+  const clearToken = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/auth/logout", {
+        withCredentials: true
+      });
+      console.log(res.data);
+     
+    } catch (err) {
+      console.error("Access denied");
+    }
+console.log(document.cookie);  // "token=eyJhbGci..."
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -56,6 +68,7 @@ console.log(document.cookie);  // "token=eyJhbGci..."
            
         </form>
             <button className="login-button" onClick={getProtectedData}>Authenticate</button>
+            <button className="login-button" onClick={clearToken}>logout</button>
     </div>
     
 

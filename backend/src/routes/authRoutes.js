@@ -19,7 +19,7 @@ router.post("/login", (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,       //not readable from JS (XSS protection)
             secure: true,         // not sent over insecure HTTP, only HTTPS (MITM protection)
-            sameSite: "Lax",     // "Strict", "Lax" "None" depends. 
+            sameSite: "None",     // "Strict", "Lax" "None" depends. 
             maxAge: 3600000       // 1 hour
         });
 
@@ -44,6 +44,15 @@ router.get("/protected", (req, res) => {
     } catch (err) {
         res.status(403).json({ message: "Invalid or expired token" });
     }
+});
+
+router.get("/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true
+    });
+    res.json({ message: "Logged out" });
 });
 
 
