@@ -5,7 +5,7 @@ import { login } from "../../api/apiCalls/auth";
 import './Login.css';
 
 function LoginPage({}) {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,8 @@ function LoginPage({}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if(await login(username, password))
-      navigate('/my-cases'); 
+      //direct to logged in page
+      navigate('/my-cases');  
   };
 
   return (
