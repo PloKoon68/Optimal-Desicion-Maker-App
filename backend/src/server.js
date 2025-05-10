@@ -1,6 +1,7 @@
 ﻿const express = require("express");
 const cors = require("cors");
 const pool = require('./db/dbConfig'); // Import your database pool
+const cookieParser = require("cookie-parser");
 
 //require('dotenv').config();
 require('dotenv').config({ path: '../.env' });
@@ -20,7 +21,7 @@ app.use(cors({
 }));
 
 app.use(express.json())
-//app.use(cookieParser());
+app.use(cookieParser());
 
 
 app.use('/api/cases', casesRoutes);
