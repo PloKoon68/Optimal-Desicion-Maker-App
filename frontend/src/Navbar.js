@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import {logout} from "./api/apiCalls/auth"; 
 
 //now lets goe
 const Navbar = () => {
@@ -27,7 +28,7 @@ const Navbar = () => {
               <Link className="nav-link" to="/contact">Contact</Link>
             </li>
             <li className="nav-item mx-2">
-              <button className="btn btn-danger" style={{backgroundColor: "rgb(241, 75, 103)", fontSize: "25px"}} onClick={() => {/* Log out function */}}>Log Out</button>
+              <button className="btn btn-danger" style={{backgroundColor: "rgb(241, 75, 103)", fontSize: "25px"}} onClick={() => logout()}>Log Out</button>
             </li>
           </ul>
         </div>

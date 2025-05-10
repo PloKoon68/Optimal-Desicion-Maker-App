@@ -33,7 +33,6 @@ router.post("/login", (req, res) => {
 //Authenticate token
 router.get("/protected", (req, res) => {
 
-    console.log(req.cookies)
     const token = req.cookies.token;
 
     if (!token) return res.status(401).json({ message: "No token found" });
@@ -47,6 +46,7 @@ router.get("/protected", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
+    console.log("logging out")
     res.clearCookie("token", {
         httpOnly: true,
         sameSite: "None",

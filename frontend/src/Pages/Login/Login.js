@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+import {login} from "../../api/apiCalls/auth"; 
+
 import './Login.css';
 
-function LoginPage({ onLogin }) {
+function LoginPage({}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,35 +19,11 @@ function LoginPage({ onLogin }) {
     } catch (err) {
       console.error("Access denied");
     }
-console.log(document.cookie);  // "token=eyJhbGci..."
   };
-  const clearToken = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/api/auth/logout", {
-        withCredentials: true
-      });
-      console.log(res.data);
-     
-    } catch (err) {
-      console.error("Access denied");
-    }
-console.log(document.cookie);  // "token=eyJhbGci..."
-  };
-
+  
   const handleLogin = async (e) => {
     e.preventDefault();
-      console.log("a: ", username, password)
-    try {
-    const result = (await axios.post('http://localhost:5000/api/auth/login', 
-      { username, password }, 
-      { withCredentials: true }))
-
-    console.log(result)
-//      onLogin(username);
-    } catch (err) {
-      alert('Login failed');
-    }
-console.log(document.cookie);  // "token=eyJhbGci..."
+     login(username, password)
   };
 
   return (
@@ -68,7 +46,6 @@ console.log(document.cookie);  // "token=eyJhbGci..."
            
         </form>
             <button className="login-button" onClick={getProtectedData}>Authenticate</button>
-            <button className="login-button" onClick={clearToken}>logout</button>
     </div>
     
 
