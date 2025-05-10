@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {logout} from "./api/apiCalls/auth"; 
 
 //now lets goe
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout(); // This clears the cookie/session on the backend
+    navigate('/login'); // Redirect to login page
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "rgb(118, 110, 120)"}}>
      <div className="container-fluid">
@@ -28,7 +34,13 @@ const Navbar = () => {
               <Link className="nav-link" to="/contact">Contact</Link>
             </li>
             <li className="nav-item mx-2">
-              <button className="btn btn-danger" style={{backgroundColor: "rgb(241, 75, 103)", fontSize: "25px"}} onClick={() => logout()}>Log Out</button>
+              <button 
+                  className="btn btn-danger" 
+                  style={{ backgroundColor: "rgb(241, 75, 103)", fontSize: "25px" }}
+                  onClick={handleLogout}
+                >
+                  Log Out
+              </button>
             </li>
           </ul>
         </div>

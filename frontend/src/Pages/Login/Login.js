@@ -1,34 +1,23 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-import {login} from "../../api/apiCalls/auth"; 
-
+import { login } from "../../api/apiCalls/auth"; 
 import './Login.css';
 
 function LoginPage({}) {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const getProtectedData = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/api/auth/protected", {
-        withCredentials: true
-      });
-      console.log(res.data);
-     
-    } catch (err) {
-      console.error("Access denied");
-    }
-  };
   
   const handleLogin = async (e) => {
     e.preventDefault();
-     login(username, password)
+    if(await login(username, password))
+      navigate('/my-cases'); 
   };
 
   return (
     <div>
-        
         <div className="background">
             <div className="shape"></div>
             <div className="shape"></div>
@@ -45,7 +34,6 @@ function LoginPage({}) {
             <button className="login-button">Log In</button>
            
         </form>
-            <button className="login-button" onClick={getProtectedData}>Authenticate</button>
     </div>
     
 
