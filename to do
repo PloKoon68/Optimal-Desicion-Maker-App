@@ -1,3 +1,4 @@
+Backend:
 - decisionmatrix route, adjust create to add whole decisionmatrix at once
 - in server.js, use.cors, allowheaders... what are thos 
 
@@ -10,3 +11,8 @@
 */        
 
 make criterias api calls in this format
+
+
+
+Frontend:
+- While editing one case, if user clicks to other

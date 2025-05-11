@@ -5,6 +5,7 @@ const { getCases, getCaseById, createCase, updateCase, deleteCase } = require('.
 router.get('/', async (req, res) => {
     try {
       const result = await getCases();
+      
       res.status(200).json(result);
     } catch (err) {
       console.log("err is: ", err)

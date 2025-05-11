@@ -29,6 +29,16 @@ function App() {
   
   console.log("log: ", isloggedIn)
 
+    
+  useEffect(() => {
+    const _checkLoggedIn = async () => {
+      setIsloggedIn(await checkLoggedIn());
+    };
+  
+    _checkLoggedIn();
+  }, []); // Empty dependency array means this runs once when the component mounts
+  
+
   //check if processing page left, if so save the changes
   const location = useLocation();
   useEffect(() => {
