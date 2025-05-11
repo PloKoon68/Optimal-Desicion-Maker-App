@@ -78,7 +78,7 @@ export default function MyCases() {
     else deleteCase(deletedCaseId)    //axios call
   };
 
-  const handleEditClick = (index) => {
+  const handleEditClick = async (index) => {
     if(!editingIndex) {
       setEditingIndex(index);
       setEditedCard({ ...caseCards[index] }); // Copy object to prevent state mutation
@@ -98,6 +98,7 @@ export default function MyCases() {
         updatedCards[index] = { ...updatedCase };
       } else  // Editing an existing case
         updatedCards[index] = { ...editedCard };
+        updateCase(editedCard.caseId, editedCard)
     } catch (error) {
       console.error("Error saving case:", error);
       updatedCards[index] = { ...editedCard };
