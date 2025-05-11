@@ -25,9 +25,9 @@ function App() {
   const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
   const [saveParams, setSaveParams] = useState({});  
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isloggedIn, setIsloggedIn] = useState(false);
   
-  console.log("log: ", isAuthenticated)
+  console.log("log: ", isloggedIn)
 
   //check if processing page left, if so save the changes
   const location = useLocation();
@@ -42,9 +42,9 @@ function App() {
     
   return (
     <div className="App">
-      <Navbar setIsAuthenticated={setIsAuthenticated}/>
+      <Navbar  isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn}/>
       <Routes>
-        <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>} />
+        <Route path="/login" element={<LoginPage setIsloggedIn={setIsloggedIn}/>} />
         <Route path="/my-cases" element={<MyCases />} />
         <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}/>} />
                     

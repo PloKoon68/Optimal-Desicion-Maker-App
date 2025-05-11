@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from "../../api/apiCalls/auth"; 
 import './Login.css';
 
-function LoginPage({setIsAuthenticated}) {
+function LoginPage({setIsloggedIn}) {
   const navigate = useNavigate(); 
 
   const [username, setUsername] = useState('');
@@ -13,7 +13,7 @@ function LoginPage({setIsAuthenticated}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if(await login(username, password)) {
-     setIsAuthenticated(true)
+     setIsloggedIn(true)
       navigate('/my-cases');  //direct to logged in page 
     }
   };
