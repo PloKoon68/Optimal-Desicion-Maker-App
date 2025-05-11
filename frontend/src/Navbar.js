@@ -4,11 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import {logout} from "./api/apiCalls/auth"; 
 
 //now lets goe
-const Navbar = () => {
+const Navbar = ({setIsAuthenticated}) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout(); // This clears the cookie/session on the backend
+    setIsAuthenticated(false);
     navigate('/login'); // Redirect to login page
   };
   return (

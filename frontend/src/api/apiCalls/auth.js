@@ -16,18 +16,18 @@ const logout = async () => {
   await axiosInstance.get('/auth/logout', { withCredentials: true })
 };
 
-const validateCredentials = async () => {
+const checkLoggedIn = async () => {
   try {
-    const res = await axiosInstance.get('/auth/protected', { withCredentials: true });
-    console.log(res.data);
-    
+    await axiosInstance.get('/auth/protected', { withCredentials: true });
+    return true;    
   } catch (err) {
     console.error("Access denied");
+    return false;    
   }
 };
 
 export {
   login,
   logout,
-  validateCredentials
+  checkLoggedIn
 };

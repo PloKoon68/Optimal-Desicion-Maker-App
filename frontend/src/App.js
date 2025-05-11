@@ -16,14 +16,20 @@ import LoginPage from "./Pages/Login/Login.js"
 
 import saveChangesProcessingPage from "./api/saveChanges.js"; // Import the axios call functions
 
+import { checkLoggedIn } from "../src/api/apiCalls/auth.js"; 
+
 
 function App() {
   
   
   const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
   const [saveParams, setSaveParams] = useState({});  
- 
- 
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  console.log("log: ", isAuthenticated)
+
+  //check if processing page left, if so save the changes
   const location = useLocation();
   useEffect(() => {
     if(location.pathname.startsWith('/processing-page')) setIsAtProcessingPage(true);  //came to processing page
@@ -36,9 +42,9 @@ function App() {
     
   return (
     <div className="App">
-      <Navbar />
+      <Navbar setIsAuthenticated={setIsAuthenticated}/>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>} />
         <Route path="/my-cases" element={<MyCases />} />
         <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}/>} />
                     
