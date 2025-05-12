@@ -26,6 +26,8 @@ function App() {
   const [saveParams, setSaveParams] = useState({});  
 
   const [isloggedIn, setIsloggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   
   console.log("log: ", isloggedIn)
 
@@ -33,8 +35,8 @@ function App() {
   useEffect(() => {
     const _checkLoggedIn = async () => {
       setIsloggedIn(await checkLoggedIn());
+      setLoading(false);
     };
-  
     _checkLoggedIn();
   }, []); // Empty dependency array means this runs once when the component mounts
   
@@ -51,23 +53,28 @@ function App() {
 
     
   return (
+    loading ? (
+    // Optional: Show loading spinner or nothing while checking auth
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  ) : (
     <div className="App">
-      <Navbar  isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn}/>
+      <Navbar isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} />
       <Routes>
-        <Route path="/login" element={<LoginPage setIsloggedIn={setIsloggedIn}/>} />
+        <Route path="/login" element={<LoginPage setIsloggedIn={setIsloggedIn} setLoading={setLoading}/>} />
         <Route path="/my-cases" element={<MyCases />} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}/>} />
-                    
-
-        {/*
-          <Route path="/my-cases" element={<MyCases />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} />} />
+        {/* Uncomment when ready
+        <Route path="/help" element={<Help />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         */}
       </Routes>
-
     </div>
+  )
   );
 }
 
