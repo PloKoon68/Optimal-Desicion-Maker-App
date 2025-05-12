@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import {fetchCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 import {fetchDecisionMatrix} from "../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
-function ProcessingPage({setSaveParams}) {
+function ProcessingPage({setSaveParams, setLoading}) {
   const { caseId } = useParams();
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -20,36 +20,43 @@ function ProcessingPage({setSaveParams}) {
   const [products, setProducts] = useState([]);
 
   let fetchedAlternativeNames = new Set();
-
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
-
+      try {
         const criterias = await fetchCriterias(caseId);
         const decisionMatrix = await fetchDecisionMatrix(caseId) || [];
-        let altIndexes = {}
-        let _products = []
+        let altIndexes = {};
+        let _products = [];
 
-        //convert decisionmatrix to products array for table
-        decisionMatrix.map((val) => {
-          const alternativeName = val.alternativeName
+        setLoading(false)
+
+        decisionMatrix.forEach((val) => {
+          const alternativeName = val.alternativeName;
           let ind = altIndexes[alternativeName];
-          if(ind == undefined) {
-            ind = _products.length
+          if (ind === undefined) {
+            ind = _products.length;
             altIndexes[alternativeName] = ind;
-            _products.push({"alternativeName": alternativeName});
+            _products.push({ alternativeName });
           }
           _products[ind][val.criteriaName] = val.value;
 
-          if(!fetchedAlternativeNames.has(alternativeName)) fetchedAlternativeNames.add(alternativeName);
-        })
+          if (!fetchedAlternativeNames.has(alternativeName)) {
+            fetchedAlternativeNames.add(alternativeName);
+          }
+        });
 
-        setProducts(_products)
-
-        setCriteriaCards(criterias)
+        setProducts(_products);
+        setCriteriaCards(criterias);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Optionally show an error message to the user
+      }
     };
-  
-    fetchWithDelay(caseId)
-  }, []); // Empty dependency array means this runs once when the component mounts
+
+    fetchWithDelay(caseId);
+  }, []);
+
+
   useEffect(() => {
     setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
   

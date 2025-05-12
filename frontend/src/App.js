@@ -6,7 +6,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';  // Optional but recommended
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Navbar from "./Navbar.js"
 
@@ -21,17 +21,23 @@ import { checkLoggedIn } from "../src/api/apiCalls/auth.js";
 
 function App() {
   
-  
   const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
   const [saveParams, setSaveParams] = useState({});  
 
   const [isloggedIn, setIsloggedIn] = useState(false);
+
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  
-  console.log("log: ", isloggedIn)
 
-    
+    // Activate loading on route changes to specific pages
+  useEffect(() => {
+    const isLoadingRoute = location.pathname.includes('/processing-page') || location.pathname.includes('/my-cases');
+    if (isLoadingRoute) {
+      setLoading(true);
+    }
+  }, [location]);
+
   useEffect(() => {
     const _checkLoggedIn = async () => {
       setIsloggedIn(await checkLoggedIn());
@@ -42,7 +48,7 @@ function App() {
   
 
   //check if processing page left, if so save the changes
-  const location = useLocation();
+  //const location = useLocation();
   useEffect(() => {
     if(location.pathname.startsWith('/processing-page')) setIsAtProcessingPage(true);  //came to processing page
     else if(isAtProcessingPage){  //processing page de değil ama önceden oradaydı
@@ -65,8 +71,8 @@ function App() {
       <Navbar isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} />
       <Routes>
         <Route path="/login" element={<LoginPage setIsloggedIn={setIsloggedIn} setLoading={setLoading}/>} />
-        <Route path="/my-cases" element={<MyCases />} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} />} />
+        <Route path="/my-cases" element={<MyCases setLoading={setLoading}/>} />
+        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading} />} />
         {/* Uncomment when ready
         <Route path="/help" element={<Help />} />
         <Route path="/about" element={<About />} />

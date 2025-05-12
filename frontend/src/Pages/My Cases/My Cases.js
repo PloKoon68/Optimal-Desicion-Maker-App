@@ -9,7 +9,7 @@ import {fetchCases, createCase,
         updateCase, deleteCase} from "../../api/apiCalls/caseApi.js"; // Import the axios call functions
 
 
-export default function MyCases() {
+export default function MyCases({setLoading}) {
 
   const navigate = useNavigate();
   const [caseCards, setCaseCards] = useState([
@@ -31,6 +31,7 @@ export default function MyCases() {
         try {
           const cases = await fetchCases();
           if (cases) {
+            setLoading(false)
             setCaseCards(cases);
             numCounts = limit; // Exit the loop if cases are found
             setDbConnected(true);

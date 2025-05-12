@@ -16,3 +16,4 @@ make criterias api calls in this format
 
 Frontend:
 - While editing one case, if user clicks to other
+- When can't fetch data, in processing page, say couldn't connect to server

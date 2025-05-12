@@ -134,7 +134,6 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         setProduct(emptyProduct);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
-    console.log("products are: ", products)
 
     const confirmDeleteProduct = (product) => {
         setProduct(product);
