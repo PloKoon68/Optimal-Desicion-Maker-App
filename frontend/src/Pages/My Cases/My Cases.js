@@ -20,7 +20,9 @@ export default function MyCases({}) {
   
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedCard, setEditedCard] = useState({ title: "", description: "" });
+
   const [dbConnected, setDbConnected] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
   
   useEffect(() => {
     const fetchWithDelay = async () => {
@@ -33,6 +35,8 @@ export default function MyCases({}) {
           if (cases) {
             setCaseCards(cases);
             numCounts = limit; // Exit the loop if cases are found
+            //setDbConnected(true);
+            setInitialRender(false);
             setDbConnected(true);
           }
         } catch (error) {
@@ -110,7 +114,13 @@ export default function MyCases({}) {
 
   return (
     <>
-    {dbConnected? (
+    {initialRender?(
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      ) : dbConnected? (
       <div className="my-cases container mt-6">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="fw-bold ml-4">My Cases</h1>
@@ -164,7 +174,7 @@ export default function MyCases({}) {
           <div className="add-sign" onClick={handleAddCase}></div>
         </div>
       </div>
-    </div>):
+    </div>) :
     (<h1>Server couldn't connected</h1>)
     }
     </>
