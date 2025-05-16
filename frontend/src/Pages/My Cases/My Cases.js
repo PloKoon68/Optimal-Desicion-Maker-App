@@ -9,7 +9,7 @@ import {fetchCases, createCase,
         updateCase, deleteCase} from "../../api/apiCalls/caseApi.js"; // Import the axios call functions
 
 
-export default function MyCases({setLoading}) {
+export default function MyCases({}) {
 
   const navigate = useNavigate();
   const [caseCards, setCaseCards] = useState([
@@ -23,8 +23,6 @@ export default function MyCases({setLoading}) {
   const [dbConnected, setDbConnected] = useState(false);
   
   useEffect(() => {
-       setLoading(true);
-    
     const fetchWithDelay = async () => {
       let numCounts = 0, limit = 1;
       
@@ -33,7 +31,6 @@ export default function MyCases({setLoading}) {
         try {
           const cases = await fetchCases();
           if (cases) {
-            setLoading(false)
             setCaseCards(cases);
             numCounts = limit; // Exit the loop if cases are found
             setDbConnected(true);

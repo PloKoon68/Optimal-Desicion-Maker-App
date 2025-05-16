@@ -7,6 +7,7 @@ import 'primeflex/primeflex.css';  // Optional but recommended
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import Navbar from "./Navbar.js"
 
@@ -17,6 +18,8 @@ import LoginPage from "./Pages/Login/Login.js"
 import saveChangesProcessingPage from "./api/saveChanges.js"; // Import the axios call functions
 
 import { checkLoggedIn } from "../src/api/apiCalls/auth.js"; 
+import PrivateRoute from './Routes/PrivateRoute.js'; // adjust path as needed
+import NonePrivateRoute from './Routes/NonePrivateRoute.js'; // adjust path as needed
 
 
 function App() {
@@ -39,12 +42,11 @@ function App() {
     const loginPath = location.pathname.includes('/login');
     console.log("finished")
     if (authRequiredPaths && !isloggedIn) {     //check if authetication required pages are tried to be opened
+    console.log("finisssss")
        navigate('/login')
-       //setLoading(true);
     }
     else if (loginPath && isloggedIn) {     //check if authetication required pages are tried to be opened
        navigate('/my-cases')
-       //setLoading(true);
     }
   }, [location]);
 
@@ -79,14 +81,35 @@ function App() {
     <div className="App">
       <Navbar isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} />
       <Routes>
-        {!isloggedIn && <Route path="/login" element={<LoginPage setIsloggedIn={setIsloggedIn}/>} />}
-        <Route path="/my-cases" element={<MyCases setLoading={setLoading}/>} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading} />} />
-        {/* Uncomment when ready
-        <Route path="/help" element={<Help />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        */}
+        
+        <Route path="/" element={<Navigate to="/my-cases" />} />
+        
+        <Route
+          path="/my-cases"
+          element={
+            <PrivateRoute isloggedIn={isloggedIn}>
+              <MyCases />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/processing-page/:caseId"
+          element={
+            <PrivateRoute isloggedIn={isloggedIn}>
+              <ProcessingPage setSaveParams={setSaveParams}/>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <NonePrivateRoute isloggedIn={isloggedIn}>
+              <LoginPage setIsloggedIn={setIsloggedIn}/>
+            </NonePrivateRoute>
+          }
+        />
+        
       </Routes>
     </div>
   )
@@ -94,3 +117,44 @@ function App() {
 }
 
 export default App;
+
+
+
+/*
+
+ <Route path="/my-cases" element={<MyCases setLoading={setLoading}/>} />
+        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading} />} />
+        { Uncomment when ready
+        <Route path="/help" element={<Help />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        }
+
+        <Route
+          path="/processing-page/:caseId"
+          element={
+            <PrivateRoutes>
+              <ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading}/>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/my-cases"
+          element={
+            <PrivateRoutes>
+              <MyCases setLoading={setLoading}/>
+            </PrivateRoutes>
+          }
+        />
+*/
+
+/*
+  <Route path="/my-cases" element={<MyCases/>} />
+        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}  />} />
+        { Uncomment when ready
+        <Route path="/help" element={<Help />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        }
+        */

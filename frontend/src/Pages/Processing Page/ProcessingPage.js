@@ -11,7 +11,8 @@ import { useParams } from 'react-router-dom';
 import {fetchCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 import {fetchDecisionMatrix} from "../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
-function ProcessingPage({setSaveParams, setLoading}) {
+function ProcessingPage({setSaveParams}) {
+  console.log("came here")
   const { caseId } = useParams();
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -28,7 +29,6 @@ function ProcessingPage({setSaveParams, setLoading}) {
         let altIndexes = {};
         let _products = [];
 
-        setLoading(false)
 
         decisionMatrix.forEach((val) => {
           const alternativeName = val.alternativeName;

@@ -30,7 +30,6 @@ router.post("/login", (req, res) => {
 });
 
 
-//Authenticate token
 router.get("/protected", (req, res) => {
 
     const token = req.cookies.token;
