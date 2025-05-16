@@ -3,7 +3,6 @@ import axiosInstance from "../axios"; // Import the axios instance
 
 const fetchCases = async () => {
   try{
-    console.log("try fetching")
     return (await axiosInstance.get('/cases/')).data
   } catch(err) {
     console.log("fetch error is:", err)

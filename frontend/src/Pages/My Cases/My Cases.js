@@ -23,6 +23,8 @@ export default function MyCases({setLoading}) {
   const [dbConnected, setDbConnected] = useState(false);
   
   useEffect(() => {
+       setLoading(true);
+    
     const fetchWithDelay = async () => {
       let numCounts = 0, limit = 1;
       
