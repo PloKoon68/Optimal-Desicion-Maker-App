@@ -12,7 +12,6 @@ import {fetchCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the 
 import {fetchDecisionMatrix} from "../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
 function ProcessingPage({setSaveParams}) {
-  console.log("came here")
   const { caseId } = useParams();
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);

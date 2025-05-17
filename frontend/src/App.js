@@ -30,25 +30,11 @@ function App() {
   const [saveParams, setSaveParams] = useState({});  
 
   const [isloggedIn, setIsloggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
 
-
-    // Activate loading on route changes to specific pages
-  useEffect(() => {
-    console.log("checking")
-    const authRequiredPaths = location.pathname.includes('/processing-page') || location.pathname.includes('/my-cases');
-    const loginPath = location.pathname.includes('/login');
-    console.log("finished")
-    if (authRequiredPaths && !isloggedIn) {     //check if authetication required pages are tried to be opened
-    console.log("finisssss")
-       navigate('/login')
-    }
-    else if (loginPath && isloggedIn) {     //check if authetication required pages are tried to be opened
-       navigate('/my-cases')
-    }
-  }, [location]);
+    console.log(location)
 
   useEffect(() => {
     const _checkLoggedIn = async () => {
@@ -57,32 +43,21 @@ function App() {
     };
     _checkLoggedIn();
   }, []); // Empty dependency array means this runs once when the component mounts
+
   
-
-  //check if processing page left, if so save the changes
-  //const location = useLocation();
-  useEffect(() => {
-    if(location.pathname.startsWith('/processing-page')) setIsAtProcessingPage(true);  //came to processing page
-    else if(isAtProcessingPage){  //processing page de değil ama önceden oradaydı
-      setIsAtProcessingPage(false);
-      saveChangesProcessingPage(saveParams)
-    }
-  }, [location]);
-
   return (
-    loading ? (
-    // Optional: Show loading spinner or nothing while checking auth
+    loading? 
     <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
       <div className="spinner-border" role="status">
         <span className="visually-hidden">Loading...</span>
       </div>
     </div>
-  ) : (
+    :
     <div className="App">
       <Navbar isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} />
       <Routes>
         
-        <Route path="/" element={<Navigate to="/my-cases" />} />
+        <Route path="/" element={<Navigate to="/Welcome" />} />
         
         <Route
           path="/my-cases"
@@ -92,10 +67,11 @@ function App() {
             </PrivateRoute>
           }
         />
+        
         <Route
           path="/processing-page/:caseId"
           element={
-            <PrivateRoute isloggedIn={isloggedIn}>
+            <PrivateRoute isloggedIn={isloggedIn} location={location}>
               <ProcessingPage setSaveParams={setSaveParams}/>
             </PrivateRoute>
           }
@@ -112,7 +88,6 @@ function App() {
         
       </Routes>
     </div>
-  )
   );
 }
 
@@ -120,41 +95,22 @@ export default App;
 
 
 
-/*
 
- <Route path="/my-cases" element={<MyCases setLoading={setLoading}/>} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading} />} />
-        { Uncomment when ready
-        <Route path="/help" element={<Help />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        }
-
-        <Route
-          path="/processing-page/:caseId"
-          element={
-            <PrivateRoutes>
-              <ProcessingPage setSaveParams={setSaveParams} setLoading={setLoading}/>
-            </PrivateRoutes>
-          }
-        />
-
-        <Route
-          path="/my-cases"
-          element={
-            <PrivateRoutes>
-              <MyCases setLoading={setLoading}/>
-            </PrivateRoutes>
-          }
-        />
+    /*
+    // Activate loading on route changes to specific pages
+  useEffect(() => {
+    if(!loading) {
+    console.log("entered check")
+      const authRequiredPaths = location.pathname.includes('/processing-page') || location.pathname.includes('/my-cases');
+      const loginPath = location.pathname.includes('/login');
+      if (authRequiredPaths && !isloggedIn) {     //check if authetication required pages are tried to be opened
+    console.log("there")
+        navigate('/login')
+      }
+      else if (loginPath && isloggedIn) {     //check if authetication required pages are tried to be opened
+    console.log("here")
+        navigate('/processing-page/48')
+      }
+    }
+  }, [location]);
 */
-
-/*
-  <Route path="/my-cases" element={<MyCases/>} />
-        <Route path="/processing-page/:caseId" element={<ProcessingPage setSaveParams={setSaveParams}  />} />
-        { Uncomment when ready
-        <Route path="/help" element={<Help />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        }
-        */
