@@ -3,13 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import {logout} from "./api/apiCalls/auth"; 
 
+import { useAuth } from './AuthContext';
+
 //now lets goe
-const Navbar = ({isloggedIn, setIsloggedIn}) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
 
   const handleLogout = async () => {
     await logout(); // This clears the cookie/session on the backend
-    setIsloggedIn(false);
+    setIsLoggedIn(false);
     navigate('/login'); // Redirect to login page
   };
   const handleLogin = async () => {
@@ -29,7 +32,7 @@ const Navbar = ({isloggedIn, setIsloggedIn}) => {
     {/* Left-aligned links */}
     <ul className="navbar-nav">
       <li className="nav-item mx-2">
-        {isloggedIn && <Link className="nav-link" to="/my-cases">My Cases</Link>}  
+        {isLoggedIn && <Link className="nav-link" to="/my-cases">My Cases</Link>}  
       </li>
       <li className="nav-item mx-2">
         <Link className="nav-link" to="/help">Help</Link>
@@ -44,7 +47,7 @@ const Navbar = ({isloggedIn, setIsloggedIn}) => {
 
     {/* Right-aligned buttons */}
     <ul className="navbar-nav">
-      {isloggedIn ? (
+      {isLoggedIn ? (
         <li className="nav-item mx-2">
           <button 
             className="btn btn-danger" 

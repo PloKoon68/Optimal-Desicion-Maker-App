@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';  // Optional but recommended
 
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -15,33 +15,21 @@ import ProcessingPage from "./Pages/Authenticated Pages/Processing Page/Processi
 import MyCases from "./Pages/Authenticated Pages/My Cases/My Cases.js"
 import LoginPage from "./Pages/None Authenticated Pages/Login/Login.js"
 
-import { checkLoggedIn } from "../src/api/apiCalls/auth.js"; 
 import PrivateRoute from './Routes/PrivateRoute.js'; // adjust path as needed
 import NonePrivateRoute from './Routes/NonePrivateRoute.js'; // adjust path as needed
 
+import { useAuth } from './AuthContext';
 
 function App() {
-  const navigate = useNavigate();
-  
-  
+  const { loading } = useAuth();
+
   const [saveParams, setSaveParams] = useState({});  
 
   const [isloggedIn, setIsloggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
 
   const location = useLocation();
 
-    console.log(location)
-
-  useEffect(() => {
-    const _checkLoggedIn = async () => {
-      setIsloggedIn(await checkLoggedIn());
-      setLoading(false);
-    };
-    _checkLoggedIn();
-  }, []); // Empty dependency array means this runs once when the component mounts
-
-  
   return (
     loading? 
     <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
@@ -51,7 +39,7 @@ function App() {
     </div>
     :
     <div className="App">
-      <Navbar isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} />
+      <Navbar  />
       <Routes>
         
         <Route path="/" element={<Navigate to="/Welcome" />} />
@@ -59,7 +47,7 @@ function App() {
         <Route
           path="/my-cases"
           element={
-            <PrivateRoute isloggedIn={isloggedIn}>
+            <PrivateRoute >
               <MyCases />
             </PrivateRoute>
           }
@@ -68,7 +56,7 @@ function App() {
         <Route
           path="/processing-page/:caseId"
           element={
-            <PrivateRoute isloggedIn={isloggedIn} location={location}>
+            <PrivateRoute >
               <ProcessingPage setSaveParams={setSaveParams}/>
             </PrivateRoute>
           }
@@ -77,8 +65,8 @@ function App() {
         <Route
           path="/login"
           element={
-            <NonePrivateRoute isloggedIn={isloggedIn}>
-              <LoginPage setIsloggedIn={setIsloggedIn}/>
+            <NonePrivateRoute >
+              <LoginPage />
             </NonePrivateRoute>
           }
         />
@@ -86,8 +74,8 @@ function App() {
         <Route
           path="/register"
           element={
-            <NonePrivateRoute isloggedIn={isloggedIn}>
-              <LoginPage setIsloggedIn={setIsloggedIn}/>
+            <NonePrivateRoute >
+              <LoginPage />
             </NonePrivateRoute>
           }
         />
@@ -98,25 +86,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-    /*
-    // Activate loading on route changes to specific pages
-  useEffect(() => {
-    if(!loading) {
-    console.log("entered check")
-      const authRequiredPaths = location.pathname.includes('/processing-page') || location.pathname.includes('/my-cases');
-      const loginPath = location.pathname.includes('/login');
-      if (authRequiredPaths && !isloggedIn) {     //check if authetication required pages are tried to be opened
-    console.log("there")
-        navigate('/login')
-      }
-      else if (loginPath && isloggedIn) {     //check if authetication required pages are tried to be opened
-    console.log("here")
-        navigate('/processing-page/48')
-      }
-    }
-  }, [location]);
-*/

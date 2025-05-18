@@ -4,18 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { login } from "../../../api/apiCalls/auth"; 
 import './Login.css';
 
-function LoginPage({setIsloggedIn}) {
+import { useAuth } from '../../../AuthContext';
+
+function LoginPage() {
   const navigate = useNavigate(); 
+  const { setIsLoggedIn, setLoading } = useAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if(await login(username, password)) {
      navigate('/my-cases');  //direct to logged in page 
-     setIsloggedIn(true);
+     setIsLoggedIn(true);
+    } else {
+      console.log("cant log in")
     }
+     setLoading(false)
   };
 
   return (

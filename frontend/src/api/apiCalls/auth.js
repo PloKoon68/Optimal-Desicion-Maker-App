@@ -3,12 +3,14 @@ import axiosInstance from "../axios"; // Import the axios instance
 
 const login = async (username, password) => {
   try{
+    console.log("up: ", username, password)
     await axiosInstance.post('/auth/login', 
     { username, password }, 
     { withCredentials: true });
     
     return true;
   } catch(err) {
+    console.log("err was: ", err)
     alert('Login failed');
   }
 };

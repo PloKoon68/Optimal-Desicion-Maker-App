@@ -1,7 +1,11 @@
 import { Navigate } from 'react-router-dom';
 
-export default function NonePrivateRoute({ children, isloggedIn}) {
-  if (isloggedIn) {
+import { useAuth } from '../AuthContext';
+
+export default function NonePrivateRoute({children}) {
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn) {
     return <Navigate to="/my-cases" replace />;
   }
   return children;
