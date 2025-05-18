@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const _check = async () => {
+      console.log("checking if logged in")
       const result = await checkLoggedIn();
       setIsLoggedIn(result);
       setLoading(false);
