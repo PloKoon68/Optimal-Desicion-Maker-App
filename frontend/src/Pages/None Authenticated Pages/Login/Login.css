@@ -114,3 +114,14 @@
   padding: 0;
   margin-left: 20px;
 }
+
+.login-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;      /* makes the button look faded */
+  pointer-events: none; /* prevents all mouse events */
+}
+
+/* Optional: prevent hover style changes on disabled */
+.login-button:disabled:hover {
+  background-color: inherit; /* or keep the same background */
+}

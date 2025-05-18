@@ -6,10 +6,11 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';  // Optional but recommended
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Navbar from "./Navbar.js"
+import ServerDownPage from "./ServerDownPage.js"
 
 import ProcessingPage from "./Pages/Authenticated Pages/Processing Page/ProcessingPage.js";
 import MyCases from "./Pages/Authenticated Pages/My Cases/My Cases.js"
@@ -39,10 +40,12 @@ function App() {
     </div>
     :
     <div className="App">
-      <Navbar  />
+      <Navbar />
       <Routes>
         
         <Route path="/" element={<Navigate to="/Welcome" />} />
+
+        <Route path="/server-error" element={<ServerDownPage/>} />
         
         <Route
           path="/my-cases"

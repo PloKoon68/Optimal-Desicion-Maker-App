@@ -1,19 +1,23 @@
 import axiosInstance from "../axios"; // Import the axios instance
-
+import { useNavigate } from 'react-router-dom';
 
 const login = async (username, password) => {
   try{
-    console.log("up: ", username, password)
     await axiosInstance.post('/auth/login', 
     { username, password }, 
     { withCredentials: true });
     
-    return true;
+    return { success: true };
   } catch(err) {
-    console.log("err was: ", err)
-    alert('Login failed');
+    if (err.response && err.response.status === 401) {
+      return { success: false, reason: 'invalid_credentials' };
+    }
+
+    return { success: false, reason: 'server_error' };
+
   }
 };
+
 const logout = async () => {
   await axiosInstance.get('/auth/logout', { withCredentials: true })
 };

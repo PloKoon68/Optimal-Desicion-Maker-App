@@ -8,10 +8,13 @@ import { useAuth } from '../../../AuthContext';
 
 function LoginPage() {
   const navigate = useNavigate(); 
-  const { setIsLoggedIn, setLoading } = useAuth();
+  const { setIsLoggedIn } = useAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const [waitingResponse, setWaitingResponse] = useState(false);
+
 
   const [errors, setErrors] = useState({
     usernameBlank: false,
@@ -21,7 +24,7 @@ function LoginPage() {
   
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setWaitingResponse(true)
 
     const _errors = {
       usernameBlank: !username.trim(),
@@ -30,18 +33,22 @@ function LoginPage() {
     }
     
     if(!_errors.usernameBlank && !_errors.passwordBlank) {
-      if(await login(username, password)) {   //check if credentials are valid
-      navigate('/my-cases');  //if so, direct to logged in page 
-      setIsLoggedIn(true);
-      } else {
+      const result = await login(username, password);
+      if(result.success) {   //check if credentials are valid
+        navigate('/my-cases');  //if so, direct to logged in page 
+        setIsLoggedIn(true);
+      } else if (result.reason === 'invalid_credentials') {
         _errors.invalidCredentials = true;
-        console.log("cant log in")
+        setErrors(_errors);
+      } else if (result.reason === 'server_error') {
+        navigate('/server-error');
+        return;
       }
     }
     setErrors(_errors);
-    setLoading(false)
+    setWaitingResponse(false)
   };
-  console.log(errors)
+
   return (
     <div>
       <div className="background">
@@ -74,7 +81,9 @@ function LoginPage() {
           {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
         </div>
 
-        <button className="login-button">LOGIN</button>
+        <button className="login-button" disabled={waitingResponse}>
+          {waitingResponse ? "Logging in..." : "LOGIN"}
+        </button>
       </form>
     </div>
   );
