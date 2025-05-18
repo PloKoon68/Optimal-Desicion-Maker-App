@@ -30,7 +30,7 @@
     bottom: -80px;
 }
 .login-form{
-    width: 30%;
+    width: 550px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -55,12 +55,7 @@
     text-align: center;
 }
 
-.login-label{
-    display: block;
-    margin-top: 30px;
-    font-size: 27px;
-    font-weight: 500;
-}
+
 .login-input {
     display: block;
     height: 50px;
@@ -77,8 +72,8 @@
 }
 .login-button{
     width: 100%;
-    background-color: #fadc79;
-    color: #080710;
+    background-color: #cc1f53;
+    color: #ecebf1;
     padding: 15px 0;
     font-size: 22px;
     font-weight: 600;
@@ -91,4 +86,31 @@
   font-size: 1.2rem;
   margin-top: 4px;
   margin-bottom: 8px;
+}
+
+.invalid-credentials {
+  background-color: rgb(250, 205, 213);
+  border: 0.17rem solid rgb(185, 62, 68);
+  color: #1a1818;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  height: 70px;
+  font-size: 1.2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 2.5rem;
+  color: #da0707;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
 }

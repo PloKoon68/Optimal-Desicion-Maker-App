@@ -16,7 +16,7 @@ function LoginPage() {
   const [errors, setErrors] = useState({
     usernameBlank: false,
     passwordBlank: false,
-    login: false
+    invalidCredentials: false
   });
   
   const handleLogin = async (e) => {
@@ -44,29 +44,39 @@ function LoginPage() {
   console.log(errors)
   return (
     <div>
-        <div className="background">
-            <div className="shape"></div>
-            <div className="shape"></div>
+      <div className="background">
+          <div className="shape"></div>
+          <div className="shape"></div>
+      </div>
+      <form className="login-form" onSubmit={handleLogin}>
+        <h2 className='login-title mb-6' style={{color:"black"}}><strong>Login</strong></h2>
+
+        {errors.invalidCredentials && (
+        <div className="invalid-credentials">
+          Invalid username or password.
+          <button 
+            className="close-btn" 
+            onClick={() => setErrors(prev => ({ ...prev, invalidCredentials: false }))}
+            aria-label="Close"
+          >
+            ×
+          </button>
         </div>
-        <form className="login-form" onSubmit={handleLogin}>
-            <h2 className='login-title mb-6' style={{color:"black"}}><strong>Login</strong></h2>
+        )}
+        
+        <div className='mb-3'>
+          <input className='login-input' type="text" placeholder="User Name" value={username} onChange={e => setUsername(e.target.value)} id="username"/>
+          {errors.usernameBlank && <div className="error-text">Username can't be empty!</div>}
+        </div>
+        
+        <div className='mb-5'>
+          <input className='login-input' type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} id="password"/>
+          {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
+        </div>
 
-            <div className='mb-3'>
-              <input className='login-input' type="text" placeholder="User Name" value={username} onChange={e => setUsername(e.target.value)} id="username"/>
-              {errors.usernameBlank && <div className="error-text">Username can't be empty!</div>}
-            </div>
-            
-            <div className='mb-5'>
-              <input className='login-input' type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} id="password"/>
-              {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
-            </div>
-
-            <button className="login-button">Log In</button>
-           
-        </form>
+        <button className="login-button">LOGIN</button>
+      </form>
     </div>
-    
-
   );
 }
 
