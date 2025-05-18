@@ -8,8 +8,8 @@ import Submission from "./Results/Submission.js"
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {fetchCriterias} from "../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
-import {fetchDecisionMatrix} from "../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
+import {fetchCriterias} from "../../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
+import {fetchDecisionMatrix} from "../../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
 function ProcessingPage({setSaveParams}) {
   const { caseId } = useParams();

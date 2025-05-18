@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./MyCases.css";
 
 
 //<Link className="nav-link" to="/about">About</Link>
 
 import {fetchCases, createCase,
-        updateCase, deleteCase} from "../../api/apiCalls/caseApi.js"; // Import the axios call functions
+        updateCase, deleteCase} from "../../../api/apiCalls/caseApi.js"; // Import the axios call functions
 
 
 export default function MyCases({}) {

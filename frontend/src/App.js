@@ -11,11 +11,9 @@ import { Navigate } from 'react-router-dom';
 
 import Navbar from "./Navbar.js"
 
-import ProcessingPage from "./Pages/Processing Page/ProcessingPage.js";
-import MyCases from "./Pages/My Cases/My Cases.js"
-import LoginPage from "./Pages/Login/Login.js"
-
-import saveChangesProcessingPage from "./api/saveChanges.js"; // Import the axios call functions
+import ProcessingPage from "./Pages/Authenticated Pages/Processing Page/ProcessingPage.js";
+import MyCases from "./Pages/Authenticated Pages/My Cases/My Cases.js"
+import LoginPage from "./Pages/None Authenticated Pages/Login/Login.js"
 
 import { checkLoggedIn } from "../src/api/apiCalls/auth.js"; 
 import PrivateRoute from './Routes/PrivateRoute.js'; // adjust path as needed
@@ -26,7 +24,6 @@ function App() {
   const navigate = useNavigate();
   
   
-  const [isAtProcessingPage, setIsAtProcessingPage] = useState(false);  
   const [saveParams, setSaveParams] = useState({});  
 
   const [isloggedIn, setIsloggedIn] = useState(false);
@@ -79,6 +76,15 @@ function App() {
 
         <Route
           path="/login"
+          element={
+            <NonePrivateRoute isloggedIn={isloggedIn}>
+              <LoginPage setIsloggedIn={setIsloggedIn}/>
+            </NonePrivateRoute>
+          }
+        />
+
+        <Route
+          path="/register"
           element={
             <NonePrivateRoute isloggedIn={isloggedIn}>
               <LoginPage setIsloggedIn={setIsloggedIn}/>

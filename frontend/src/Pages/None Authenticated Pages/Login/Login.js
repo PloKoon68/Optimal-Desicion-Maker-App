@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from "../../api/apiCalls/auth"; 
+import { login } from "../../../api/apiCalls/auth"; 
 import './Login.css';
 
 function LoginPage({setIsloggedIn}) {
