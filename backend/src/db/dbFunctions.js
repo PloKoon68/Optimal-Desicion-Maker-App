@@ -24,10 +24,10 @@ const getCaseById = async (id) => {
 };
 
 // 3️⃣ Create a new case
-const createCase = async (title, description) => {
+const createCase = async (userId, title, description) => {
   return (await runQuery(
-    `INSERT INTO cases (title, description) VALUES ($1, $2) RETURNING *`,
-    [title, description]
+    `INSERT INTO cases (title, description, "userId") VALUES ($1, $2, $3) RETURNING *`,
+    [title, description, userId]
   )).rows[0];
 };
 
@@ -126,6 +126,14 @@ CREATE TABLE decisionmatrix (
   value TEXT NOT NULL,  
   PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
   FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  "userId" SERIAL PRIMARY KEY,
+  "username" VARCHAR(255) UNIQUE NOT NULL,
+  "email" VARCHAR(255) UNIQUE NOT NULL,
+  "passwordHash" TEXT NOT NULL,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 */
 /*

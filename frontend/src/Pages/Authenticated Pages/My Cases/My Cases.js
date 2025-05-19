@@ -97,11 +97,13 @@ export default function MyCases() {
     const updatedCards = [...caseCards];
     try {
       if (!editedCard.caseId) { // Creating a new case
+        editedCard.userId = 1;
         const updatedCase = await createCase(editedCard);
         updatedCards[index] = { ...updatedCase };
-      } else  // Editing an existing case
+      } else { // Editing an existing case
         updatedCards[index] = { ...editedCard };
-        updateCase(editedCard.caseId, editedCard)
+        await updateCase(editedCard.caseId, editedCard)
+      }
     } catch (error) {
       console.error("Error saving case:", error);
       updatedCards[index] = { ...editedCard };

@@ -14,6 +14,7 @@ const createCase = async (newCaseData) => {
     let a = (await axiosInstance.post('/cases/', newCaseData)).data;
     return a;
   } catch(err) {
+
     return err
   }
 };

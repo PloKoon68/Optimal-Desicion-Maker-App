@@ -31,9 +31,10 @@ router.get('/', async (req, res) => {
   
   // POST create a new case
   router.post('/', async (req, res) => {
-    const { title, description } = req.body; // assuming the case has a description
+    const { userId, title, description } = req.body; // assuming the case has a description
     try {
-      const createdRow = await createCase(title, description);
+      const createdRow = await createCase(userId, title, description);
+      console.log("no error")
       res.status(201).json(createdRow);  // Return the created case
     } catch (err) {
       res.status(500).send('Error creating case');

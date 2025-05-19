@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const { getCases, getCaseById, createCase, updateCase, deleteCase } = require('../db/dbFunctions');
 require('dotenv').config({ path: '../../.env' });
 
 const JWT_SECRET = process.env.JWT_SECRET_CODE; 
@@ -9,8 +8,7 @@ const jwt = require("jsonwebtoken");
 //login and generate token
 router.post("/login", (req, res) => {
     const { username, password } = req.body;
-    console.log((username === "as" && password === "12"))
-    // Dummy authentication
+
     if ((username === "as" && password === "12") || (username === "asd" && password === "123")) {
         const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
 
@@ -29,7 +27,6 @@ router.post("/login", (req, res) => {
 });
 
 
-
 //register user
 router.post("/register", (req, res) => {
     const { username, password, email } = req.body;
@@ -42,10 +39,9 @@ router.post("/register", (req, res) => {
     else if(existingEmail) 
         return res.status(409).json({ existingEmail: true});
 
-    //generate new user
+    //generate new user in database
 
     //create token for login
-       
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
     res.cookie("token", token, {
         httpOnly: true,       //not readable from JS (XSS protection)
@@ -71,7 +67,6 @@ router.get("/protected", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    console.log("logging out")
     res.clearCookie("token", {
         httpOnly: true,
         sameSite: "None",
