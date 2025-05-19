@@ -3,7 +3,6 @@ const router = express.Router();
 //const { getCases, getCaseById, createCase, updateCase, deleteCase } = require('../db/dbFunctions');
 require('dotenv').config({ path: '../../.env' });
 
-
 const JWT_SECRET = process.env.JWT_SECRET_CODE; 
 const jwt = require("jsonwebtoken");
 
@@ -29,6 +28,33 @@ router.post("/login", (req, res) => {
     }
 });
 
+
+
+//register user
+router.post("/register", (req, res) => {
+    const { username, password, email } = req.body;
+    
+    //check if this email or username already exists. 
+    const existingUsername = true;
+    const existingEmail = true;
+    if(existingUsername) 
+        return res.status(409).json({ usernameExists: true});
+    else if(existingEmail) 
+        return res.status(409).json({ existingEmail: true});
+
+    //generate new user
+
+    //create token for login
+       
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
+    res.cookie("token", token, {
+        httpOnly: true,       //not readable from JS (XSS protection)
+        secure: true,         // not sent over insecure HTTP, only HTTPS (MITM protection)
+        sameSite: "None",     // "Strict", "Lax" "None" depends. 
+        maxAge: 3600000       // 1 hour
+    });
+    res.json({ message: "Login successful" });
+});
 
 router.get("/protected", (req, res) => {
 

@@ -57,7 +57,7 @@ function RegisterPage() {
     const isValid = checkIfValid(_errors);
 
     if (isValid) {
-      const result = await register(username, password);
+      const result = await register(username, password, email);
 
       if (result.success) {
         navigate('/my-cases');

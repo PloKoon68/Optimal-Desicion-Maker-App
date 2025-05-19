@@ -1,5 +1,17 @@
 import axiosInstance from "../axios"; // Import the axios instance
-import { useNavigate } from 'react-router-dom';
+
+const register = async (username, password, email) => {
+  try {
+    await axiosInstance.post('/auth/register', { username, password, email }, { withCredentials: true });
+    return { success: true };
+  } catch (err) {
+    if (err.response && err.response.status === 400) {
+      return { success: false, reason: 'user_exists' }; // assuming backend sends 400 for existing user
+    } 
+
+    return { success: false, reason: 'server_error' };
+  }
+};
 
 const login = async (username, password) => {
   try{
@@ -29,19 +41,6 @@ const checkLoggedIn = async () => {
   } catch (err) {
     console.error("Access denied");
     return false;    
-  }
-};
-
-const register = async (username, password) => {
-  try {
-    await axiosInstance.post('/auth/register', { username, password }, { withCredentials: true });
-    return { success: true };
-  } catch (err) {
-    if (err.response && err.response.status === 400) {
-      return { success: false, reason: 'user_exists' }; // assuming backend sends 400 for existing user
-    } 
-
-    return { success: false, reason: 'server_error' };
   }
 };
 

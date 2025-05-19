@@ -18,6 +18,7 @@ function LoginPage() {
   const [errors, setErrors] = useState({
     usernameBlank: false,
     passwordBlank: false,
+    
     invalidCredentials: false
   });
   
