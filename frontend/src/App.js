@@ -14,7 +14,9 @@ import ServerDownPage from "./ServerDownPage.js"
 
 import ProcessingPage from "./Pages/Authenticated Pages/Processing Page/ProcessingPage.js";
 import MyCases from "./Pages/Authenticated Pages/My Cases/My Cases.js"
+
 import LoginPage from "./Pages/None Authenticated Pages/Login/Login.js"
+import RegisterPage from "./Pages/None Authenticated Pages/Register/Register.js"
 
 import PrivateRoute from './Routes/PrivateRoute.js'; // adjust path as needed
 import NonePrivateRoute from './Routes/NonePrivateRoute.js'; // adjust path as needed
@@ -70,6 +72,15 @@ function App() {
           element={
             <NonePrivateRoute >
               <LoginPage />
+            </NonePrivateRoute>
+          }
+        />
+
+        <Route
+          path="/register"
+          element={
+            <NonePrivateRoute >
+              <RegisterPage />
             </NonePrivateRoute>
           }
         />

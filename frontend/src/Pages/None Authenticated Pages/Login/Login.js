@@ -15,7 +15,6 @@ function LoginPage() {
 
   const [waitingResponse, setWaitingResponse] = useState(false);
 
-
   const [errors, setErrors] = useState({
     usernameBlank: false,
     passwordBlank: false,
@@ -56,7 +55,7 @@ function LoginPage() {
           <div className="shape"></div>
       </div>
       <form className="login-form" onSubmit={handleLogin}>
-        <h2 className='login-title mb-6' style={{color:"black"}}><strong>Login</strong></h2>
+        <h2 className='login-title mb-6' style={{color:"black"}}><strong>Login </strong></h2>
 
         {errors.invalidCredentials && (
         <div className="invalid-credentials">
@@ -72,12 +71,12 @@ function LoginPage() {
         )}
         
         <div className='mb-3'>
-          <input className='login-input' type="text" placeholder="User Name" value={username} onChange={e => setUsername(e.target.value)} id="username"/>
+          <input className='login-input' type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} id="Username"/>
           {errors.usernameBlank && <div className="error-text">Username can't be empty!</div>}
         </div>
         
         <div className='mb-5'>
-          <input className='login-input' type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} id="password"/>
+          <input className='login-input' type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} id="Password"/>
           {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
         </div>
 

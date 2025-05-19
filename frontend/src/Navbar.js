@@ -60,13 +60,13 @@ const Navbar = () => {
       ) : (
         <>
           <li className="nav-item mx-2">
-            <Link className="nav-link" to="/login">Register</Link>
+            <Link className="nav-link" to="/register">Register</Link>
           </li>
           <li className="nav-item mx-2">
             <button 
               className="btn btn-success" 
               style={{ backgroundColor: "rgb(44, 248, 89)", fontSize: "20px" }}
-              onClick={handleLogin}
+              onClick={() => navigate('/login')}
             >
               Login
             </button>
