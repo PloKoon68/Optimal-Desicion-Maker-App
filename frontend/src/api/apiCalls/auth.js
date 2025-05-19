@@ -13,7 +13,7 @@ const login = async (username, password) => {
       return { success: false, reason: 'invalid_credentials' };
     }
 
-    return { success: false, reason: 'server_error' };
+    return { success: false, reason: 'server_error' };   //code: ERR_NETWORK
 
   }
 };
@@ -39,9 +39,9 @@ const register = async (username, password) => {
   } catch (err) {
     if (err.response && err.response.status === 400) {
       return { success: false, reason: 'user_exists' }; // assuming backend sends 400 for existing user
-    } else {
-      return { success: false, reason: 'server_error' };
-    }
+    } 
+
+    return { success: false, reason: 'server_error' };
   }
 };
 

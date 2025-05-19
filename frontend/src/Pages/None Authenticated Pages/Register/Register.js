@@ -20,28 +20,43 @@ function RegisterPage() {
 
 
   const [errors, setErrors] = useState({
-    usernameBlank: false,
-    passwordBlank: false,
-    confirmPasswordNotMatch: false,
-    emailBlank: false,
-
-    userExists: false
   });
 
-  const [spaceWarning, setSpaceWarning] = useState(false)
   
+  const checkPreErrors = () => {  
+    const _errors = {
+      usernameBlank: !username,
+      usernameHasSpaces: username.includes(" "),
+
+      passwordBlank: !password,
+      confirmPasswordNotMatch: password !== confirmPassword,
+
+      emailBlank: !email,
+      invalidEmail: false,
+      emailNotFound: false,
+  
+      userExists: false
+    };
+    return _errors;
+  }
+  const checkIfValid = (_errors) => {  
+    let isValid = true;
+    for (const value of Object.values(_errors)) {
+      if (value) {
+        isValid = false;
+        break;
+      }
+    }
+    return isValid;
+  }
   const handleRegister = async (e) => {
     e.preventDefault();
     setWaitingResponse(true);
 
-    const _errors = {
-      usernameBlank: !username.trim(),
-      passwordBlank: !password.trim(),
-      invalidCredentials: confirmPassword.trim() !== password.trim(),
-      userExists: false
-    };
+    const _errors = checkPreErrors();
+    const isValid = checkIfValid(_errors);
 
-    if (!_errors.usernameBlank && !_errors.passwordBlank) {
+    if (isValid) {
       const result = await register(username, password);
 
       if (result.success) {
@@ -84,13 +99,13 @@ function RegisterPage() {
         
         <div className='mb-3'>
           <input className='login-input' type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-          {errors.usernameBlank && <div className="error-text">Username can't be empty!</div>}
+          {errors.usernameBlank && (<div className="error-text">Username can't be empty!</div>) ||
+          errors.usernameHasSpaces && <small className="error-text">Blank character not allowed in username ℹ️</small>}
         </div>
         
         <div className='mb-3'>
           <input className='login-input' type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
           {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
-          {spaceWarning && <small className="helper-text">Leading/trailing spaces will be removed.</small>}
         </div>
         <div className='mb-3'>
           <input className='login-input' type="password" placeholder="Confirm password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
@@ -99,7 +114,7 @@ function RegisterPage() {
 
         <div className='mb-5'>
           <input className='login-input' type="email" placeholder="E-mail address" value={email} onChange={e => setEmail(e.target.value)} />
-          {errors.passwordBlank && <div className="error-text">Password can't be empty!</div>}
+          {errors.emailBlank && <div className="error-text">Email required!</div>}
         </div>
 
         <button className="login-button" disabled={waitingResponse}>
