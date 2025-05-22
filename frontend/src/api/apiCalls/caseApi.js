@@ -12,6 +12,8 @@ const fetchCases = async () => {
 
 const createCase = async (newCaseData) => {
   try{
+    console.log("on axios")
+
     let a = (await axiosInstance.post('/cases/', newCaseData)).data;
     return a;
   } catch(err) {

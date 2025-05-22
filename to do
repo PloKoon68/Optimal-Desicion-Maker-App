@@ -1,7 +1,8 @@
 Backend:
 - decisionmatrix route, adjust create to add whole decisionmatrix at once
 - in server.js, use.cors, allowheaders... what are thos 
-
+- when clicking a case, the whole page content data recieving should be done in one route call (/caseContent), intead of having different for decisiionmatrix and cases so authentication middleware doesn't need to work twice.
+- then after this middleware implementation, maybe no need for useeffect checking in every reload 
 
 - /*
         criteriaName

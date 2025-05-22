@@ -99,6 +99,7 @@ export default function MyCases() {
     try {
       if (!editedCard.caseId) { // Creating a new case
         editedCard.userId = 1;
+        console.log("on component")
         const updatedCase = await createCase(editedCard);
         updatedCards[index] = { ...updatedCase };
       } else { // Editing an existing case
