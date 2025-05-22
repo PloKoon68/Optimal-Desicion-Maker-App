@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
     }
 
     // 3️⃣ Generate JWT with userId and username
-    const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user.userId, username: user.username }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -46,27 +46,7 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-/*
-router.post("/login", (req, res) => {
-    const { username, password } = req.body;
 
-    if ((username === "as" && password === "12") || (username === "asd" && password === "123")) {
-        const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
-
-        // Set HttpOnly cookie
-        res.cookie("token", token, {
-            httpOnly: true,       //not readable from JS (XSS protection)
-            secure: true,         // not sent over insecure HTTP, only HTTPS (MITM protection)
-            sameSite: "None",     // "Strict", "Lax" "None" depends. 
-            maxAge: 3600000       // 1 hour
-        });
-
-        res.json({ message: "Login successful" });
-    } else {
-        res.status(401).json({ message: "Invalid credentials" });
-    }
-});
-*/
 
 router.post("/register", async (req, res) => {
     const { username, password, email } = req.body;
@@ -84,10 +64,9 @@ router.post("/register", async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         // Step 3: Insert new user into DB
         const insertResult = await createNewUser(username, hashedPassword, email);
-        const userId = insertResult.rows[0].id;
 
         // Step 4: Generate JWT containing userId
-        const token = jwt.sign({ userId, username }, JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ userId: user.userId, username: user.username }, JWT_SECRET, { expiresIn: "1h" });
 
         // Step 5: Set token cookie
         res.cookie("token", token, {
@@ -118,6 +97,7 @@ router.get("/protected", (req, res) => {
         res.status(403).json({ message: "Invalid or expired token" });
     }
 });
+
 
 router.get("/logout", (req, res) => {
     res.clearCookie("token", {

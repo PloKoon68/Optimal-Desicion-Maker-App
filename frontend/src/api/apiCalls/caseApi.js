@@ -3,8 +3,7 @@ import axiosInstance from "../axios"; // Import the axios instance
 
 const fetchCases = async () => {
   try{
-    console.log((await axiosInstance.get(`/cases`)).data)
-    return (await axiosInstance.get(`/cases`)).data
+    return (await axiosInstance.get(`/cases`, { withCredentials: true })).data
   } catch(err) {
     console.log("fetch error is:", err)
   }
@@ -12,12 +11,10 @@ const fetchCases = async () => {
 
 const createCase = async (newCaseData) => {
   try{
-    console.log("on axios")
-
-    let a = (await axiosInstance.post('/cases/', newCaseData)).data;
+    console.log("going")
+    let a = (await axiosInstance.post('/cases/', newCaseData, { withCredentials: true })).data;
     return a;
   } catch(err) {
-
     return err
   }
 };

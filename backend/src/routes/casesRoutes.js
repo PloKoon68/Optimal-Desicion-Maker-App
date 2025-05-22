@@ -1,7 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { getCases, getCasesByUserId, createCase, updateCase, deleteCase } = require('../db/dbFunctions');
+const authenticateUser = require('../middleware/authenticateUser'); // adjust path as needed
 
+
+router.get("/", authenticateUser, async (req, res) => {
+  const userId = req.userId;
+  const cases = await getCasesByUserId(userId);
+
+  res.json(cases);
+});
+/*
 router.get('/', async (req, res) => {
     try {
       const result = await getCases();
@@ -12,23 +21,7 @@ router.get('/', async (req, res) => {
       res.status(500).send('Error fetching cases');
     }
   });
-  
-  /*
-  
-  // GET a specific case by ID
-  router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await getCaseById(id);
-      if (!result) {
-        return res.status(404).send('Case not found');
-      }
-      res.status(200).json(result);
-    } catch (err) {
-      res.status(500).send('Error fetching case');
-    }
-  });
-*/
+  */
   // GET the cases for a user
   router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
@@ -46,15 +39,20 @@ router.get('/', async (req, res) => {
   
   
   // POST create a new case
-  router.post('/', async (req, res) => {
-    const { userId, title, description } = req.body; // assuming the case has a description
+  router.post('/', authenticateUser, async (req, res) => {
+    const { title, description } = req.body;
+    const userId = req.userId; // ✅ Safe and verified
+
+    console.log(userId)
     try {
       const createdRow = await createCase(userId, title, description);
-      res.status(201).json(createdRow);  // Return the created case
+      res.status(201).json(createdRow);
     } catch (err) {
+      console.error('Error creating case:', err);
       res.status(500).send('Error creating case');
     }
   });
+
   
   // PUT update an existing case by ID
   router.put('/:id', async (req, res) => {
