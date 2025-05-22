@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCases, getCaseById, createCase, updateCase, deleteCase } = require('../db/dbFunctions');
+const { getCases, getCasesByUserId, createCase, updateCase, deleteCase } = require('../db/dbFunctions');
 
 router.get('/', async (req, res) => {
     try {
@@ -13,12 +13,28 @@ router.get('/', async (req, res) => {
     }
   });
   
+  /*
   
   // GET a specific case by ID
   router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
       const result = await getCaseById(id);
+      if (!result) {
+        return res.status(404).send('Case not found');
+      }
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(500).send('Error fetching case');
+    }
+  });
+*/
+  // GET the cases for a user
+  router.get('/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const result = await getCasesByUserId(userId)
+//      const result = await getCaseById(id);
       if (!result) {
         return res.status(404).send('Case not found');
       }
@@ -34,7 +50,6 @@ router.get('/', async (req, res) => {
     const { userId, title, description } = req.body; // assuming the case has a description
     try {
       const createdRow = await createCase(userId, title, description);
-      console.log("no error")
       res.status(201).json(createdRow);  // Return the created case
     } catch (err) {
       res.status(500).send('Error creating case');

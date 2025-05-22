@@ -39,6 +39,7 @@ function RegisterPage() {
     };
     return _errors;
   }
+  
   const checkIfValid = (_errors) => {  
     let isValid = true;
     for (const value of Object.values(_errors)) {

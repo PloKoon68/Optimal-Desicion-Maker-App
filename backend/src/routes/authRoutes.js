@@ -4,6 +4,9 @@ require('dotenv').config({ path: '../../.env' });
 
 const JWT_SECRET = process.env.JWT_SECRET_CODE; 
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const { doesUsernameExist, doesEmailExist, createNewUser } = require('../db/dbFunctions');
 
 //login and generate token
 router.post("/login", (req, res) => {
@@ -27,6 +30,43 @@ router.post("/login", (req, res) => {
 });
 
 
+router.post("/register", async (req, res) => {
+    const { username, password, email } = req.body;
+
+    try {
+        // Step 1: Check if username or email already exists
+        if (await doesUsernameExist())
+            return res.status(409).json({ usernameExists: true });
+
+        if (await doesEmailExist())
+            return res.status(409).json({ existingEmail: true });
+
+        // Step 2: Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        // Step 3: Insert new user into DB
+        const insertResult = await createNewUser(username, hashedPassword, email);
+        const userId = insertResult.rows[0].id;
+
+        // Step 4: Generate JWT containing userId
+        const token = jwt.sign({ userId, username }, JWT_SECRET, { expiresIn: "1h" });
+
+        // Step 5: Set token cookie
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 3600000
+        });
+
+        res.json({ message: "Registration successful" });
+    } catch (err) {
+        console.error("Registration error:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+/*
 //register user
 router.post("/register", (req, res) => {
     const { username, password, email } = req.body;
@@ -51,6 +91,7 @@ router.post("/register", (req, res) => {
     });
     res.json({ message: "Login successful" });
 });
+*/
 
 router.get("/protected", (req, res) => {
 

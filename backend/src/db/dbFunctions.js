@@ -23,6 +23,10 @@ const getCaseById = async (id) => {
   return (await runQuery(`SELECT * FROM cases WHERE "caseId" = $1`, [id])).rows[0];
 };
 
+const getCasesByUserId = async (userId) => {
+  return (await runQuery(`SELECT * FROM cases WHERE "userId" = $1`, [userId])).rows;
+};
+
 // 3️⃣ Create a new case
 const createCase = async (userId, title, description) => {
   return (await runQuery(
@@ -86,24 +90,34 @@ const insertDecisionMatrix = async (caseId, decisionMatrix) => {
 };
 
 
-/*
-//no need since deleting criterias will already delete these
-const deleteDecisionMatrix = async (caseId) => {
-  const query = `
-    DELETE FROM decisionmatrix 
-    WHERE "caseId" = $1
-  `;
 
-  await runQuery(query, [caseId]);
+
+//auth
+// Check if a username exists
+const doesUsernameExist = async (username) => {
+  const result = await runQuery("SELECT * FROM users WHERE username = $1", [username]);
+  return result.rows.length > 0;
 };
-*/
 
+// Check if an email exists
+const doesEmailExist = async (email) => {
+  const result = await runQuery("SELECT * FROM users WHERE email = $1", [email]);
+  return result.rows.length > 0;
+};
+
+
+//register
+const createNewUser = async (username, hashedPassword, email) => {
+  return await runQuery(`INSERT INTO users (username, "passwordHash", email) VALUES ($1, $2, $3) RETURNING "userId"`,
+                                 [username, hashedPassword, email]);
+};
 
 
 // Export all functions
 module.exports = {
   getCases,
   getCaseById,
+  getCasesByUserId,
   createCase,
   updateCase,
   deleteCase,
@@ -112,7 +126,10 @@ module.exports = {
   insertCriterias,
   runQuery,
   insertDecisionMatrix,
-  getDecisionMatrix
+  getDecisionMatrix,
+  doesUsernameExist,
+  doesEmailExist,
+  createNewUser
 };
 
 

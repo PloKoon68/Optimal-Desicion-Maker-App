@@ -24,6 +24,7 @@ export default function MyCases() {
   const [initialRender, setInitialRender] = useState(true);
   
   useEffect(() => {
+    console.log("t")
     const fetchWithDelay = async () => {
       let numCounts = 0, limit = 1;
       

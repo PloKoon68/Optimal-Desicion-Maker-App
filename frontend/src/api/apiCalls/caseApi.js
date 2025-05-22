@@ -3,7 +3,8 @@ import axiosInstance from "../axios"; // Import the axios instance
 
 const fetchCases = async () => {
   try{
-    return (await axiosInstance.get('/cases/')).data
+    console.log((await axiosInstance.get(`/cases`)).data)
+    return (await axiosInstance.get(`/cases`)).data
   } catch(err) {
     console.log("fetch error is:", err)
   }
@@ -26,6 +27,8 @@ const updateCase = async (caseId, updatedData) => {
 const deleteCase = async (caseId) => {
   return (await axiosInstance.delete(`/cases/${caseId}`)).data;
 };
+
+
 
 export {
   fetchCases,

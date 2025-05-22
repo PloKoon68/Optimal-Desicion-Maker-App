@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';  // Optional but recommended
 
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -28,10 +28,7 @@ function App() {
 
   const [saveParams, setSaveParams] = useState({});  
 
-  const [isloggedIn, setIsloggedIn] = useState(false);
-  //const [loading, setLoading] = useState(true);
 
-  const location = useLocation();
 
   return (
     loading? 
