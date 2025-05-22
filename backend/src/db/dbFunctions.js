@@ -105,6 +105,12 @@ const doesEmailExist = async (email) => {
   return result.rows.length > 0;
 };
 
+//get user
+const getUserByUsername = async (username) => {
+  return (await runQuery("SELECT * FROM users WHERE username = $1", [username])).rows[0];
+};
+
+
 
 //register
 const createNewUser = async (username, hashedPassword, email) => {
@@ -129,7 +135,8 @@ module.exports = {
   getDecisionMatrix,
   doesUsernameExist,
   doesEmailExist,
-  createNewUser
+  createNewUser,
+  getUserByUsername
 };
 
 
