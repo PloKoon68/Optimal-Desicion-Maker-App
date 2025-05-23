@@ -82,15 +82,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/register"
-          element={
-            <NonePrivateRoute >
-              <LoginPage />
-            </NonePrivateRoute>
-          }
-        />
-        
       </Routes>
     </div>
   );

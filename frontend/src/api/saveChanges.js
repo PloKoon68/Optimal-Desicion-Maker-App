@@ -4,10 +4,8 @@ import {deleteCriterias,
 import {insertMatrixContent} from "./apiCalls/decisionMatrixApi.js"; // Import the axios call functions
     
 
-const saveChangesProcessingPage = async (saveParams) => {
-    const caseId = saveParams.caseId;
-    const newCriterias = saveParams.criteriaCards;
-    const decisionMatrix = saveParams.products;
+const saveChangesProcessingPage = async (caseId, newCriterias, decisionMatrix) => {
+    console.log(caseId, newCriterias, decisionMatrix)
 
     try {
         //delete old criterias and add the new ones
@@ -16,14 +14,12 @@ const saveChangesProcessingPage = async (saveParams) => {
             await createCriterias(caseId, newCriterias);
         }
         if(decisionMatrix.length) {
-            await insertMatrixContent(caseId, decisionMatrix);
-            
+            await insertMatrixContent(caseId, decisionMatrix);   //old matrix content already be deleted when criterias are deleted because of foreign key dependency
         }
       } catch (error) {
         console.error("Error saving changes:", error);
       }
 
-    return "done"
 }
 
     

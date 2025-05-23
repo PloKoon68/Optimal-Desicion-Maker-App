@@ -73,7 +73,6 @@ export default class SAW extends McdmMethods {
         let weights = AHP.weightCalculation(criteriaValues, weightsCalculationMethod);
 
         let normalizedMatrix = this.normalize(decisionMatrix, isBeneficial);
-        console.log("norm:Ç ", normalizedMatrix)
         let weightedMultiplicationMatrix = this.multiplyWithWeights(normalizedMatrix, weights);
         let alternativesScores = this.summationOfCriterias(weightedMultiplicationMatrix);
         //let sortedAlternatives = this.sortingAlternatives(alternativesScores);

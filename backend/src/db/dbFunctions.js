@@ -64,11 +64,34 @@ const insertCriterias = async (caseId, criterias) => {
 };
 
 
+//criteria single (chatty)
+const insertCriteria = async (caseId, criterias) => {
+  return await runQuery(`INSERT INTO criterias ("caseId", "criteriaName", "dataType", characteristic, "criteriaPoint") VALUES ($1, $2, $3, $4, $5)`,
+                                                [caseId, criterias.criteriaName, criterias.dataType, criterias.characteristic, criterias.criteriaPoint]);
+};
+
+const deleteCriteriaByCriteriaId = async (caseId) => {
+  return await runQuery(`DELETE FROM criteria WHERE "caseId" = $1`, [caseId]);
+};
 
 
+
+
+
+//decision matrix
 const getDecisionMatrix = async (caseId) => {
+//    SELECT * FROM decisionmatrix WHERE "caseId" = $1
   const query = `
-    SELECT * FROM decisionmatrix WHERE "caseId" = $1
+    SELECT 
+    c."criteriaName",
+    d."alternativeName",
+    d."value"
+  FROM 
+    decisionmatrix d
+  JOIN 
+    criterias c ON d."criteriaId" = c."criteriaId"
+  WHERE 
+    d."caseId" = $1;
   `;
 
   return (await runQuery(query, [caseId])).rows;
@@ -89,6 +112,20 @@ const insertDecisionMatrix = async (caseId, decisionMatrix) => {
   await runQuery(query, [caseId]);
 };
 
+const insertEntity = async (caseId, decisionMatrix) => {
+  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
+  VALUES ${decisionMatrix.map((alternative) => {
+    let values = ``;
+    Object.keys(alternative).filter(key => key !== 'alternativeName' && key !== 'id')
+    .forEach(criteriaName => {
+       values += `($1, '${criteriaName}', '${alternative.alternativeName}', '${alternative[criteriaName]}'),`
+      //         caseId, criteriaName,         alternativeName,                      value
+      })
+      return values.substring(0, values.length - 1);
+  })}`
+
+  await runQuery(query, [caseId]);
+};
 
 
 
@@ -130,6 +167,7 @@ module.exports = {
   getCriteriasByCaseId,
   deleteCriteriasByCaseId,
   insertCriterias,
+  insertCriteria,
   runQuery,
   insertDecisionMatrix,
   getDecisionMatrix,
@@ -159,6 +197,15 @@ CREATE TABLE IF NOT EXISTS users (
   "passwordHash" TEXT NOT NULL,
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE IF NOT EXISTS criterias (
+        "caseId" INT,
+        "criteriaName" VARCHAR(255) NOT NULL,
+        "dataType" VARCHAR(20),
+        characteristic VARCHAR(20),
+        "criteriaPoint" NUMERIC,
+        PRIMARY KEY ("caseId", "criteriaName"),
+        FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
+      );
 */
 /*
 const createTables = async () => {

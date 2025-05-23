@@ -24,7 +24,6 @@ export default function MyCases() {
   const [initialRender, setInitialRender] = useState(true);
   
   useEffect(() => {
-    console.log("t")
     const fetchWithDelay = async () => {
       let numCounts = 0, limit = 1;
       
@@ -98,7 +97,6 @@ export default function MyCases() {
     const updatedCards = [...caseCards];
     try {
       if (!editedCard.caseId) { // Creating a new case
-        editedCard.userId = 1;
         console.log("on component")
         const updatedCase = await createCase(editedCard);
         updatedCards[index] = { ...updatedCase };

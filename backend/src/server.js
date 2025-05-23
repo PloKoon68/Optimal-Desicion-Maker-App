@@ -35,6 +35,56 @@ app.get('/healthz', (req, res) => {
   res.status(200).send('OK');
 });
 
+app.post('/api/quick-save', async (req, res) => {
+  let body = '';
+  console.log("came");
+/*
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+
+  req.on('end', async () => {
+    try {
+      const { caseId, criteriaCards, products } = JSON.parse(body);
+      console.log("came");
+      console.log("Data:", caseId, criteriaCards?.length, products?.length);
+
+      // await deleteCriterias(caseId);
+      // await createCriterias(caseId, criteriaCards);
+      // await insertMatrixContent(caseId, products);
+
+      res.sendStatus(200);
+    } catch (err) {
+      console.error("Error parsing beacon payload:", err);
+      res.sendStatus(400);
+    }
+  });
+  */
+});
+
+/*
+app.post('/api/quick-save', express.json(), async (req, res) => {
+  //const { caseId, newCriterias, decisionMatrix } = req.body;
+
+  console.log("came")
+  
+  
+  try {
+    if (newCriterias?.length) {
+      await deleteCriterias(caseId);
+      await createCriterias(caseId, newCriterias);
+    }
+    if (decisionMatrix?.length) {
+      await insertMatrixContent(caseId, decisionMatrix);
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error in quick save:", error);
+    res.sendStatus(500);
+  }
+});
+*/
 
 const server = app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

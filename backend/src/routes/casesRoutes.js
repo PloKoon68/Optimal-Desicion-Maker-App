@@ -10,18 +10,7 @@ router.get("/", authenticateUser, async (req, res) => {
 
   res.json(cases);
 });
-/*
-router.get('/', async (req, res) => {
-    try {
-      const result = await getCases();
-      
-      res.status(200).json(result);
-    } catch (err) {
-      console.log("err is: ", err)
-      res.status(500).send('Error fetching cases');
-    }
-  });
-  */
+
   // GET the cases for a user
   router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
@@ -43,7 +32,6 @@ router.get('/', async (req, res) => {
     const { title, description } = req.body;
     const userId = req.userId; // ✅ Safe and verified
 
-    console.log(userId)
     try {
       const createdRow = await createCase(userId, title, description);
       res.status(201).json(createdRow);
@@ -82,5 +70,7 @@ router.get('/', async (req, res) => {
       res.status(500).send('Error deleting case');
     }
   });
+
+  
 
   module.exports = router;

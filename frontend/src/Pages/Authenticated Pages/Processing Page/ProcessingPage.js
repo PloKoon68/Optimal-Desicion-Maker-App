@@ -5,13 +5,13 @@ import DecisionMatrix from "./DecisionMatrix/DecisionMatrix.js"
 import Submission from "./Results/Submission.js"
 
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {fetchCriterias} from "../../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 import {fetchDecisionMatrix} from "../../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
-function ProcessingPage({setSaveParams}) {
+function ProcessingPage() {
   const { caseId } = useParams();
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -27,7 +27,6 @@ function ProcessingPage({setSaveParams}) {
         const decisionMatrix = await fetchDecisionMatrix(caseId) || [];
         let altIndexes = {};
         let _products = [];
-
 
         decisionMatrix.forEach((val) => {
           const alternativeName = val.alternativeName;
@@ -56,11 +55,7 @@ function ProcessingPage({setSaveParams}) {
   }, []);
 
 
-  useEffect(() => {
-    setSaveParams({"caseId": caseId, "criteriaCards": [...criteriaCards], "products": [...products]});
   
-  }, [criteriaCards, products]); // Empty dependency array means this runs once when the component mounts
-
   return (
     <div className="ProcessingPage container-fluid col-10" >
       {/*<CaseTitle caseTitle={"University Selection okayy"}/>*/}
