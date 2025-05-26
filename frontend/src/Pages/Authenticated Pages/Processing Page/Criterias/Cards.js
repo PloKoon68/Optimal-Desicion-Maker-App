@@ -1,10 +1,16 @@
-  // Cards.js
-  import React from 'react';
-  import './Criterias.css';
+// Cards.js
+import './Criterias.css';
+
+import {deleteCriteria} from "../../../../api/apiCalls/criteriaApi"; // Import the axios call functions
 
 
 function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, criteriaNames}) {
-  
+  const handleDeleteCard = async (card) => {
+    await deleteCriteria(card.criteriaId);
+    setCriteriaCards(criteriaCards.filter((mapCard) => mapCard !== card));
+    criteriaNames.delete(card.criteriaName);
+    setCriteriaNames(criteriaNames)
+  }
   return (
     <div className='criterias-container mt-7'>
       <div className='criterias'>
@@ -40,11 +46,7 @@ function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, 
                   type='button'
                   className='btn btn-danger inputs-size'
                   style={{backgroundColor: "rgb(221, 96, 180)"}}
-                  onClick={() => {
-                    setCriteriaCards(criteriaCards.filter((mapCard) => mapCard !== card));
-                    criteriaNames.delete(card.criteriaName);
-                    setCriteriaNames(criteriaNames)
-                  }}
+                  onClick={() => handleDeleteCard(card)}
                 >
                   Delete
                 </button>

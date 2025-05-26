@@ -37,7 +37,6 @@ const createCriteria = async (caseId, newCriteria) => {
   }
 };
   
-
 export const updateCriteria = async (criteriaId, updatedCriteria) => {
   try {
     await axiosInstance.put(`/criterias/${criteriaId}`, updatedCriteria);
@@ -46,6 +45,19 @@ export const updateCriteria = async (criteriaId, updatedCriteria) => {
     throw err;
   }
 };
+
+// services/criteriaService.js or similar file
+export const deleteCriteria = async (criteriaId) => {
+  try {
+    console.log("sending: ", criteriaId)
+    await axiosInstance.delete(`/criterias/${criteriaId}`);
+    console.log("Criteria deleted successfully");
+  } catch (err) {
+    console.error("Delete criteria error:", err.response ? err.response.data : err.message);
+    throw err;
+  }
+};
+
 
 export {
     fetchCriterias,

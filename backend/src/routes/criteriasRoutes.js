@@ -18,8 +18,10 @@ router.get('/:caseId', async (req, res) => {
   }
 });
 
+/*
 router.delete('/:caseId', async (req, res) => { 
   try {
+    console.log("dd")
     await deleteCriteriasByCaseId(req.params.caseId);
     res.status(200).send(`Criterias deleted at case with id ${req.params.caseId}`);
   } catch (err) {
@@ -28,7 +30,6 @@ router.delete('/:caseId', async (req, res) => {
   }
 });
 
-/*
 router.post('/:caseId', async (req, res) => {
   try {
     // 1️⃣ Check if the case exists
@@ -90,6 +91,27 @@ router.put('/:criteriaId', async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 });
+
+router.delete('/:criteriaId', async (req, res) => {
+  const { criteriaId } = req.params;
+
+  try {
+    const result = await runQuery(
+      `DELETE FROM criterias WHERE "criteriaId" = $1`,
+      [criteriaId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Criteria not found." });
+    }
+
+    res.status(200).json({ message: "Criteria deleted successfully." });
+  } catch (err) {
+    console.error("Error deleting criteria:", err);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
+
 
 
   module.exports = router;
