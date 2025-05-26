@@ -42,6 +42,7 @@ export default class SAW extends McdmMethods {
     }
 
     multiplyWithWeights(normalizedMatrix, weights) {
+        console.log("ww: ", weights)
         let weightedMultiplicationMatrix = new Array(normalizedMatrix.length).fill().map(() => new Array(normalizedMatrix[0].length));
         for (let i = 0; i < normalizedMatrix.length; i++) {
             for (let j = 0; j < normalizedMatrix[0].length; j++) {

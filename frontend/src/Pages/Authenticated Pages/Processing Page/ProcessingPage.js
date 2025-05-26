@@ -5,14 +5,15 @@ import DecisionMatrix from "./DecisionMatrix/DecisionMatrix.js"
 import Submission from "./Results/Submission.js"
 
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {fetchCriterias} from "../../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 import {fetchDecisionMatrix} from "../../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
 function ProcessingPage() {
-  const { caseId } = useParams();
+  const caseId = Number(useParams().caseId);
+  console.log(caseId)
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 
@@ -59,7 +60,7 @@ function ProcessingPage() {
   return (
     <div className="ProcessingPage container-fluid col-10" >
       {/*<CaseTitle caseTitle={"University Selection okayy"}/>*/}
-      <CriteriaForm criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
+      <CriteriaForm caseId={caseId} criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
       <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
       <Submission products={products} criteriaCards={criteriaCards}/>

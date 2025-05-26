@@ -65,16 +65,22 @@ const insertCriterias = async (caseId, criterias) => {
 
 
 //criteria single (chatty)
-const insertCriteria = async (caseId, criterias) => {
-  return await runQuery(`INSERT INTO criterias ("caseId", "criteriaName", "dataType", characteristic, "criteriaPoint") VALUES ($1, $2, $3, $4, $5)`,
-                                                [caseId, criterias.criteriaName, criterias.dataType, criterias.characteristic, criterias.criteriaPoint]);
+const insertCriteria = async (caseId, criteria) => {
+  return (await runQuery(`INSERT INTO criterias ("caseId", "criteriaName", "dataType", characteristic, "criteriaPoint") VALUES ($1, $2, $3, $4, $5) RETURNING "criteriaId"`,
+                                                [caseId, criteria.criteriaName, criteria.dataType, criteria.characteristic, criteria.criteriaPoint])).rows[0];
 };
 
-const deleteCriteriaByCriteriaId = async (caseId) => {
-  return await runQuery(`DELETE FROM criteria WHERE "caseId" = $1`, [caseId]);
+const deleteCriteriaByCriteriaId = async (criteriaId) => {
+  return await runQuery(`DELETE FROM criteria WHERE "criteriaId" = $1`, [criteriaId]);
 };
 
-
+const insertDecionMatrixEntity = async (caseId, entity) => {
+// `($1, '${criteriaName}', '${alternative.alternativeName}', '${alternative[criteriaName]}'),`
+  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaId", "alternativeName", value)
+  VALUES ($1, $2, $3, $4)`
+  await runQuery(query, [caseId, entity.criteriaId, entity.alternativeName, entity.value]);
+  //!!!!!!!!!!!!!!111111!!!!!!!!!!bura illa criteriaName mi olacak
+};
 
 
 
@@ -112,20 +118,7 @@ const insertDecisionMatrix = async (caseId, decisionMatrix) => {
   await runQuery(query, [caseId]);
 };
 
-const insertEntity = async (caseId, decisionMatrix) => {
-  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
-  VALUES ${decisionMatrix.map((alternative) => {
-    let values = ``;
-    Object.keys(alternative).filter(key => key !== 'alternativeName' && key !== 'id')
-    .forEach(criteriaName => {
-       values += `($1, '${criteriaName}', '${alternative.alternativeName}', '${alternative[criteriaName]}'),`
-      //         caseId, criteriaName,         alternativeName,                      value
-      })
-      return values.substring(0, values.length - 1);
-  })}`
 
-  await runQuery(query, [caseId]);
-};
 
 
 
@@ -183,13 +176,12 @@ module.exports = {
 /*
 CREATE TABLE decisionmatrix (
   "caseId" INT NOT NULL,
-  "criteriaName" VARCHAR(255) NOT NULL,
+  "criteriaId" INT NOT NULL,
   "alternativeName" VARCHAR(255) NOT NULL,
   value TEXT NOT NULL,  
-  PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
-  FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
+  PRIMARY KEY ("criteriaId", "alternativeName"),
+  FOREIGN KEY ("caseId", "criteriaId") REFERENCES criterias("caseId", "criteriaId") ON DELETE CASCADE
 );
-
 CREATE TABLE IF NOT EXISTS users (
   "userId" SERIAL PRIMARY KEY,
   "username" VARCHAR(255) UNIQUE NOT NULL,
@@ -197,13 +189,16 @@ CREATE TABLE IF NOT EXISTS users (
   "passwordHash" TEXT NOT NULL,
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+DROP TABLE criterias;
 CREATE TABLE IF NOT EXISTS criterias (
         "caseId" INT,
+         "criteriaId" SERIAL,
         "criteriaName" VARCHAR(255) NOT NULL,
         "dataType" VARCHAR(20),
         characteristic VARCHAR(20),
         "criteriaPoint" NUMERIC,
-        PRIMARY KEY ("caseId", "criteriaName"),
+        PRIMARY KEY ("caseId", "criteriaId"),
         FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
       );
 */

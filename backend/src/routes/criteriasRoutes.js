@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCriteriasByCaseId, deleteCriteriasByCaseId, insertCriterias, runQuery } = require('../db/dbFunctions');
+const { getCriteriasByCaseId, deleteCriteriasByCaseId, insertCriterias, insertCriteria, runQuery } = require('../db/dbFunctions');
 
 /*
         criteriaName
@@ -28,6 +28,7 @@ router.delete('/:caseId', async (req, res) => {
   }
 });
 
+/*
 router.post('/:caseId', async (req, res) => {
   try {
     // 1️⃣ Check if the case exists
@@ -42,5 +43,25 @@ router.post('/:caseId', async (req, res) => {
     res.status(500).send({"error is: ": err});
   }
 });
+
+*/
+
+router.post('/:caseId', async (req, res) => {
+  try {
+   
+    // 1️⃣ Check if the case exists
+    const caseCheckResult = await runQuery(`SELECT * FROM cases WHERE "caseId" = $1`, [req.params.caseId]);
+    
+    if (!caseCheckResult.rowCount) {
+      return res.status(404).send('Case not found');
+    }
+    const criteriaId = await insertCriteria(req.params.caseId, req.body);
+    //res.status(201).send('Criteria added');
+    res.status(201).json(criteriaId);
+  } catch (err) {
+    res.status(500).send({"error is: ": err});
+  }
+});
+
 
   module.exports = router;

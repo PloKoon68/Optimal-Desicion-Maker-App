@@ -26,11 +26,11 @@ const createCriterias = async (caseId, newCriterias) => {
   }
 };
 
+
+//single criterias
 const createCriteria = async (caseId, newCriteria) => {
   try{
-
-    let a = (await axiosInstance.post(`/criteria/${caseId}`, newCriteria)).data;
-    return a;
+    return (await axiosInstance.post(`/criterias/${caseId}`, newCriteria)).data.criteriaId;
   } catch(err) {
     console.error("Create criterias error:", err.response ? err.response.data : err.message);
     throw err
@@ -41,5 +41,6 @@ const createCriteria = async (caseId, newCriteria) => {
 export {
     fetchCriterias,
     deleteCriterias,
-    createCriterias
+    createCriterias,
+    createCriteria
 };

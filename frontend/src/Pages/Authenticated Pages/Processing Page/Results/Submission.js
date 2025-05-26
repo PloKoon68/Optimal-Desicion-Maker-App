@@ -46,7 +46,6 @@ function Submission({products, criteriaCards}) {
       alert('First add some products to the decision matrix!')
       return false;
     }
-    let valid = true;
     for(let i = 0; i < n; i++) {
       for(let j = 0; j < m; j++) 
         if(!products[i][criteriaCards[j].criteriaName]) {
@@ -74,7 +73,7 @@ function Submission({products, criteriaCards}) {
   }
   return (
     <>
-      <button onClick={() => {calculate()}} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black", fontSize: "28px"}}>Submit</button>
+      <button onClick={() => calculate()} className="btn btn-success btn-lg w-100 mt-3" style={{backgroundColor: "rgb(170, 233, 128)", color: "black", fontSize: "28px"}}>Submit</button>
 
       <div className="Submission row" style={{ backgroundColor: "purple", marginTop: "20px" }}>
         <div className="scores col-lg-6 col-md-12 p-3">
