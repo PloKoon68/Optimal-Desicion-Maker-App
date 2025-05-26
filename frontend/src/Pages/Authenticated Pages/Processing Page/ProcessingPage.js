@@ -13,7 +13,6 @@ import {fetchDecisionMatrix} from "../../../api/apiCalls/decisionMatrixApi.js"; 
 
 function ProcessingPage() {
   const caseId = Number(useParams().caseId);
-  console.log(caseId)
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
 

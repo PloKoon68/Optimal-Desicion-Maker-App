@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {createCriteria} from "../../../../api/apiCalls/criteriaApi"; // Import the axios call functions
+import {createCriteria, updateCriteria} from "../../../../api/apiCalls/criteriaApi"; // Import the axios call functions
 
 function CriteriaForm({ caseId, criteriaCards, setCriteriaCards, editCard, setEditCard, criteriaNames, setCriteriaNames }) {
   let [criteriaName, setCriteriaName] = useState('');
@@ -15,8 +15,6 @@ function CriteriaForm({ caseId, criteriaCards, setCriteriaCards, editCard, setEd
 
 
   const [validInputs, setValidInputs] = useState({ validCriteriaName: true, criteriaNameDoesntExist: true, validCategories: true});
-
-  console.log("ri is: ",   criteriaCards)
 
 
   const handleSubmit = async (e) => {
@@ -49,13 +47,16 @@ function CriteriaForm({ caseId, criteriaCards, setCriteriaCards, editCard, setEd
 
       if (dataType === 'Categorical') formData.categories = categories;
 
+      formData.caseId = caseId;
+      let criteriaId;
       if(!editCard)  {
-        const criteriaId = await createCriteria(caseId, formData);
-        formData.caseId = caseId;
+        criteriaId = await createCriteria(caseId, formData);
         formData.criteriaId = criteriaId;
         setCriteriaCards([...criteriaCards, formData]);
       } else {
-        await createCriteria();
+        criteriaId = criteriaCards[editCard.cardIndex].criteriaId;
+        formData.criteriaId = criteriaId;
+        await updateCriteria(criteriaId, formData);
         setCriteriaCards(criteriaCards.map((card, index) => {return (index === editCard.cardIndex)? formData: card}))
         setEditCard(null)
       }

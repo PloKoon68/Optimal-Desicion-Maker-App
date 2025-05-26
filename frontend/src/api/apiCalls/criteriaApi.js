@@ -38,9 +38,19 @@ const createCriteria = async (caseId, newCriteria) => {
 };
   
 
+export const updateCriteria = async (criteriaId, updatedCriteria) => {
+  try {
+    await axiosInstance.put(`/criterias/${criteriaId}`, updatedCriteria);
+  } catch (err) {
+    console.error("Update criteria error:", err.response ? err.response.data : err.message);
+    throw err;
+  }
+};
+
 export {
     fetchCriterias,
     deleteCriterias,
     createCriterias,
+
     createCriteria
 };

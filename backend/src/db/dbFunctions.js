@@ -51,7 +51,7 @@ const deleteCase = async (id) => {
 
 //criterias table
 const getCriteriasByCaseId = async (caseId) => {
-  return (await runQuery(`SELECT * FROM criterias WHERE "caseId" = $1`, [caseId])).rows;
+  return (await runQuery(`SELECT * FROM criterias WHERE "caseId" = $1 ORDER BY "criteriaId"`, [caseId])).rows;
 };
 
 const deleteCriteriasByCaseId = async (caseId) => {

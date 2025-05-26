@@ -64,4 +64,32 @@ router.post('/:caseId', async (req, res) => {
 });
 
 
+router.put('/:criteriaId', async (req, res) => {
+  const { criteriaId } = req.params;
+  const { criteriaName, dataType, characteristic, criteriaPoint } = req.body;
+
+  try {
+    // Optional: Verify the case and criteria exist
+    const result = await runQuery(
+      `UPDATE criterias
+       SET "criteriaName" = $1,
+           "dataType" = $2,
+           characteristic = $3,
+           "criteriaPoint" = $4
+       WHERE "criteriaId" = $5`,
+      [criteriaName, dataType, characteristic, criteriaPoint, criteriaId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Criteria not found or no changes made." });
+    }
+
+    res.status(200).json({ message: "Criteria updated successfully." });
+  } catch (err) {
+    console.error("Error updating criteria:", err);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
+
+
   module.exports = router;
