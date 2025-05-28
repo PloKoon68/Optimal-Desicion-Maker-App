@@ -45,6 +45,7 @@ function ProcessingPage() {
 
         setProducts(_products);
         setCriteriaCards(criterias);
+        console.log("dd: ", _products)
       } catch (error) {
         console.error("Error fetching data:", error);
         // Optionally show an error message to the user
@@ -61,7 +62,7 @@ function ProcessingPage() {
       {/*<CaseTitle caseTitle={"University Selection okayy"}/>*/}
       <CriteriaForm caseId={caseId} criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
-      <DecisionMatrix criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
+      <DecisionMatrix caseId={caseId} criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
       <Submission products={products} criteriaCards={criteriaCards}/>
 
     </div>

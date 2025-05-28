@@ -18,14 +18,14 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 
-export default function DecisionMatrix({criteriaCards, products, setProducts, fetchedAlternativeNames}) {
+import {insertDecisionMatrixEntity} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
+
+export default function DecisionMatrix({caseId, criteriaCards, products, setProducts, fetchedAlternativeNames}) {
 
     const tableColor = "rgb(226, 243, 132)"
     let emptyProduct;
     const [alternativeNames, setAlternativeNames] = useState(fetchedAlternativeNames);
     const [editingIndex, setEditingIndex] = useState(-1);
-    
-    
  
 
     emptyProduct = {
@@ -77,6 +77,7 @@ export default function DecisionMatrix({criteriaCards, products, setProducts, fe
         product.alternativeName = product.alternativeName.trim()
         let blankExists = product.alternativeName === "" || alternativeNames.has(product.alternativeName)
         
+        insertDecisionMatrixEntity(caseId, product)
         
         //check if categorical variables are empty
         if(!blankExists)

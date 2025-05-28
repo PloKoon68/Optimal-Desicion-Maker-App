@@ -26,6 +26,16 @@ const insertMatrixContent = async (caseId, decisionMatrix) => {
     throw err
   }
 };
+
+export const insertDecisionMatrixEntity = async (caseId, entity) => {
+  try{
+    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, entity)).data;
+    return a;
+  } catch(err) {
+    console.error("Create criterias error:", err.response ? err.response.data : err.message);
+    throw err
+  }
+};
   
 
 export {

@@ -74,12 +74,21 @@ const deleteCriteriaByCriteriaId = async (criteriaId) => {
   return await runQuery(`DELETE FROM criteria WHERE "criteriaId" = $1`, [criteriaId]);
 };
 
-const insertDecionMatrixEntity = async (caseId, entity) => {
-// `($1, '${criteriaName}', '${alternative.alternativeName}', '${alternative[criteriaName]}'),`
-  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaId", "alternativeName", value)
-  VALUES ($1, $2, $3, $4)`
-  await runQuery(query, [caseId, entity.criteriaId, entity.alternativeName, entity.value]);
-  //!!!!!!!!!!!!!!111111!!!!!!!!!!bura illa criteriaName mi olacak
+//decision matrix single chatty
+const insertDecisionMatrixEntity = async (caseId, entity) => {
+  let values = ``;
+   Object.keys(entity).filter(criteriaName => criteriaName !== 'alternativeName')
+    .forEach(criteriaName => {
+      values += `($1, '${criteriaName}', $2, '${entity[criteriaName]}'),`
+      return values
+      //         caseId, criteriaName,         alternativeName,                      value
+      })
+  values = values.slice(0, -1);
+
+  const query = `INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
+  VALUES ` + values
+    
+  await runQuery(query, [caseId,entity.alternativeName]);
 };
 
 
@@ -87,17 +96,17 @@ const insertDecionMatrixEntity = async (caseId, entity) => {
 //decision matrix
 const getDecisionMatrix = async (caseId) => {
 //    SELECT * FROM decisionmatrix WHERE "caseId" = $1
+    console.log("came", caseId)
+
   const query = `
     SELECT 
-    c."criteriaName",
-    d."alternativeName",
-    d."value"
+    "criteriaName",
+    "alternativeName",
+    "value"
   FROM 
-    decisionmatrix d
-  JOIN 
-    criterias c ON d."criteriaId" = c."criteriaId"
+    decisionmatrix 
   WHERE 
-    d."caseId" = $1;
+    "caseId" = $1;
   `;
 
   return (await runQuery(query, [caseId])).rows;
@@ -164,6 +173,7 @@ module.exports = {
   runQuery,
   insertDecisionMatrix,
   getDecisionMatrix,
+  insertDecisionMatrixEntity,
   doesUsernameExist,
   doesEmailExist,
   createNewUser,
@@ -176,12 +186,17 @@ module.exports = {
 /*
 CREATE TABLE decisionmatrix (
   "caseId" INT NOT NULL,
-  "criteriaId" INT NOT NULL,
+  "criteriaName" VARCHAR(255) NOT NULL,  -- not a foreign key, just a value
   "alternativeName" VARCHAR(255) NOT NULL,
-  value TEXT NOT NULL,  
-  PRIMARY KEY ("criteriaId", "alternativeName"),
-  FOREIGN KEY ("caseId", "criteriaId") REFERENCES criterias("caseId", "criteriaId") ON DELETE CASCADE
+  value TEXT NOT NULL,
+
+  -- Composite primary key ensures uniqueness
+  PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
+
+  -- Foreign key only on caseId for referential integrity
+  FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
 );
+
 CREATE TABLE IF NOT EXISTS users (
   "userId" SERIAL PRIMARY KEY,
   "username" VARCHAR(255) UNIQUE NOT NULL,
