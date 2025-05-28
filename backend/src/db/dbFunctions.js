@@ -91,12 +91,16 @@ const insertDecisionMatrixEntity = async (caseId, entity) => {
   await runQuery(query, [caseId,entity.alternativeName]);
 };
 
+const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
+  await runQuery(`DELETE FROM decisionmatrix 
+    WHERE "caseId" = $1 AND "alternativeName" = $2`, [caseId, alternativeName]);
+};
+
 
 
 //decision matrix
 const getDecisionMatrix = async (caseId) => {
 //    SELECT * FROM decisionmatrix WHERE "caseId" = $1
-    console.log("came", caseId)
 
   const query = `
     SELECT 
@@ -174,6 +178,7 @@ module.exports = {
   insertDecisionMatrix,
   getDecisionMatrix,
   insertDecisionMatrixEntity,
+  deleteDecisionMatrixEntity,
   doesUsernameExist,
   doesEmailExist,
   createNewUser,

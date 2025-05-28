@@ -6,6 +6,16 @@ import axiosInstance from "../axios"; // Import the axios instance
 // {alternativeName, c1, c2, c3}
 //}
 
+//old
+const insertMatrixContent = async (caseId, decisionMatrix) => {
+  try{
+    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, decisionMatrix)).data;
+    return a;
+  } catch(err) {
+    console.error("Create criterias error:", err.response ? err.response.data : err.message);
+    throw err
+  }
+};
 
 
 //case_id, criteriaName, alternativeName, value 
@@ -17,20 +27,23 @@ const fetchDecisionMatrix = async (caseId) => {
   }
 }
 
-const insertMatrixContent = async (caseId, decisionMatrix) => {
+
+
+export const insertDecisionMatrixEntity = async (caseId, entity) => {
   try{
-    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, decisionMatrix)).data;
+    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, entity)).data;
     return a;
   } catch(err) {
     console.error("Create criterias error:", err.response ? err.response.data : err.message);
     throw err
   }
 };
+  
 
-export const insertDecisionMatrixEntity = async (caseId, entity) => {
+export const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
   try{
-    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, entity)).data;
-    return a;
+    console.log("burda ya: ", alternativeName)
+    await axiosInstance.delete(`/decisionMatrix/${caseId}/${alternativeName}`);
   } catch(err) {
     console.error("Create criterias error:", err.response ? err.response.data : err.message);
     throw err

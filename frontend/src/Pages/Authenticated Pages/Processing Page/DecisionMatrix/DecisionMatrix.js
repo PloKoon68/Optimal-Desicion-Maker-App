@@ -18,7 +18,7 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 
-import {insertDecisionMatrixEntity} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
+import {insertDecisionMatrixEntity, deleteDecisionMatrixEntity} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
 
 export default function DecisionMatrix({caseId, criteriaCards, products, setProducts, fetchedAlternativeNames}) {
 
@@ -129,7 +129,7 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
         let _products = products.filter((val) => val.alternativeName !== product.alternativeName);
 
         alternativeNames.delete(product.alternativeName)
-
+        deleteDecisionMatrixEntity(caseId, product.alternativeName)
         setProducts(_products);
         setDeleteProductDialog(false);
         setProduct(emptyProduct);
@@ -142,29 +142,7 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
     };
     
 
-    const findIndexById = (id) => {
-        let index = -1;
 
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    };
-
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-
-        return id;
-    };
 
     const exportCSV = () => {
         dt.current.exportCSV();
@@ -318,7 +296,7 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '3rem' }} />
                     {product && (
                         <span>
-                            Are you sure you want to delete <b>{product.name}</b>?
+                            Are you sure you want to delete <b>{product.alternativeName}</b>?
                         </span>
                     )}
                 </div>
