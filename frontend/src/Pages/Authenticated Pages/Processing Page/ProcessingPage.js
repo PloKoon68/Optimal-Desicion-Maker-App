@@ -45,7 +45,6 @@ function ProcessingPage() {
 
         setProducts(_products);
         setCriteriaCards(criterias);
-        console.log("dd: ", _products)
       } catch (error) {
         console.error("Error fetching data:", error);
         // Optionally show an error message to the user

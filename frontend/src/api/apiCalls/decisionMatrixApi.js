@@ -42,9 +42,18 @@ export const insertDecisionMatrixEntity = async (caseId, entity) => {
 
 export const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
   try{
-    console.log("burda ya: ", alternativeName)
     await axiosInstance.delete(`/decisionMatrix/${caseId}/${alternativeName}`);
   } catch(err) {
+    console.error("Create criterias error:", err.response ? err.response.data : err.message);
+    throw err
+  }
+};
+
+export const deleteDecisionMatrixEntities = async (caseId, deleteAlternativeNames) => {
+    console.log("d are:", deleteAlternativeNames)
+  try{
+    await axiosInstance.delete(`/decisionMatrix/${caseId}`, {data: { deleteAlternativeNames: deleteAlternativeNames }});
+    } catch(err) {
     console.error("Create criterias error:", err.response ? err.response.data : err.message);
     throw err
   }

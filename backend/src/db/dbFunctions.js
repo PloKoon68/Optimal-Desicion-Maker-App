@@ -96,6 +96,19 @@ const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
     WHERE "caseId" = $1 AND "alternativeName" = $2`, [caseId, alternativeName]);
 };
 
+const deleteDecisionMatrixEntities = async (caseId, deleteAlternativeNames) => {
+  let stringNames = `(`
+  deleteAlternativeNames.map((alternativeName) => {
+    stringNames += "'" + alternativeName + "'" + ','
+  })
+  stringNames = stringNames.slice(0, -1);
+  stringNames += ')';
+  const query = `DELETE FROM decisionmatrix 
+  WHERE "caseId" = $1 AND "alternativeName" IN ` + stringNames
+  console.log("sto: ", query)
+
+  await runQuery(query, [caseId]);
+};
 
 
 //decision matrix
@@ -107,10 +120,10 @@ const getDecisionMatrix = async (caseId) => {
     "criteriaName",
     "alternativeName",
     "value"
-  FROM 
-    decisionmatrix 
-  WHERE 
-    "caseId" = $1;
+    FROM 
+      decisionmatrix 
+    WHERE 
+      "caseId" = $1;
   `;
 
   return (await runQuery(query, [caseId])).rows;
@@ -179,6 +192,7 @@ module.exports = {
   getDecisionMatrix,
   insertDecisionMatrixEntity,
   deleteDecisionMatrixEntity,
+  deleteDecisionMatrixEntities,
   doesUsernameExist,
   doesEmailExist,
   createNewUser,

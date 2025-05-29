@@ -18,7 +18,7 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 
-import {insertDecisionMatrixEntity, deleteDecisionMatrixEntity} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
+import {insertDecisionMatrixEntity, deleteDecisionMatrixEntity, deleteDecisionMatrixEntities} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
 
 export default function DecisionMatrix({caseId, criteriaCards, products, setProducts, fetchedAlternativeNames}) {
 
@@ -136,26 +136,17 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
 
-    const confirmDeleteProduct = (product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
-    };
-    
-
-
-
-    const exportCSV = () => {
-        dt.current.exportCSV();
-    };
-
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    };
-
     const deleteSelectedProducts = () => {
         let _products = products.filter((val) => !selectedProducts.includes(val));
 
-        selectedProducts.map((pd) => alternativeNames.delete(pd.alternativeName))        
+        let deleteAlternativeNames = [];
+        selectedProducts.map((pd) =>  {
+            alternativeNames.delete(pd.alternativeName)
+            deleteAlternativeNames.push(pd.alternativeName)
+        })        
+
+        deleteDecisionMatrixEntities(caseId, deleteAlternativeNames)
+
 
         setProducts(_products);
         setDeleteProductsDialog(false);
@@ -163,7 +154,20 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     };
 
-  
+    const confirmDeleteProduct = (product) => {
+        setProduct(product);
+        setDeleteProductDialog(true);
+    };
+    
+    const confirmDeleteSelected = () => {
+        setDeleteProductsDialog(true);
+    };
+
+
+    const exportCSV = () => {
+        dt.current.exportCSV();
+    };
+
 
     const onInputChange = (e, name) => {
         const val = e.target? e.target.value: e.value;

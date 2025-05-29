@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getDecisionMatrix, insertDecisionMatrixEntity, deleteDecisionMatrixEntity } = require('../db/dbFunctions');
+const { getDecisionMatrix, insertDecisionMatrixEntity, deleteDecisionMatrixEntities } = require('../db/dbFunctions');
 
 router.get('/:caseId', async (req, res) => {
   try {
@@ -22,22 +22,11 @@ router.post('/:caseId', async (req, res) => {
   }
 });
 
-router.post('/:caseId', async (req, res) => {
+router.delete('/:caseId', async (req, res) => {
+  const { caseId } = req.params;
+  const { deleteAlternativeNames } = req.body
   try {
-    const entity = req.body;
-    await insertDecisionMatrixEntity(req.params.caseId, entity);
-    res.status(201).send('Decision matrix updated');
-  } catch (err) {
-    console.log("err: ", err)
-    res.status(500).send(err);
-  }
-});
-
-router.delete('/:caseId/:alternativeName', async (req, res) => {
-  console.log("caa", req.params.caseId, req.params.alternativeName)
-  try {
-    //console.log("s: ", req.params.caseId, res.body.alternativeName)
-    await deleteDecisionMatrixEntity(req.params.caseId, req.params.alternativeName);
+    await deleteDecisionMatrixEntities(caseId, deleteAlternativeNames);
     res.status(200).send("Alternative deleted");
   } catch (err) {
     console.log(err)
