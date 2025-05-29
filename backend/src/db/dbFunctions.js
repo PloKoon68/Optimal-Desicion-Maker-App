@@ -91,6 +91,35 @@ const insertDecisionMatrixEntity = async (caseId, entity) => {
   await runQuery(query, [caseId,entity.alternativeName]);
 };
 
+const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
+ 
+  //console.log("sd: ", updatedEntity) 
+
+  let query = `UPDATE decisionmatrix SET\n value = CASE "criteriaName"\n`;
+   Object.keys(updatedEntity).forEach(criteriaName => {
+    if(criteriaName !== 'alternativeName' && criteriaName !== 'oldAlternativeName') {
+      query += `WHEN '${criteriaName}' THEN '${updatedEntity[criteriaName]}'\n`
+    }
+  })
+
+  query += `ELSE value\n END,\n "alternativeName" = $1 \nWHERE "caseId" = $2 AND "alternativeName" = $3;`
+      //  values = values.slice(0, -1);
+      /*
+  UPDATE decisionmatrix
+SET
+  value = CASE "criteriaName"
+    WHEN '45ss' THEN '260'
+    WHEN 'sd' THEN '510'
+    ELSE value
+  END,
+  "alternativeName" = 'a20'
+WHERE "caseId" = 85 AND "alternativeName" = 'a20';
+
+*/
+
+  await runQuery(query, [updatedEntity.alternativeName, caseId, updatedEntity.oldAlternativeName]);
+};
+
 const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
   await runQuery(`DELETE FROM decisionmatrix 
     WHERE "caseId" = $1 AND "alternativeName" = $2`, [caseId, alternativeName]);
@@ -191,6 +220,7 @@ module.exports = {
   insertDecisionMatrix,
   getDecisionMatrix,
   insertDecisionMatrixEntity,
+  editDecisionMatrixEntity,
   deleteDecisionMatrixEntity,
   deleteDecisionMatrixEntities,
   doesUsernameExist,

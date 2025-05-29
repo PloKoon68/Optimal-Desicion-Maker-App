@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getDecisionMatrix, insertDecisionMatrixEntity, deleteDecisionMatrixEntities } = require('../db/dbFunctions');
+const { getDecisionMatrix, insertDecisionMatrixEntity, editDecisionMatrixEntity, deleteDecisionMatrixEntities } = require('../db/dbFunctions');
 
 router.get('/:caseId', async (req, res) => {
   try {
@@ -15,6 +15,18 @@ router.post('/:caseId', async (req, res) => {
   try {
     const entity = req.body;
     await insertDecisionMatrixEntity(req.params.caseId, entity);
+    res.status(201).send('Decision matrix updated');
+  } catch (err) {
+    console.log("err: ", err)
+    res.status(500).send(err);
+  }
+});
+
+router.put('/:caseId', async (req, res) => {
+  try {
+    const updatedEntity = req.body;
+    console.log("recieved input edt: ", updatedEntity)
+    await editDecisionMatrixEntity(req.params.caseId, updatedEntity);
     res.status(201).send('Decision matrix updated');
   } catch (err) {
     console.log("err: ", err)

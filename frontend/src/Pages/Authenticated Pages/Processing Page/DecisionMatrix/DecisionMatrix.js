@@ -18,7 +18,7 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 
-import {insertDecisionMatrixEntity, deleteDecisionMatrixEntity, deleteDecisionMatrixEntities} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
+import {insertDecisionMatrixEntity, editDecisionMatrixEntity, deleteDecisionMatrixEntities} from "../../../../api/apiCalls/decisionMatrixApi"; // Import the axios call functions
 
 export default function DecisionMatrix({caseId, criteriaCards, products, setProducts, fetchedAlternativeNames}) {
 
@@ -72,21 +72,17 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
     };
 
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
         let n = criteriaCards.length;
         product.alternativeName = product.alternativeName.trim()
         let blankExists = product.alternativeName === "" || alternativeNames.has(product.alternativeName)
         
-        insertDecisionMatrixEntity(caseId, product)
         
         //check if categorical variables are empty
         if(!blankExists)
             for(let i = 0; i < n; i++) {
                 let card = criteriaCards[i];
-                /* bu ne???????????
-                if(card.dataType === "Categorical") 
-                    product[card.criteriaName] = product[card.criteriaName]
-                */
+               
                 if(!product[card.criteriaName]) {
                     blankExists = true;
                     break;
@@ -96,12 +92,15 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
         if(!blankExists){
             let _products = [...products];
             if (editingIndex !== -1) {
+                await editDecisionMatrixEntity(caseId, _products[editingIndex].alternativeName, product);
                 _products[editingIndex] = product;
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
             } else {
+                await insertDecisionMatrixEntity(caseId, product)
                 _products.push(product);
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
             }
+
 
             alternativeNames.add(product.alternativeName)
             setAlternativeNames(alternativeNames)
@@ -125,18 +124,19 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
 
     };
 
-    const deleteProduct = () => {
+    const deleteProduct = async () => {
         let _products = products.filter((val) => val.alternativeName !== product.alternativeName);
 
         alternativeNames.delete(product.alternativeName)
-        deleteDecisionMatrixEntity(caseId, product.alternativeName)
+        await deleteDecisionMatrixEntities(caseId, [product.alternativeName])
+
         setProducts(_products);
         setDeleteProductDialog(false);
         setProduct(emptyProduct);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
 
-    const deleteSelectedProducts = () => {
+    const deleteSelectedProducts = async () => {
         let _products = products.filter((val) => !selectedProducts.includes(val));
 
         let deleteAlternativeNames = [];
@@ -145,8 +145,7 @@ export default function DecisionMatrix({caseId, criteriaCards, products, setProd
             deleteAlternativeNames.push(pd.alternativeName)
         })        
 
-        deleteDecisionMatrixEntities(caseId, deleteAlternativeNames)
-
+        await deleteDecisionMatrixEntities(caseId, deleteAlternativeNames)
 
         setProducts(_products);
         setDeleteProductsDialog(false);

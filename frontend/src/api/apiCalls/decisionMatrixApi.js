@@ -31,8 +31,17 @@ const fetchDecisionMatrix = async (caseId) => {
 
 export const insertDecisionMatrixEntity = async (caseId, entity) => {
   try{
-    let a = (await axiosInstance.post(`/decisionMatrix/${caseId}`, entity)).data;
-    return a;
+    await axiosInstance.post(`/decisionMatrix/${caseId}`, entity);
+  } catch(err) {
+    console.error("Create criterias error:", err.response ? err.response.data : err.message);
+    throw err
+  }
+};
+
+export const editDecisionMatrixEntity = async (caseId, oldAlternativeName, entity) => {
+  entity["oldAlternativeName"] = oldAlternativeName;
+  try{
+   await axiosInstance.put(`/decisionMatrix/${caseId}`,  entity );
   } catch(err) {
     console.error("Create criterias error:", err.response ? err.response.data : err.message);
     throw err
