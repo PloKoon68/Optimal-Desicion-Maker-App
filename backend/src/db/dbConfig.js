@@ -31,7 +31,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false} // Bunu "require" olarak tut
 
 });
-/*
 //test by fetching time
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -40,7 +39,6 @@ pool.query('SELECT NOW()', (err, res) => {
     console.log('Database time: ', res.rows[0]);
   }
 });
-*/
 
 // Log successful connection
 pool.on("connect", () => {
