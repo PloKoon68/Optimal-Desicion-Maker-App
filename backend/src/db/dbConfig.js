@@ -13,6 +13,7 @@ DATABASE_PORT=5432
 PORT=5000
 DATABASE_URL=postgresql://optimal_desicion_maker_app_db_user:AKCSbKbbujo6Nazoby5oTT2cafasHWVc@dpg-cvap65ij1k6c738vkaf0-a.frankfurt-postgres.render.com/optimal_desicion_maker_app_db
 */
+/*
 // for local dev
 const pool = new Pool({
   user: process.env.DATABASE_USER,
@@ -23,14 +24,13 @@ const pool = new Pool({
   max: 10, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
 });
+*/
 //for deploy!!!
-/*
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // The full connection URL
   ssl: { rejectUnauthorized: false} // Bunu "require" olarak tut
 
 });
-*/
 /*
 //test by fetching time
 pool.query('SELECT NOW()', (err, res) => {
