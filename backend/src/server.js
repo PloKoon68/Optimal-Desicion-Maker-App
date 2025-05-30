@@ -3,7 +3,6 @@ const cors = require("cors");
 const pool = require('./db/dbConfig'); // Import your database pool
 const cookieParser = require("cookie-parser");
 
-//require('dotenv').config();
 require('dotenv').config({ path: '../.env' });
 
 const casesRoutes = require('./routes/casesRoutes');
@@ -86,9 +85,15 @@ app.post('/api/quick-save', express.json(), async (req, res) => {
 });
 */
 
+/*
 const server = app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+*/
+const server = app.listen(port, () => {
+  console.log(`Server running on render port:${port}`);
+});
+
 
 // Graceful shutdown on Ctrl+C
 process.on('SIGINT', async () => {
