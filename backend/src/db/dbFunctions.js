@@ -92,9 +92,67 @@ const insertDecisionMatrixEntity = async (caseId, entity) => {
 };
 
 const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
- 
-  //console.log("sd: ", updatedEntity) 
+  let values = '';
+  const criteriaNames = Object.keys(updatedEntity).filter(
+    key => key !== 'alternativeName' && key !== 'oldAlternativeName'
+  );
 
+  criteriaNames.forEach(criteriaName => {
+    values += `(${caseId}, '${criteriaName}', '${updatedEntity.alternativeName}', '${updatedEntity[criteriaName]}'),\n`;
+  });
+
+  values = values.slice(0, -2); // remove trailing comma and newline
+
+  const query = `
+    INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
+    VALUES ${values}
+    ON CONFLICT ("caseId", "criteriaName", "alternativeName")
+    DO UPDATE SET 
+      value = EXCLUDED.value,
+      "alternativeName" = EXCLUDED."alternativeName";
+  `;
+
+  await runQuery(query);
+};
+/*
+const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
+  let values = '';
+  const criteriaNames = Object.keys(updatedEntity).filter(
+    key => key !== 'alternativeName' && key !== 'oldAlternativeName'
+  );
+
+  criteriaNames.forEach(criteriaName => {
+    values += `(${caseId}, '${criteriaName}', '${updatedEntity.alternativeName}', '${updatedEntity[criteriaName]}'),\n`;
+  });
+
+  values = values.slice(0, -2); // remove trailing comma and newline
+
+  const query = `
+    INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
+    VALUES ${values}
+    ON CONFLICT ("caseId", "criteriaName", "alternativeName")
+    DO UPDATE SET 
+      value = EXCLUDED.value,
+      "alternativeName" = EXCLUDED."alternativeName";
+  `;
+
+  await runQuery(query);
+};
+*/
+
+ /*
+  UPDATE decisionmatrix
+  SET
+    value = CASE "criteriaName"
+      WHEN '45ss' THEN '260'
+      WHEN 'sd' THEN '510'
+      ELSE value
+    END,
+    "alternativeName" = 'a20'
+  WHERE "caseId" = 85 AND "alternativeName" = 'a20';
+  */
+/*
+const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
   let query = `UPDATE decisionmatrix SET\n value = CASE "criteriaName"\n`;
    Object.keys(updatedEntity).forEach(criteriaName => {
     if(criteriaName !== 'alternativeName' && criteriaName !== 'oldAlternativeName') {
@@ -103,23 +161,10 @@ const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
   })
 
   query += `ELSE value\n END,\n "alternativeName" = $1 \nWHERE "caseId" = $2 AND "alternativeName" = $3;`
-      //  values = values.slice(0, -1);
-      /*
-  UPDATE decisionmatrix
-SET
-  value = CASE "criteriaName"
-    WHEN '45ss' THEN '260'
-    WHEN 'sd' THEN '510'
-    ELSE value
-  END,
-  "alternativeName" = 'a20'
-WHERE "caseId" = 85 AND "alternativeName" = 'a20';
-
-*/
-
+ 
   await runQuery(query, [updatedEntity.alternativeName, caseId, updatedEntity.oldAlternativeName]);
 };
-
+*/
 const deleteDecisionMatrixEntity = async (caseId, alternativeName) => {
   await runQuery(`DELETE FROM decisionmatrix 
     WHERE "caseId" = $1 AND "alternativeName" = $2`, [caseId, alternativeName]);

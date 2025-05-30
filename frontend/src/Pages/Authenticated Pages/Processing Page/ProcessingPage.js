@@ -24,6 +24,7 @@ function ProcessingPage() {
     const fetchWithDelay = async (caseId) => {
       try {
         const criterias = await fetchCriterias(caseId);
+        criterias.map((criteria) => criteriaNames.add(criteria.criteriaName))
         const decisionMatrix = await fetchDecisionMatrix(caseId) || [];
         let altIndexes = {};
         let _products = [];

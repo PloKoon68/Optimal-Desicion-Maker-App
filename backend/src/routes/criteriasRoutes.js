@@ -94,13 +94,11 @@ router.put('/:criteriaId', async (req, res) => {
 
 router.delete('/:criteriaId', async (req, res) => {
   const { criteriaId } = req.params;
+  const criteriaName = req.body.criteriaName;
 
   try {
-    const result = await runQuery(
-      `DELETE FROM criterias WHERE "criteriaId" = $1`,
-      [criteriaId]
-    );
-
+    const result = await runQuery(`DELETE FROM criterias WHERE "criteriaId" = $1`, [criteriaId]);
+    await runQuery(`DELETE FROM decisionmatrix WHERE "criteriaName" = $1`, [criteriaName]);
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Criteria not found." });
     }

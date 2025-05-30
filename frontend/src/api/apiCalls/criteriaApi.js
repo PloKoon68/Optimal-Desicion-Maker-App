@@ -47,12 +47,10 @@ export const updateCriteria = async (criteriaId, updatedCriteria) => {
 };
 
 // services/criteriaService.js or similar file
-export const deleteCriteria = async (criteriaId) => {
+export const deleteCriteria = async (criteriaId, criteriaName) => {
   try {
-    console.log("sending: ", criteriaId)
-    await axiosInstance.delete(`/criterias/${criteriaId}`);
-    console.log("Criteria deleted successfully");
-  } catch (err) {
+    await axiosInstance.delete(`/criterias/${criteriaId}`, {data: {criteriaName: criteriaName}});
+} catch (err) {
     console.error("Delete criteria error:", err.response ? err.response.data : err.message);
     throw err;
   }

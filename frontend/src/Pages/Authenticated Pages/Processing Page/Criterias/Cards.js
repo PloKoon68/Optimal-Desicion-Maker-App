@@ -6,7 +6,7 @@ import {deleteCriteria} from "../../../../api/apiCalls/criteriaApi"; // Import t
 
 function Cards({criteriaCards, setCriteriaCards, setEditCard, setCriteriaNames, criteriaNames}) {
   const handleDeleteCard = async (card) => {
-    await deleteCriteria(card.criteriaId);
+    await deleteCriteria(card.criteriaId, card.criteriaName);
     setCriteriaCards(criteriaCards.filter((mapCard) => mapCard !== card));
     criteriaNames.delete(card.criteriaName);
     setCriteriaNames(criteriaNames)
