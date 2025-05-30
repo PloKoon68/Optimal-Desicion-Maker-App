@@ -6,7 +6,6 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';  // Optional but recommended
 
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Navbar from "./Navbar.js"
@@ -18,6 +17,9 @@ import MyCases from "./Pages/Authenticated Pages/My Cases/My Cases.js"
 import LoginPage from "./Pages/None Authenticated Pages/Login/Login.js"
 import RegisterPage from "./Pages/None Authenticated Pages/Register/Register.js"
 
+import AboutPage from './Pages/Public Pages/AboutPage.js';
+import HowItWorksPage from './Pages/Public Pages/HowItWorksPage.js';
+
 import PrivateRoute from './Routes/PrivateRoute.js'; // adjust path as needed
 import NonePrivateRoute from './Routes/NonePrivateRoute.js'; // adjust path as needed
 
@@ -25,9 +27,6 @@ import { useAuth } from './AuthContext';
 
 function App() {
   const { loading } = useAuth();
-
-  const [saveParams, setSaveParams] = useState({});  
-
 
 
   return (
@@ -59,7 +58,7 @@ function App() {
           path="/processing-page/:caseId"
           element={
             <PrivateRoute >
-              <ProcessingPage setSaveParams={setSaveParams}/>
+              <ProcessingPage />
             </PrivateRoute>
           }
         />
@@ -81,7 +80,8 @@ function App() {
             </NonePrivateRoute>
           }
         />
-
+        <Route path="/about" element={<AboutPage />}/>
+        <Route path="/how-it-works" element={<HowItWorksPage />}/>
       </Routes>
     </div>
   );

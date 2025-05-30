@@ -114,31 +114,6 @@ const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
 
   await runQuery(query);
 };
-/*
-const editDecisionMatrixEntity = async (caseId, updatedEntity) => {
-  let values = '';
-  const criteriaNames = Object.keys(updatedEntity).filter(
-    key => key !== 'alternativeName' && key !== 'oldAlternativeName'
-  );
-
-  criteriaNames.forEach(criteriaName => {
-    values += `(${caseId}, '${criteriaName}', '${updatedEntity.alternativeName}', '${updatedEntity[criteriaName]}'),\n`;
-  });
-
-  values = values.slice(0, -2); // remove trailing comma and newline
-
-  const query = `
-    INSERT INTO decisionmatrix ("caseId", "criteriaName", "alternativeName", value)
-    VALUES ${values}
-    ON CONFLICT ("caseId", "criteriaName", "alternativeName")
-    DO UPDATE SET 
-      value = EXCLUDED.value,
-      "alternativeName" = EXCLUDED."alternativeName";
-  `;
-
-  await runQuery(query);
-};
-*/
 
  /*
   UPDATE decisionmatrix

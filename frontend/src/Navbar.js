@@ -32,16 +32,13 @@ const Navbar = () => {
     {/* Left-aligned links */}
     <ul className="navbar-nav">
       <li className="nav-item mx-2">
-        {isLoggedIn && <Link className="nav-link" to="/my-cases">My Cases</Link>}  
-      </li>
-      <li className="nav-item mx-2">
-        <Link className="nav-link" to="/help">Help</Link>
-      </li>
-      <li className="nav-item mx-2">
         <Link className="nav-link" to="/about">About</Link>
       </li>
       <li className="nav-item mx-2">
-        <Link className="nav-link" to="/contact">Contact</Link>
+        <Link className="nav-link" to="/how-it-works">How It Works</Link>
+      </li>
+      <li className="nav-item mx-2">
+        {isLoggedIn && <Link className="nav-link" to="/my-cases">My Cases</Link>}  
       </li>
     </ul>
 
