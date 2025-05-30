@@ -253,6 +253,35 @@ module.exports = {
 //table creations:
 
 /*
+
+CREATE TABLE IF NOT EXISTS users (
+  "userId" SERIAL PRIMARY KEY,
+  "username" VARCHAR(255) UNIQUE NOT NULL,
+  "email" VARCHAR(255) UNIQUE NOT NULL,
+  "passwordHash" TEXT NOT NULL,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ CREATE TABLE IF NOT EXISTS cases (
+        "caseId" SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        "userId" INT,
+        FOREIGN KEY ("userId") REFERENCES users("userId") ON DELETE CASCADE
+      );
+
+DROP TABLE criterias;
+CREATE TABLE IF NOT EXISTS criterias (
+        "caseId" INT,
+         "criteriaId" SERIAL KEY,
+        "criteriaName" VARCHAR(255) NOT NULL,
+        "dataType" VARCHAR(20),
+        characteristic VARCHAR(20),
+        "criteriaPoint" NUMERIC,
+        PRIMARY KEY ("caseId", "criteriaId"),
+        FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
+      );
+
 CREATE TABLE decisionmatrix (
   "caseId" INT NOT NULL,
   "criteriaName" VARCHAR(255) NOT NULL,  -- not a foreign key, just a value
@@ -265,19 +294,34 @@ CREATE TABLE decisionmatrix (
   -- Foreign key only on caseId for referential integrity
   FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
 );
+*/
+/*
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        "userId" SERIAL PRIMARY KEY,
+        "username" VARCHAR(255) UNIQUE NOT NULL,
+        "email" VARCHAR(255) UNIQUE NOT NULL,
+        "passwordHash" TEXT NOT NULL,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
 
-CREATE TABLE IF NOT EXISTS users (
-  "userId" SERIAL PRIMARY KEY,
-  "username" VARCHAR(255) UNIQUE NOT NULL,
-  "email" VARCHAR(255) UNIQUE NOT NULL,
-  "passwordHash" TEXT NOT NULL,
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS cases (
+        "caseId" SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        "userId" INT,
+        FOREIGN KEY ("userId") REFERENCES users("userId") ON DELETE CASCADE
+      );
+    `);
 
-DROP TABLE criterias;
-CREATE TABLE IF NOT EXISTS criterias (
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS criterias (
         "caseId" INT,
-         "criteriaId" SERIAL,
+        "criteriaId" SERIAL,
         "criteriaName" VARCHAR(255) NOT NULL,
         "dataType" VARCHAR(20),
         characteristic VARCHAR(20),
@@ -285,62 +329,23 @@ CREATE TABLE IF NOT EXISTS criterias (
         PRIMARY KEY ("caseId", "criteriaId"),
         FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
       );
-*/
-/*
-const createTables = async () => {
-  try {
-    // Create cases table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS cases (
-        "caseId" SERIAL PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        description TEXT
-      );
     `);
-    console.log("✅ Table 'cases' created successfully.");
 
-    // Create criterias table
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS criterias (
-        "caseId" INT,
+      CREATE TABLE IF NOT EXISTS decisionmatrix (
+        "caseId" INT NOT NULL,
         "criteriaName" VARCHAR(255) NOT NULL,
-        "dataType" VARCHAR(20),
-        characteristic VARCHAR(20),
-        "criteriaPoint" NUMERIC,
-        PRIMARY KEY ("caseId", "criteriaName"),
+        "alternativeName" VARCHAR(255) NOT NULL,
+        value TEXT NOT NULL,
+        PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
         FOREIGN KEY ("caseId") REFERENCES cases("caseId") ON DELETE CASCADE
       );
     `);
-    console.log("✅ Table 'criterias' created successfully.");
 
-    // Create decisionmatrix table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS decisionmatrix (
-        "caseId" INT,
-        "criteriaName" VARCHAR(255),
-        "alternativeName" VARCHAR(255) NOT NULL,
-        value TEXT,
-        PRIMARY KEY ("caseId", "criteriaName", "alternativeName"),
-        FOREIGN KEY ("caseId", "criteriaName") REFERENCES criterias("caseId", "criteriaName") ON DELETE CASCADE
-      );
-    `);
-    console.log("✅ Table 'decisionmatrix' created successfully.");
-
+    console.log('✅ Database tables created or already exist.');
   } catch (err) {
-    console.error("❌ Error creating tables:", err);
-  } finally {
-    pool.end(); // Close the connection
+    console.error('❌ Error initializing database:', err);
   }
-};
-createTables();
-
-//check if the tables exists: 
-pool.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';", (err, res) => {
-  if (err) {
-    console.error('Error fetching tables:', err);
-  } else {
-    console.log('Existing tables:', res.rows);
-  }
-});
+}
 
 */
