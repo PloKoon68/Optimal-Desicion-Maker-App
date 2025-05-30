@@ -41,7 +41,7 @@ function App() {
       <Navbar />
       <Routes>
         
-        <Route path="/" element={<Navigate to="/Welcome" />} />
+        <Route path="/" element={<Navigate to="/about" />} />
 
         <Route path="/server-error" element={<ServerDownPage/>} />
         
