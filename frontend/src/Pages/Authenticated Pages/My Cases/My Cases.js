@@ -7,14 +7,12 @@ import "./MyCases.css";
 import {fetchCases, createCase,
         updateCase, deleteCase} from "../../../api/apiCalls/caseApi.js"; // Import the axios call functions
 
+import {useAuth} from "../../../AuthContext.js"; // Import the axios call functions
 
 export default function MyCases() {
 
   const navigate = useNavigate();
-  const [caseCards, setCaseCards] = useState([
-    { caseId: 1, title: "case 1", description: "This is the description of a bla bla bla" },
-    { caseId: 2, title: "case 2", description: "Another case description" }
-  ]);
+  const [caseCards, setCaseCards] = useState([]);
 
   
   const [editingIndex, setEditingIndex] = useState(null);
@@ -23,6 +21,7 @@ export default function MyCases() {
   const [dbConnected, setDbConnected] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
   
+ const { setGlobalLoading } = useAuth();
   useEffect(() => {
     const fetchWithDelay = async () => {
       let numCounts = 0, limit = 1;
@@ -113,6 +112,14 @@ export default function MyCases() {
   };
   
 
+  const gotToProccessingPage = (caseCard, index, e) => {
+    console.log("settting true")
+    setGlobalLoading(true); // 👈 show spinner
+    if(!e.target.closest("button") && editingIndex !== index)  {
+      console.log("going: ", caseCard)
+      navigate(`/processing-page/${caseCard.caseId}`)
+    }
+  }
   return (
     <>
     {initialRender?(
@@ -130,7 +137,7 @@ export default function MyCases() {
 
       <div className="row">
         {caseCards.map((caseCard, index) => (
-          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={(e) =>  {if(!e.target.closest("button") && editingIndex !== index) navigate(`/processing-page/${caseCard.caseId}`)}}>
+          <div key={index} className="col-md-4 col-sm-6 mb-4 case-card" onClick={(e) => gotToProccessingPage(caseCard, index, e)}>
             <div className="card text-decoration-none shadow-sm" style={{ cursor: "pointer" }}>
               <div className="card-body">
                 {editingIndex === index ? (

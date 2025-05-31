@@ -6,6 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [globalLoading, setGlobalLoading] = useState(false); // ← NEW for general loading
 
   useEffect(() => {
     const _check = async () => {
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loading, setLoading }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loading, setLoading, globalLoading, setGlobalLoading }}>
       {children}
     </AuthContext.Provider>
   );

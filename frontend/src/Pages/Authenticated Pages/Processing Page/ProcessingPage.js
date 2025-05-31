@@ -11,7 +11,11 @@ import { useParams } from 'react-router-dom';
 import {fetchCriterias} from "../../../api/apiCalls/criteriaApi.js"; // Import the axios call functions
 import {fetchDecisionMatrix} from "../../../api/apiCalls/decisionMatrixApi.js"; // Import the axios call functions
 
-function ProcessingPage() {
+import { useAuth } from "../../../AuthContext.js"; // Import the axios call functions
+
+import GlobalSpinner from '../../../GlobalSpinner.js';
+
+function ProcessingPage(globalLoading) {
   const caseId = Number(useParams().caseId);
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -20,6 +24,8 @@ function ProcessingPage() {
   const [products, setProducts] = useState([]);
 
   let fetchedAlternativeNames = new Set();
+ 
+  const { setGlobalLoading } = useAuth();
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
       try {
@@ -46,6 +52,7 @@ function ProcessingPage() {
 
         setProducts(_products);
         setCriteriaCards(criterias);
+        setGlobalLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         // Optionally show an error message to the user
@@ -56,16 +63,18 @@ function ProcessingPage() {
   }, []);
 
 
-  
+  console.log(globalLoading.globalLoading)
   return (
-    <div className="ProcessingPage container-fluid col-10" >
+    globalLoading.globalLoading? 
+    <GlobalSpinner />
+    : (<div className="ProcessingPage container-fluid col-10" >
       {/*<CaseTitle caseTitle={"University Selection okayy"}/>*/}
       <CriteriaForm caseId={caseId} criteriaCards={criteriaCards} setCriteriaCards ={setCriteriaCards} editCard={editCard} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>
       <Cards criteriaCards={criteriaCards} setCriteriaCards={setCriteriaCards} setEditCard={setEditCard} criteriaNames={criteriaNames} setCriteriaNames={setCriteriaNames}/>    
       <DecisionMatrix caseId={caseId} criteriaCards={criteriaCards} products={products} setProducts={setProducts} fetchedAlternativeNames={fetchedAlternativeNames}/> 
       <Submission products={products} criteriaCards={criteriaCards}/>
 
-    </div>
+    </div>)
   );
 }
 

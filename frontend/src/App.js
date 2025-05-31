@@ -26,7 +26,7 @@ import NonePrivateRoute from './Routes/NonePrivateRoute.js'; // adjust path as n
 import { useAuth } from './AuthContext';
 
 function App() {
-  const { loading } = useAuth();
+  const { loading, globalLoading } = useAuth();
 
 
   return (
@@ -58,7 +58,7 @@ function App() {
           path="/processing-page/:caseId"
           element={
             <PrivateRoute >
-              <ProcessingPage />
+              <ProcessingPage globalLoading={globalLoading}/>
             </PrivateRoute>
           }
         />

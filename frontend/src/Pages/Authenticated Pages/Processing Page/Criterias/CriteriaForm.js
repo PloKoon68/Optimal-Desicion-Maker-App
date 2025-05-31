@@ -17,14 +17,12 @@ function CriteriaForm({ caseId, criteriaCards, setCriteriaCards, editCard, setEd
   const [validInputs, setValidInputs] = useState({ validCriteriaName: true, criteriaNameDoesntExist: true, validCategories: true});
 
 
-  console.log("from now on: ", criteriaNames)
   const handleSubmit = async (e) => {
     e.preventDefault();
     criteriaName = criteriaName.trim();
 
     setFormSubmitted(true);
 
-    console.log("c: ", criteriaNames, criteriaName, criteriaNames.has(criteriaName) )
     let _validInputs = {};
     _validInputs.validCriteriaName = criteriaName !== ''
     _validInputs.criteriaNameDoesntExist = !criteriaNames.has(criteriaName)
