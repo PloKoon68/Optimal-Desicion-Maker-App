@@ -215,6 +215,23 @@ const getUserByUsername = async (username) => {
   return (await runQuery("SELECT * FROM users WHERE username = $1", [username])).rows[0];
 };
 
+/*
+{
+  issue_at: 12,
+  rows: [
+    {
+    user_id: 68,
+    username: "bny"
+    password: "sdfgsdfg",
+    },
+    {
+    user_id: 58,
+    username: "bny"
+    password: "sdasadffgsdfg"
+  }
+  ]
+}
+*/
 
 
 //register

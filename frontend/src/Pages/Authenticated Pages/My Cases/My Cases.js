@@ -113,7 +113,6 @@ export default function MyCases() {
   
 
   const gotToProccessingPage = (caseCard, index, e) => {
-    console.log("settting true")
     setGlobalLoading(true); // 👈 show spinner
     if(!e.target.closest("button") && editingIndex !== index)  {
       console.log("going: ", caseCard)

@@ -15,7 +15,7 @@ import { useAuth } from "../../../AuthContext.js"; // Import the axios call func
 
 import GlobalSpinner from '../../../GlobalSpinner.js';
 
-function ProcessingPage(globalLoading) {
+function ProcessingPage() {
   const caseId = Number(useParams().caseId);
   const [criteriaCards, setCriteriaCards] = useState([]);
   const [editCard, setEditCard] = useState(null);
@@ -25,7 +25,8 @@ function ProcessingPage(globalLoading) {
 
   let fetchedAlternativeNames = new Set();
  
-  const { setGlobalLoading } = useAuth();
+  const { globalLoading, setGlobalLoading } = useAuth();
+
   useEffect(() => {
     const fetchWithDelay = async (caseId) => {
       try {
@@ -63,7 +64,6 @@ function ProcessingPage(globalLoading) {
   }, []);
 
 
-  console.log(globalLoading.globalLoading)
   return (
     globalLoading.globalLoading? 
     <GlobalSpinner />

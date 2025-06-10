@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import {logout} from "./api/apiCalls/auth"; 
+import { logout } from "./api/apiCalls/auth"; 
 
 import { useAuth } from './AuthContext';
 
@@ -15,9 +15,10 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate('/login'); // Redirect to login page
   };
+
   const handleLogin = async () => {
       navigate('/login'); // Redirect to login page
-    };
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{backgroundColor: "rgb(118, 110, 120)"}}>
